@@ -9,21 +9,21 @@ import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 
-public class HeaderComponent extends LinearLayout {
-    public HeaderComponent(Context context) {
+public class CommonHeaderComponent extends LinearLayout {
+    public CommonHeaderComponent(Context context) {
         this(context, null);
     }
 
-    public HeaderComponent(Context context, @Nullable AttributeSet attrs) {
+    public CommonHeaderComponent(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public HeaderComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CommonHeaderComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.initComponent(context, attrs, defStyleAttr);
     }
 
-    public HeaderComponent(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CommonHeaderComponent(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
