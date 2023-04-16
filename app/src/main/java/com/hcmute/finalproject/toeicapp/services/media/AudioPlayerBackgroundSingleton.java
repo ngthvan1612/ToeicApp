@@ -44,6 +44,7 @@ public class AudioPlayerBackgroundSingleton {
 
         if (instance != null) {
             storePlaying = instance.isPlaying();
+            instance.pause();
         }
     }
 
@@ -78,5 +79,10 @@ public class AudioPlayerBackgroundSingleton {
     public static void seekCurrentAudio(int time) {
         if (instance != null)
             instance.seekTo(time);
+    }
+
+    public static void setVolume(float volume) {
+        if (instance != null)
+            instance.setVolume(volume);
     }
 }

@@ -22,9 +22,12 @@
     <SeekBar
         android:id="@+id/component_audio_player_seek_bar_status"
         android:layout_width="0dp"
+        android:layout_marginLeft="5dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:layout_toStartOf="@id/component_audio_player_layout_status"
         app:layout_constraintLeft_toRightOf="@id/component_audio_player_btn_start_pause"
         app:layout_constraintRight_toLeftOf="@id/component_audio_player_layout_status"
@@ -80,6 +83,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:minWidth="60dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

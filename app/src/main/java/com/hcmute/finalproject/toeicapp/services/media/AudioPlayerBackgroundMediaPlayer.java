@@ -254,4 +254,12 @@ public class AudioPlayerBackgroundMediaPlayer implements AudioPlayerBackground {
     public void pauseAllPlayersExceptMe() {
         pauseAllPlayersExcept(this.mediaPlayer);
     }
+
+    @Override
+    public void setVolume(float volume) {
+        try {
+            this.mediaPlayer.setVolume(volume, volume);
+        }
+        catch (Exception ignored) { }
+    }
 }

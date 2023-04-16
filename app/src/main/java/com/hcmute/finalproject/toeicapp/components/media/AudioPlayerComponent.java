@@ -26,6 +26,8 @@ public class AudioPlayerComponent extends LinearLayout {
     private int currentTime, totalTime;
     private boolean isPlaying, isPrepared;
     private OnAudioPlayerChange onAudioPlayerChange;
+    private File audioFile;
+    private float currentVolume = 0.5f;
 
     public AudioPlayerComponent(Context context) {
         this(context, null);
@@ -83,7 +85,18 @@ public class AudioPlayerComponent extends LinearLayout {
 
     public void loadAudioFile(File audioFile) {
         AudioPlayerBackgroundSingleton.prepareAudio(this.getContext(), audioFile);
+        AudioPlayerBackgroundSingleton.setVolume(currentVolume);
+        audioFile = audioFile;
         isPrepared = true;
+    }
+
+    public float getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public void setCurrentVolume(float currentVolume) {
+        this.currentVolume = currentVolume;
+        AudioPlayerBackgroundSingleton.setVolume(currentVolume);
     }
 
     public boolean isPrepared() {
@@ -176,6 +189,8 @@ public class AudioPlayerComponent extends LinearLayout {
                 if (!fromUser)
                     return;
 
+                setCurrentVolume((float)(1.0 * progress / seekBar.getMax()));
+
                 if (onAudioPlayerChange != null) {
                     onAudioPlayerChange.onChangeVolume(progress, seekBarVolume.getMax());
                 }
@@ -197,16 +212,28 @@ public class AudioPlayerComponent extends LinearLayout {
         AudioPlayerBackgroundSingleton.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
             @Override
             public void afterStarted() {
-
+                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause);
+                    }
+                });
             }
 
             @Override
             public void afterPaused() {
-
+                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play);
+                    }
+                });
             }
 
             @Override
             public void onFinished() {
+                AudioPlayerBackgroundSingleton.seekCurrentAudio(0);
+                setPlaying(false);
                 setCurrentTime(0);
             }
 

@@ -183,6 +183,14 @@ public class AudioPlayerBackgroundExoPlayer implements AudioPlayerBackground {
     }
 
     @Override
+    public void setVolume(float volume) {
+        try {
+            this.exoPlayer.setVolume(volume);
+        }
+        catch (Exception ignored) { }
+    }
+
+    @Override
     public void stop() {
         try {
             this.exoPlayer.stop();

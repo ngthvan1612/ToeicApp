@@ -16,6 +16,7 @@ public interface AudioPlayerBackground {
     void seekTo(int seconds);
 
     void start(boolean pauseAllAnotherPlayers);
+    void setVolume(float volume);
 
     void stop();
 

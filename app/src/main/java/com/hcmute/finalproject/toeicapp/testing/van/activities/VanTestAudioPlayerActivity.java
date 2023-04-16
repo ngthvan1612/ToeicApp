@@ -12,6 +12,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
 import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
 import com.hcmute.finalproject.toeicapp.network.test.TestAPIService;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundSingleton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,6 +34,18 @@ public class VanTestAudioPlayerActivity extends AppCompatActivity {
                 getApplicationContext());
         File directory = contextWrapper.getDir("test-01-01-02", Context.MODE_PRIVATE);
         return new File(directory, fileName);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AudioPlayerBackgroundSingleton.backupAudioPlayerState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AudioPlayerBackgroundSingleton.restoreAudioPlayerState();
     }
 
     @Override
