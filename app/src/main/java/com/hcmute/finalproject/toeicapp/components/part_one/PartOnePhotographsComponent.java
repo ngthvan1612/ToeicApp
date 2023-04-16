@@ -15,8 +15,7 @@ public class PartOnePhotographsComponent extends LinearLayout {
     }
 
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs,0);
-
+        this(context, attrs, 0);
     }
 
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {

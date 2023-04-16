@@ -30,15 +30,16 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/man_reading_news" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent
             android:layout_marginTop="20dp"
-            android:background="#787676"
-            android:text="audio sample" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp" />

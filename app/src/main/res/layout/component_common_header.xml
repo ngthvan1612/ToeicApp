@@ -32,7 +32,8 @@
             android:text="Photographs 01"
             android:textSize="25sp"
             android:textStyle="bold"
-            tools:textAlignment="textEnd" />
+            tools:textAlignment="textEnd"
+            android:gravity="end"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
