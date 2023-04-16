@@ -69,6 +69,14 @@ public class AnswerSelectionComponent extends LinearLayout {
         }
     }
 
+    private String getQuestionTitle() {
+        return this.txtTitle.getText().toString();
+    }
+
+    public void setQuestionTitle(String title) {
+        this.txtTitle.setText(title);
+    }
+
     public List<ToeicAnswerChoice> getToeicAnswerChoices() {
         return toeicAnswerChoices;
     }
