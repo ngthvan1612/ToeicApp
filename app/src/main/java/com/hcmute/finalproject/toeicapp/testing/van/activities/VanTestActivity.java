@@ -71,28 +71,28 @@ public class VanTestActivity extends AppCompatActivity {
         ToeicAnswerChoice a = new ToeicAnswerChoice();
         a.setContent("Product quality testing");
         a.setLabel("A");
-        a.setExplain("");
+        a.setExplain("Kiểm tra chất lượng sản phẩm");
         choices.add(a);
 
         // B
         ToeicAnswerChoice b = new ToeicAnswerChoice();
         b.setContent("Candidates for a job");
         b.setLabel("B");
-        b.setExplain("");
+        b.setExplain("Ứng cử viên cho 1 công việ");
         choices.add(b);
 
         // C.
         ToeicAnswerChoice c = new ToeicAnswerChoice();
         c.setContent("Contracts with vendors");
         c.setLabel("C");
-        c.setExplain("");
+        c.setExplain("Hợp đồng với khách hàng");
         choices.add(c);
 
         // D.
         ToeicAnswerChoice d = new ToeicAnswerChoice();
         d.setContent("Design modifications");
         d.setLabel("D");
-        d.setExplain("");
+        d.setExplain("Sửa đổi thiết kế");
         choices.add(d);
 
         return choices;
