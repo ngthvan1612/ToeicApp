@@ -11,7 +11,7 @@ import com.hcmute.finalproject.toeicapp.R;
 
 public class PartOnePhotographsComponent extends LinearLayout {
     public PartOnePhotographsComponent(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs) {
@@ -25,6 +25,6 @@ public class PartOnePhotographsComponent extends LinearLayout {
 
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        View view = inflate(context, R.layout.component_home_page_list_practice, this);
+        View view = inflate(context, R.layout.component_part_one_photographs, this);
     }
 }

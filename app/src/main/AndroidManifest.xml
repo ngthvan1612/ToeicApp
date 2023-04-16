@@ -14,8 +14,11 @@
         <activity
             android:name=".testing.huong.activities.HuongTestActivity"
             android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".activities.PartOnePhotographsActivity"-->
+<!--            android:exported="true" />-->
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".activities.PartOnePhotographsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
