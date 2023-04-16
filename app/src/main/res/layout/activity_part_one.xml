@@ -9,15 +9,9 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/activity_home_view_pager"
-        android:layout_above="@id/activity_home_bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </androidx.viewpager.widget.ViewPager>
-
-    <com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent
-        android:id="@+id/activity_home_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        tools:ignore="SpeakableTextPresentCheck">
+    </androidx.viewpager.widget.ViewPager>
+
 </RelativeLayout>
