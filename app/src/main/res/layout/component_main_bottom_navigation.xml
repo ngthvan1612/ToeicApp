@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/component_main_bottom_navigation_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:menu="@menu/menu_component_bottom_navigation"

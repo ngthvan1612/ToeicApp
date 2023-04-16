@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_component_bottom_navigation_home"
         android:icon="@drawable/menu_component_bottom_navigation_icon_home"
         android:title="Home"
         />
     <item
+        android:id="@+id/menu_component_bottom_navigation_vocabulary"
         android:icon="@drawable/menu_component_bottom_navigation_icon_document"
         android:title="Document"
         />
     <item
+        android:id="@+id/menu_component_bottom_navigation_statistic"
         android:icon="@drawable/menu_component_bottom_navigation_icon_command"
         android:title="Unknown"
         />
     <item
+        android:id="@+id/menu_component_bottom_navigation_note"
         android:icon="@drawable/menu_component_bottom_navigation_icon_love"
         android:title="Love"
         />
     <item
+        android:id="@+id/menu_component_bottom_navigation_options"
         android:icon="@drawable/menu_component_bottom_navigation_icon_burger"
         android:title="Option"
         />
