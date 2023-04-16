@@ -7,17 +7,11 @@
     android:background="@drawable/activity_home_background_linear_gradient"
     tools:context=".activities.HomeActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/activity_home_view_pager"
-        android:layout_above="@id/activity_home_bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
 
-    </androidx.viewpager.widget.ViewPager>
-
-    <com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent
-        android:id="@+id/activity_home_bottom_navigation_view"
+    <com.hcmute.finalproject.toeicapp.components.common.HeaderComponent
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="wrap_content" />
 </RelativeLayout>
