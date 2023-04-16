@@ -12,14 +12,16 @@
         android:theme="@style/Theme.ToeicApp"
         tools:targetApi="31">
         <activity
+            android:name=".testing.van.activities.VanTestAudioPlayerActivity"
+            android:exported="true" />
+        <activity
             android:name=".testing.van.activities.VanTestHomePageListVocabularyActivity"
             android:exported="true" />
         <activity
             android:name=".testing.huong.activities.HuongTestActivity"
-            android:exported="true" />
-<!--        <activity-->
-<!--            android:name=".activities.PartOnePhotographsActivity"-->
-<!--            android:exported="true" />-->
+            android:exported="true" /> <!-- <activity -->
+        <!-- android:name=".activities.PartOnePhotographsActivity" -->
+        <!-- android:exported="true" /> -->
         <activity
             android:name=".activities.PartOnePhotographsActivity"
             android:exported="true">
