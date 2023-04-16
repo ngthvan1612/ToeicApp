@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
+import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 
 public class HomeActivity extends AppCompatActivity {
@@ -122,6 +123,17 @@ public class HomeActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            if (position == 1) {
+                HomePageListVocabularyComponent component = new HomePageListVocabularyComponent(HomeActivity.this);
+                container.addView(component);
+                component.setTag(getLayoutTagByPosition(position));
+                component.loadSampleStatistics();
+
+                component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
+
+                return component;
+            }
+
             HomePageListPracticeComponent component = new HomePageListPracticeComponent(HomeActivity.this);
             container.addView(component);
             component.setTag(getLayoutTagByPosition(position));

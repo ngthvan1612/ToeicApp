@@ -12,10 +12,16 @@
     android:orientation="vertical"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    tools:ignore="MissingDefaultResource,SpeakableTextPresentCheck">
+    tools:ignore="MissingDefaultResource,SpeakableTextPresentCheck"
+    android:contextClickable="true"
+    android:duplicateParentState="true"
+    android:longClickable="true">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:duplicateParentState="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/component_back_button_rounded_image_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,4 +29,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/common_back_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

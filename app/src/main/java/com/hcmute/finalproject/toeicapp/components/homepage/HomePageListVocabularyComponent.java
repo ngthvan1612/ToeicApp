@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,15 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
+import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class HomePageListVocabularyComponent extends LinearLayout {
     private ListView listViewVocabs;
     private ListVocabsAdapter adapter;
     private List<VocabularyTopicStatistic> statistics;
+    private OnClickBackButton onClickBackButton;
 
     public HomePageListVocabularyComponent(Context context) {
         this(context, null);
@@ -45,6 +51,14 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         this.adapter.notifyDataSetChanged();
     }
 
+    public OnClickBackButton getOnClickBackButton() {
+        return onClickBackButton;
+    }
+
+    public void setOnClickBackButton(OnClickBackButton onClickBackButton) {
+        this.onClickBackButton = onClickBackButton;
+    }
+
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_home_page_list_vocabulary, this);
 
@@ -57,6 +71,13 @@ public class HomePageListVocabularyComponent extends LinearLayout {
 
         this.adapter = new ListVocabsAdapter();
         this.listViewVocabs.setAdapter(this.adapter);
+
+        final BackButtonRoundedComponent btnClickBack = findViewById(R.id.component_home_page_list_vocabulary_btn_back);
+        btnClickBack.setOnClickListener(v -> {
+            if (this.onClickBackButton != null) {
+                this.onClickBackButton.onClick();
+            }
+        });
     }
 
     private class ListVocabsAdapter extends BaseAdapter {
@@ -90,5 +111,38 @@ public class HomePageListVocabularyComponent extends LinearLayout {
 
             return view;
         }
+    }
+
+    public void loadSampleStatistics() {
+        this.setStatistics(this.getSampleVocabStatistic(this.getSampleTopics()));
+    }
+
+    @Deprecated
+    private List<VocabularyTopic> getSampleTopics() {
+        List<VocabularyTopic> topics = new ArrayList<>();
+
+        topics.add(new VocabularyTopic("Contracts - Hợp Đồng", 12));
+        topics.add(new VocabularyTopic("Marketing - Nghiên Cứu Thị Trường", 12));
+        topics.add(new VocabularyTopic("Warrranties - Sự Bảo Hành", 12));
+        topics.add(new VocabularyTopic("Business Planning - Kế Hoạch Kinh Doanh", 12));
+        topics.add(new VocabularyTopic("Conferences - Hội Nghị", 12));
+
+        return topics;
+    }
+
+    @Deprecated
+    public List<VocabularyTopicStatistic> getSampleVocabStatistic(final List<VocabularyTopic> topics) {
+        final Random randomEngine = new Random();
+        List<VocabularyTopicStatistic> result = topics.stream().map(VocabularyTopicStatistic::new).collect(Collectors.toList());
+
+        for (VocabularyTopicStatistic statistic : result) {
+            statistic.setSuccess(Math.abs(randomEngine.nextInt()) % (statistic.getTotal() + 1));
+        }
+
+        return result;
+    }
+
+    public interface OnClickBackButton {
+        void onClick();
     }
 }

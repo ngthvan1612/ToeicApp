@@ -13,7 +13,7 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <com.hcmute.finalproject.toeicapp.components.common.HeaderComponent
+        <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp" />
