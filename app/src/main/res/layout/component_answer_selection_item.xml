@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource"
+    android:paddingTop="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingBottom="10dp"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:id="@+id/component_answer_selection_item_radio_button"
+        android:contextClickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="A. ABC"/>
+
+    <RelativeLayout
+        android:background="@drawable/component_answer_selection_explain_background"
+        android:id="@+id/component_answer_selection_item_explain_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="26dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/component_answer_selection_item_explain_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/component_answer_selection_item_explain_icon_fixed"/>
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/component_answer_selection_item_explain_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/component_answer_selection_item_explain_image"
+            android:textColor="#1F0C91"
+            android:gravity="center_vertical"
+            android:text="DEF"/>
+    </RelativeLayout>
+</LinearLayout>
