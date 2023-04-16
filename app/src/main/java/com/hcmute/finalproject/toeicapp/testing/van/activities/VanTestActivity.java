@@ -20,7 +20,7 @@ public class VanTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_van_test);
 
         final AnswerSelectionComponent answerSelectionComponent = findViewById(R.id.activity_van_test_answer_selection_test);
-        final List<ToeicAnswerChoice> toeicAnswerChoices = this.getSamplePart3Choices();
+        final List<ToeicAnswerChoice> toeicAnswerChoices = this.getSamplePart1Choices();
         final Button btnShowAnswer = findViewById(R.id.activity_van_test_answer_btn_show_answer);
 
         answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
