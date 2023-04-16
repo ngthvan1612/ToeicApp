@@ -44,6 +44,29 @@ public class MainBottomNavigationComponent extends LinearLayout {
         this.onNavigationClicked = onNavigationClicked;
     }
 
+    public void setSelectedItem(MainBottomNavigationType itemType) {
+        if (bottomNavigationView == null)
+            return;
+
+        switch (itemType) {
+            case HOME:
+                this.bottomNavigationView.setSelectedItemId(R.id.menu_component_bottom_navigation_home);
+                break;
+            case VOCABULARY:
+                this.bottomNavigationView.setSelectedItemId(R.id.menu_component_bottom_navigation_vocabulary);
+                break;
+            case STATISTIC:
+                this.bottomNavigationView.setSelectedItemId(R.id.menu_component_bottom_navigation_statistic);
+                break;
+            case NOTE:
+                this.bottomNavigationView.setSelectedItemId(R.id.menu_component_bottom_navigation_note);
+                break;
+            case OPTIONS:
+                this.bottomNavigationView.setSelectedItemId(R.id.menu_component_bottom_navigation_options);
+                break;
+        }
+    }
+
     private void initComponent(Context context, AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_main_bottom_navigation, this);
 
