@@ -331,7 +331,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.hcmute.finalproject.toeicapp.components.MainBottomNavigationComponent
+    <com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent
         android:id="@+id/activity_home_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
