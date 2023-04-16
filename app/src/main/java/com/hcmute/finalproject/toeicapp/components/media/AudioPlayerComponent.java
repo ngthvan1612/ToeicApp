@@ -19,6 +19,7 @@ public class AudioPlayerComponent extends LinearLayout {
     private TextView txtCurrentTime, txtTotalTime;
     private int currentTime, totalTime;
     private boolean isPlaying;
+    private OnAudioPlayerChange onAudioPlayerChange;
 
     public AudioPlayerComponent(Context context) {
         this(context, null);
@@ -77,6 +78,14 @@ public class AudioPlayerComponent extends LinearLayout {
         this.txtTotalTime.setText(" / " + formatTime(totalTime));
     }
 
+    public OnAudioPlayerChange getOnAudioPlayerChange() {
+        return onAudioPlayerChange;
+    }
+
+    public void setOnAudioPlayerChange(OnAudioPlayerChange onAudioPlayerChange) {
+        this.onAudioPlayerChange = onAudioPlayerChange;
+    }
+
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_audio_player, this);
 
@@ -97,9 +106,14 @@ public class AudioPlayerComponent extends LinearLayout {
 
         this.imageViewBtnStartPause.setOnClickListener(v -> {
             setPlaying(!isPlaying);
+            if (onAudioPlayerChange != null) {
+                if (isPlaying) onAudioPlayerChange.onPauseButtonClicked();
+                else onAudioPlayerChange.onPlayButtonClicked();
+            }
         });
 
         this.initSeekBarStatus();
+        this.initSeekBarVolume();
     }
 
     private void initSeekBarStatus() {
@@ -122,5 +136,35 @@ public class AudioPlayerComponent extends LinearLayout {
                 setPlaying(true);
             }
         });
+    }
+
+    private void initSeekBarVolume() {
+        this.seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (!fromUser)
+                    return;
+
+                if (onAudioPlayerChange != null) {
+                    onAudioPlayerChange.onChangeVolume(progress, seekBarVolume.getMax());
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    public interface OnAudioPlayerChange {
+        void onPlayButtonClicked();
+        void onPauseButtonClicked();
+        void onChangeVolume(int currentVolumne, int maxVolume);
     }
 }
