@@ -331,11 +331,9 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.hcmute.finalproject.toeicapp.components.MainBottomNavigationComponent
         android:id="@+id/activity_home_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

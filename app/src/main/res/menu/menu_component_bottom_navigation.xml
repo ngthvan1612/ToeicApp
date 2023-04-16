@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/menu_component_bottom_navigation_icon_home"
+        android:title="Home"
+        />
+    <item
+        android:icon="@drawable/menu_component_bottom_navigation_icon_document"
+        android:title="Document"
+        />
+    <item
+        android:icon="@drawable/menu_component_bottom_navigation_icon_command"
+        android:title="Unknown"
+        />
+    <item
+        android:icon="@drawable/menu_component_bottom_navigation_icon_love"
+        android:title="Love"
+        />
+    <item
+        android:icon="@drawable/menu_component_bottom_navigation_icon_burger"
+        android:title="Option"
+        />
+</menu>
