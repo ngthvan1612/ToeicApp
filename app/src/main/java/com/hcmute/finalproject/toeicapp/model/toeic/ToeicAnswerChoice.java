@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.model;
+package com.hcmute.finalproject.toeicapp.model.toeic;
 
 import java.io.Serializable;
 

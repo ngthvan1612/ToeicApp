@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.model.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
