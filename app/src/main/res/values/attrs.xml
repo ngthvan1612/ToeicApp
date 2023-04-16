@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HomeButtonRoundedComponent">
+        <attr name="part_id" format="integer"/>
+        <attr name="hi" format="string"/>
+    </declare-styleable>
+</resources>

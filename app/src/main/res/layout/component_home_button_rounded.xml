@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/component_home_button_rounded_background"
+    android:minWidth="120dp"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/component_home_button_rounded_image_part"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/customer_service_fill_resource_customer_service_fill"
+        android:layout_gravity="center_horizontal"
+    />
+
+    <TextView
+        android:id="@+id/component_home_button_rounded_text_view_part_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Part 1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/component_home_button_rounded_text_view_part_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Photographs"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:gravity="center_horizontal"/>
+</LinearLayout>
