@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="HomeButtonRoundedComponent">
-        <attr name="part_id" format="integer"/>
-        <attr name="hi" format="string"/>
+        <attr name="toeic_image" format="reference"/>
+        <attr name="toeic_title" format="string"/>
+        <attr name="toeic_description" format="string"/>
+        <attr name="toeic_background_color" format="enum">
+            <enum name="blue" value="0"/>
+            <enum name="red" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

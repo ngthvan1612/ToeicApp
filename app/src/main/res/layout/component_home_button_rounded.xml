@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/component_home_button_rounded_main_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/component_home_button_rounded_background"
+    android:background="@drawable/component_home_button_rounded_background_blue"
     android:minWidth="120dp"
     android:orientation="vertical"
     android:paddingTop="5dp"
@@ -14,26 +17,35 @@
         android:id="@+id/component_home_button_rounded_image_part"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/customer_service_fill_resource_customer_service_fill"
         android:layout_gravity="center_horizontal"
-    />
+        android:src="@drawable/activity_home_question_icon_image_part_1"
+        app:layout_constraintBottom_toTopOf="@+id/component_home_button_rounded_text_view_part_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/component_home_button_rounded_text_view_part_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Part 1"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="20sp"
-        android:gravity="center_horizontal"/>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/component_home_button_rounded_text_view_part_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/component_home_button_rounded_text_view_part_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Photographs"
         android:textColor="@color/white"
-        android:textSize="17sp"
-        android:gravity="center_horizontal"/>
-</LinearLayout>
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
