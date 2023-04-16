@@ -16,7 +16,7 @@
         <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
             android:clickable="true"
             android:focusable="true"
-            android:id="@+id/backButtonRoundedComponent"
+            android:id="@+id/component_home_page_list_vocabulary_btn_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
             android:text="Học từ vựng theo chủ đề"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backButtonRoundedComponent"
+            app:layout_constraintStart_toEndOf="@+id/component_home_page_list_vocabulary_btn_back"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="20sp"
             android:textColor="@color/black"
