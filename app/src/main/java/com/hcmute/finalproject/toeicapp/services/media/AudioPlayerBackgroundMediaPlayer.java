@@ -176,6 +176,22 @@ public class AudioPlayerBackgroundMediaPlayer implements AudioPlayerBackground {
     }
 
     @Override
+    public void stop() {
+        try {
+            this.mediaPlayer.stop();
+        }
+        catch (Exception e) { }
+    }
+
+    @Override
+    public void release() {
+        try {
+            this.mediaPlayer.stop();
+        }
+        catch (Exception e) { }
+    }
+
+    @Override
     public void pause() {
         try {
             if (this.mediaPlayer.isPlaying()) {

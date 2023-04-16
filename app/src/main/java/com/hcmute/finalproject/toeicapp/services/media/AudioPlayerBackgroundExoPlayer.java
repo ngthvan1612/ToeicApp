@@ -183,6 +183,22 @@ public class AudioPlayerBackgroundExoPlayer implements AudioPlayerBackground {
     }
 
     @Override
+    public void stop() {
+        try {
+            this.exoPlayer.stop();
+        }
+        catch (Exception e) { }
+    }
+
+    @Override
+    public void release() {
+        try {
+            this.exoPlayer.release();
+        }
+        catch (Exception e) { }
+    }
+
+    @Override
     public void pause() {
         try {
             if (this.exoPlayer.isPlaying()) {

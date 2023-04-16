@@ -1,6 +1,7 @@
 package com.hcmute.finalproject.toeicapp.components.media;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -8,17 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackground;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundSingleton;
+
+import java.io.File;
 
 public class AudioPlayerComponent extends LinearLayout {
     private ImageView imageViewBtnStartPause;
     private SeekBar seekBarStatus, seekBarVolume;
     private TextView txtCurrentTime, txtTotalTime;
     private int currentTime, totalTime;
-    private boolean isPlaying;
+    private boolean isPlaying, isPrepared;
     private OnAudioPlayerChange onAudioPlayerChange;
 
     public AudioPlayerComponent(Context context) {
@@ -40,7 +46,12 @@ public class AudioPlayerComponent extends LinearLayout {
 
     public void setCurrentTime(int currentTime) {
         this.currentTime = currentTime;
-        this.reRenderTextViewStatus();
+        ((Activity)getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                reRenderTextViewStatus();
+            }
+        });
         this.seekBarStatus.setProgress(currentTime);
     }
 
@@ -55,9 +66,11 @@ public class AudioPlayerComponent extends LinearLayout {
     public void setPlaying(boolean playing) {
         isPlaying = playing;
         if (playing) {
+            AudioPlayerBackgroundSingleton.continueCurrentAudio();
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause);
         }
         else {
+            AudioPlayerBackgroundSingleton.pauseCurrentAudio();
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play);
         }
     }
@@ -66,6 +79,15 @@ public class AudioPlayerComponent extends LinearLayout {
         this.totalTime = totalTime;
         this.reRenderTextViewStatus();
         this.seekBarStatus.setMax(totalTime);
+    }
+
+    public void loadAudioFile(File audioFile) {
+        AudioPlayerBackgroundSingleton.prepareAudio(this.getContext(), audioFile);
+        isPrepared = true;
+    }
+
+    public boolean isPrepared() {
+        return this.isPrepared;
     }
 
     @SuppressLint("DefaultLocale")
@@ -82,7 +104,7 @@ public class AudioPlayerComponent extends LinearLayout {
         return onAudioPlayerChange;
     }
 
-    public void setOnAudioPlayerChange(OnAudioPlayerChange onAudioPlayerChange) {
+    public void setOnAudioPlayerStateChanged(OnAudioPlayerChange onAudioPlayerChange) {
         this.onAudioPlayerChange = onAudioPlayerChange;
     }
 
@@ -102,18 +124,26 @@ public class AudioPlayerComponent extends LinearLayout {
         this.seekBarVolume.setMax(100);
         this.seekBarVolume.setProgress(50);
         this.setCurrentTime(0);
-        this.setTotalTime(129);
+        this.setTotalTime(0);
 
         this.imageViewBtnStartPause.setOnClickListener(v -> {
-            setPlaying(!isPlaying);
             if (onAudioPlayerChange != null) {
-                if (isPlaying) onAudioPlayerChange.onPauseButtonClicked();
-                else onAudioPlayerChange.onPlayButtonClicked();
+                if (isPlaying) {
+                    if (onAudioPlayerChange.onPauseButtonClicked()) {
+                        setPlaying(false);
+                    }
+                }
+                else {
+                    if (onAudioPlayerChange.onPlayButtonClicked()) {
+                        setPlaying(true);
+                    }
+                }
             }
         });
 
         this.initSeekBarStatus();
         this.initSeekBarVolume();
+        this.initAudioPlayerBackgroundService();
     }
 
     private void initSeekBarStatus() {
@@ -128,12 +158,13 @@ public class AudioPlayerComponent extends LinearLayout {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                setPlaying(false);
+                AudioPlayerBackgroundSingleton.backupAudioPlayerState();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                setPlaying(true);
+                AudioPlayerBackgroundSingleton.seekCurrentAudio(seekBar.getProgress());
+                AudioPlayerBackgroundSingleton.restoreAudioPlayerState();
             }
         });
     }
@@ -162,9 +193,50 @@ public class AudioPlayerComponent extends LinearLayout {
         });
     }
 
+    private void initAudioPlayerBackgroundService() {
+        AudioPlayerBackgroundSingleton.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
+            @Override
+            public void afterStarted() {
+
+            }
+
+            @Override
+            public void afterPaused() {
+
+            }
+
+            @Override
+            public void onFinished() {
+                setCurrentTime(0);
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+            }
+
+            @Override
+            public void playing(long currentTime) {
+                setCurrentTime((int)currentTime);
+            }
+
+            @Override
+            public void onReady() {
+                setEnabled(true);
+                if (getTotalTime() != AudioPlayerBackgroundSingleton.getCurrentAudioDuration())
+                    setTotalTime(AudioPlayerBackgroundSingleton.getCurrentAudioDuration());
+            }
+
+            @Override
+            public void onProcessing() {
+                setEnabled(false);
+            }
+        });
+    }
+
     public interface OnAudioPlayerChange {
-        void onPlayButtonClicked();
-        void onPauseButtonClicked();
+        boolean onPlayButtonClicked();
+        boolean onPauseButtonClicked();
         void onChangeVolume(int currentVolumne, int maxVolume);
     }
 }

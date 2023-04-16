@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#474544">
+    android:background="#474544"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <ImageView
         android:id="@+id/component_audio_player_btn_start_pause"

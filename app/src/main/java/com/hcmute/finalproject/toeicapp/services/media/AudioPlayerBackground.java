@@ -17,6 +17,10 @@ public interface AudioPlayerBackground {
 
     void start(boolean pauseAllAnotherPlayers);
 
+    void stop();
+
+    void release();
+
     void pause();
 
     void pauseAllPlayersExceptMe();
