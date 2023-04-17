@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_home_background_linear_gradient"
+    tools:context=".activities.ResultActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="80dp"
+        android:paddingBottom="60dp"
+        android:weightSum="20"
+        android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/activity_result_image_happy">
+
+    </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:textSize="25sp"
+            android:textColor="#DC3549"
+            android:textStyle="bold"
+            android:text="Good job!"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:textSize="20sp"
+            android:text="You have completed the training"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:layout_margin="10dp"
+            android:padding="22dp"
+            android:weightSum="4"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/activity_result_white_corner_background"
+            android:elevation="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="Result: 8/10"
+                android:layout_weight="2"
+                android:textSize="25sp"
+                android:textColor="#DC3549"
+                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/activity_result_button_show_answers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Show answers"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/activity_result_button_show_answers">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/activity_result_button_continue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Continue"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/activity_result_button_continue">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
