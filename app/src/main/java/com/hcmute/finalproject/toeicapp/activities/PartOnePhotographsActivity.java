@@ -16,15 +16,13 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
 
-public class PartOnePhotographsActivity extends AppCompatActivity {
+public class PartOnePhotographsActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_part_one);
         viewPager = findViewById(R.id.activity_home_view_pager);

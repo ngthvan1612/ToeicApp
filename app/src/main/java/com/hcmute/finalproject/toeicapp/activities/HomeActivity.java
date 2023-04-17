@@ -16,7 +16,7 @@ import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPractice
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
@@ -24,10 +24,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_home);
 
         viewPager = findViewById(R.id.activity_home_view_pager);
