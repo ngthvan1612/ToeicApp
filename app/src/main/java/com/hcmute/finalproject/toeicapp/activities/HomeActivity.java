@@ -127,7 +127,6 @@ public class HomeActivity extends AppCompatActivity {
                 HomePageListVocabularyComponent component = new HomePageListVocabularyComponent(HomeActivity.this);
                 container.addView(component);
                 component.setTag(getLayoutTagByPosition(position));
-                component.loadSampleStatistics();
 
                 component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
 

@@ -12,6 +12,6 @@ public interface TestAPIService {
     Call<ResponseBody> downloadTestFile01();
 
     @Streaming
-    @GET("https://dl.dropboxusercontent.com/s/xin6vvva0shii3n/600-tu-toeic.json")
+    @GET("https://dl.dropboxusercontent.com/s/whbu8or0k1w3olb/600-tu-toeic.json")
     Call<ResponseBody> download600ToeicVocabularies();
 }

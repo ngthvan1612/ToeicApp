@@ -27,7 +27,7 @@ public class VanTestHomePageListVocabularyActivity extends AppCompatActivity {
         final List<VocabularyTopic> sampleTopics = this.getSampleTopics();
         final List<VocabularyTopicStatistic> sampleStatistic = this.getSampleVocabStatistic(sampleTopics);
 
-        component.setStatistics(sampleStatistic);
+        //component.setStatistics(sampleStatistic);
     }
 
     private List<VocabularyTopic> getSampleTopics() {

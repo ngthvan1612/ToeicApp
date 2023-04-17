@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +11,39 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
+import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
+import com.hcmute.finalproject.toeicapp.network.test.TestAPIService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomePageListVocabularyComponent extends LinearLayout {
+    private final static String VOCAB_CONFIG_FILE = "vocab.json";
     private ListView listViewVocabs;
     private ListVocabsAdapter adapter;
     private List<VocabularyTopicStatistic> statistics;
@@ -78,6 +98,83 @@ public class HomePageListVocabularyComponent extends LinearLayout {
                 this.onClickBackButton.onClick();
             }
         });
+
+        if (!this.getVocabsConfigFile().exists()) {
+            this.downloadConfigFile();
+        }
+
+        this.loadListVocabsTest();
+    }
+
+    private void loadListVocabsTest() {
+        String json = null;
+        this.statistics.clear();
+        adapter.notifyDataSetChanged();
+
+        try {
+            final File file = this.getVocabsConfigFile();
+            final FileInputStream fileInputStream = new FileInputStream(file);
+            final byte[] buffer = new byte[(int) file.length()];
+            fileInputStream.read(buffer);
+            json = new String(buffer, StandardCharsets.UTF_8);
+            fileInputStream.close();
+        } catch (IOException e) {
+            return;
+        }
+
+        Gson gson = new Gson();
+        List<Toeic600Topic> topics = List.of(gson.fromJson(json, Toeic600Topic[].class));
+        List<VocabularyTopic> vocabularyTopics = new ArrayList<>();
+
+        for (Toeic600Topic topic : topics) {
+            VocabularyTopic vocabularyTopic = new VocabularyTopic();
+            vocabularyTopic.setTopicName(topic.getName());
+            vocabularyTopic.setNumberOfVocabularies(topic.vocabs.size());
+            vocabularyTopics.add(vocabularyTopic);
+        }
+
+        this.statistics.addAll(vocabularyTopics.stream()
+                .map(VocabularyTopicStatistic::new).collect(Collectors.toList()));
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void downloadConfigFile() {
+        ProgressDialog progressBar = new ProgressDialog(this.getContext());
+        progressBar.setTitle("Đang tải 600 từ xuống");
+        TestAPIService apiService = RetrofitTestRetrofitClient01.getInstance();
+        apiService.download600ToeicVocabularies().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                final ResponseBody responseBody = response.body();
+
+                try {
+                    final byte[] content = responseBody.bytes();
+                    FileOutputStream outputStream = new FileOutputStream(getVocabsConfigFile());
+                    outputStream.write(content);
+                    outputStream.close();
+                    Toast.makeText(getContext(), "Tải file thành công", Toast.LENGTH_SHORT).show();
+
+                    loadListVocabsTest();
+                } catch (IOException e) {
+                    Toast.makeText(getContext(), "Tải file lỗi", Toast.LENGTH_SHORT).show();
+                }
+
+                progressBar.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Tải file lỗi", Toast.LENGTH_SHORT).show();
+                progressBar.dismiss();
+            }
+        });
+    }
+
+    private File getVocabsConfigFile() {
+        ContextWrapper contextWrapper = new ContextWrapper(this.getContext().getApplicationContext());
+        File directory = contextWrapper.getDir("vocabs", Context.MODE_PRIVATE);
+        return new File(directory, VOCAB_CONFIG_FILE);
     }
 
     private class ListVocabsAdapter extends BaseAdapter {
@@ -131,7 +228,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
     }
 
     @Deprecated
-    public List<VocabularyTopicStatistic> getSampleVocabStatistic(final List<VocabularyTopic> topics) {
+    private List<VocabularyTopicStatistic> getSampleVocabStatistic(final List<VocabularyTopic> topics) {
         final Random randomEngine = new Random();
         List<VocabularyTopicStatistic> result = topics.stream().map(VocabularyTopicStatistic::new).collect(Collectors.toList());
 
@@ -144,5 +241,67 @@ public class HomePageListVocabularyComponent extends LinearLayout {
 
     public interface OnClickBackButton {
         void onClick();
+    }
+
+    private class Toeic600Topic {
+        private String name;
+        private List<Toeic600Vocab> vocabs;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<Toeic600Vocab> getVocabs() {
+            return vocabs;
+        }
+
+        public void setVocabs(List<Toeic600Vocab> vocabs) {
+            this.vocabs = vocabs;
+        }
+    }
+
+    private class Toeic600Vocab {
+        @SerializedName("image_url")
+        private String imageUrl;
+        private String text;
+        private String pronunciation;
+        @SerializedName("audio_url")
+        private String audioUrl;
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public String getPronunciation() {
+            return pronunciation;
+        }
+
+        public void setPronunciation(String pronunciation) {
+            this.pronunciation = pronunciation;
+        }
+
+        public String getAudioUrl() {
+            return audioUrl;
+        }
+
+        public void setAudioUrl(String audioUrl) {
+            this.audioUrl = audioUrl;
+        }
     }
 }
