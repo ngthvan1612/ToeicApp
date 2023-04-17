@@ -11,7 +11,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicStorage;
 import java.util.List;
 
 @Dao
-public interface ToeicStorageDao {
+public interface TestToeicStorageDao {
     @Insert
     void insert(ToeicStorage... toeicStorages);
 

@@ -6,7 +6,6 @@ import androidx.room.RoomDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicStorage;
 import com.hcmute.finalproject.toeicapp.entities.ToeicVocabulary;
 import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
-import com.hcmute.finalproject.toeicapp.testing.van.activities.VanTestRoomDatabaseActivity;
 
 @Database(
         entities = {
@@ -16,6 +15,6 @@ import com.hcmute.finalproject.toeicapp.testing.van.activities.VanTestRoomDataba
         },
         version = 1
 )
-public abstract class AppDatabase extends RoomDatabase {
-    public abstract ToeicStorageDao getToeicStorageDao();
+public abstract class TestAppDatabase extends RoomDatabase {
+    public abstract TestToeicStorageDao getToeicStorageDao();
 }
