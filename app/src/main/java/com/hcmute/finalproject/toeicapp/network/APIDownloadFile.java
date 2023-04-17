@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Url;
 
 public interface APIDownloadFile {
-    APIDownloadFile instance = BaseRetrofitClient.createService(APIDownloadFile.class, "");
+    APIDownloadFile instance = BaseRetrofitClient.createService(APIDownloadFile.class, "https://khong-biet");
     static APIDownloadFile getInstance() {
         return instance;
     }
