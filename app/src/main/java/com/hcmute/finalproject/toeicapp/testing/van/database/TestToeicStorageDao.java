@@ -18,9 +18,12 @@ public interface TestToeicStorageDao {
     @Query("SELECT * FROM toeicstorage")
     List<ToeicStorage> listAll();
 
+    @Query("SELECT * FROM toeicstorage WHERE id = :id")
+    ToeicStorage getOne(Integer id);
+
     @Update
     void update(ToeicStorage... toeicStorages);
 
     @Delete
-    void delete(ToeicStorage toeicStorage);
+    void delete(ToeicStorage... toeicStorages);
 }

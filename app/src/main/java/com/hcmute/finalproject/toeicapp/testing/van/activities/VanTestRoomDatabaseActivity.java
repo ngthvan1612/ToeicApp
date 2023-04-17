@@ -40,15 +40,33 @@ public class VanTestRoomDatabaseActivity extends AppCompatActivity {
 
         TestToeicStorageDao storageDao = testAppDatabase.getToeicStorageDao();
 
+        // APPEND
         ToeicStorage item = new ToeicStorage();
         item.setFileName(new Date() + " ahihi nhe");
 
         storageDao.insert(item);
 
+        // UPDATE 2
+        ToeicStorage two = testAppDatabase.getToeicStorageDao().getOne(2);
+        Log.d("TOEIC STORAGE", "PAR: " + two.getId() + " " + two.getFileName());
+        two.setFileName("ahihi nhe " + new Date());
+        testAppDatabase.getToeicStorageDao().update(two);
+
+        // LIST ALL
         List<ToeicStorage> toeicStorages = storageDao.listAll();
 
         for (ToeicStorage toeicStorage : toeicStorages) {
-            Log.d("TOEIC STORAGE", +toeicStorage.getId() + " " + toeicStorage.getFileName());
+            Log.d("TOEIC STORAGE",  "READ: " + +toeicStorage.getId() + " " + toeicStorage.getFileName());
+        }
+
+        // DELETE 3
+        ToeicStorage three = storageDao.getOne(3);
+        if (three != null) {
+            storageDao.delete(three);
+            Log.d("TOEIC STORAGE", "deleted 3 ok");
+        }
+        else {
+            Log.d("TOEIC STORAGE", "3 is deleted");
         }
     }
 }
