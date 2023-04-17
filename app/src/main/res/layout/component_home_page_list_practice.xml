@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="Cùng tham gia\ncộng động học\nTOEIC"
                 android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
                 android:textSize="18sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -68,9 +69,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:clipToPadding="false"
-            android:clipChildren="false">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,451 +80,210 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:shrinkColumns="*"
-                android:stretchColumns="*">
-
-                <TableRow
-                    android:clipToPadding="false"
-                    android:clipChildren="false"
-                    android:elevation="8dp">
+                android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:clipToPadding="false"
                         android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Photographs"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
-                                app:toeic_title="Part 1" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Q &amp; R"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_2"
-                                app:toeic_title="Part 2" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:clipToPadding="false"
-                    android:clipChildren="false"
-                    android:elevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
                         android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Conversations"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_3"
-                                app:toeic_title="Part 3" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Short Talks"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_4"
-                                app:toeic_title="Part 4" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-            </TableLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reading Practice"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginLeft="10dp"
-                android:textStyle="bold" />
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:shrinkColumns="*"
-                android:stretchColumns="*">
-
-                <TableRow
-                    android:clipToPadding="false"
-                    android:clipChildren="false"
-                    android:elevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
+                        android:weightSum="2">
 
-                        <androidx.cardview.widget.CardView
+                        <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="0dp"
                             android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
+                            app:toeic_description="Photographs"
+                            app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
+                            app:toeic_title="Part 1" />
 
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Incomplete sentences"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_4"
-                                app:toeic_title="Part 5" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_description="Text completion"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_2"
-                                app:toeic_title="Part 6" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:clipToPadding="false"
-                    android:clipChildren="false"
-                    android:elevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
-
-                        <androidx.cardview.widget.CardView
+                        <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
+                            app:toeic_description="Q &amp; R"
+                            app:toeic_image="@drawable/activity_home_question_icon_image_part_2"
+                            app:toeic_title="Part 2" />
 
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                app:toeic_description="Reading comprehension"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
-                                app:toeic_title="Part 7" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                        </androidx.cardview.widget.CardView>
+                        <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:toeic_description="Conversations"
+                            app:toeic_image="@drawable/activity_home_question_icon_image_part_3"
+                            app:toeic_title="Part 3" />
+
+                        <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:toeic_description="Short Talks"
+                            app:toeic_image="@drawable/activity_home_question_icon_image_part_4"
+                            app:toeic_title="Part 4" />
+
                     </LinearLayout>
 
-                </TableRow>
-
-            </TableLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test"
+                android:layout_marginLeft="20dp"
+                android:text="Reading Practice"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"/>
+                android:textStyle="bold" />
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:orientation="vertical">
 
-                <TableRow
-                    android:clipToPadding="false"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
-                    android:elevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_background_color="red"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
-                                app:toeic_title="Listening" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
-
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                android:layout_margin="5dp"
-                                app:toeic_background_color="red"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
-                                app:toeic_title="Reading" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
                     android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        app:toeic_description="Incomplete sentences"
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
+                        app:toeic_title="Part 5" />
+
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:toeic_description="Text completion"
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_2"
+                        app:toeic_title="Part 6" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
-                    android:elevation="8dp">
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:clipToPadding="false"
-                        android:clipChildren="false"
-                        android:padding="10dp"
-                        android:elevation="8dp">
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:toeic_description="Reading comprehension"
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_3"
+                        app:toeic_title="Part 7" />
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:divider="@android:color/transparent"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            android:dividerHeight="0.0px"
-                            android:elevation="100dp"
-                            app:cardElevation="10dp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardCornerRadius="10dp"
-                            android:layout_margin="10dp">
+                </LinearLayout>
 
-                            <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:elevation="10dp"
-                                app:toeic_background_color="red"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="5dp"
-                                app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
-                                app:toeic_title="Full test" />
+            </LinearLayout>
 
-                        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
 
-                    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Test"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                </TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-            </TableLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        app:toeic_background_color="red"
+                        app:toeic_description=""
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_1"
+                        app:toeic_title="Listening" />
+
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:toeic_background_color="red"
+                        app:toeic_description=""
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_2"
+                        app:toeic_title="Reading" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:toeic_background_color="red"
+                        app:toeic_description=""
+                        app:toeic_image="@drawable/activity_home_question_icon_image_part_3"
+                        app:toeic_title="Full test" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

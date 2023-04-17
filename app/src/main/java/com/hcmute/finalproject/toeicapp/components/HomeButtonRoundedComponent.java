@@ -1,18 +1,23 @@
 package com.hcmute.finalproject.toeicapp.components;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -45,13 +50,20 @@ public class HomeButtonRoundedComponent extends LinearLayout {
         this.initComponent(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @SuppressLint("ResourceType")
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        this.setOrientation(VERTICAL);
         mainView = inflate(context, R.layout.component_home_button_rounded, this);
 
         this.txtPartId = mainView.findViewById(R.id.component_home_button_rounded_text_view_part_id);
         this.txtPartDescription = mainView.findViewById(R.id.component_home_button_rounded_text_view_part_description);
         this.imagePart = mainView.findViewById(R.id.component_home_button_rounded_image_part);
         this.mainLayout = mainView.findViewById(R.id.component_home_button_rounded_main_layout);
+
+        try {
+            setBackground(ViewUtils.generateBackgroundWithShadow(this.mainLayout, R.color.white, R.dimen.component_home_page_list_practice_dimen_ele, R.color.component_home_page_list_practice_color_blue, R.dimen.component_home_page_list_practice_dimen_radius, Gravity.CENTER));
+        }
+        catch (Exception ignored) { }
 
         if (attrs != null) {
             final TypedArray typedArrayResources = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HomeButtonRoundedComponent, defStyleAttr, defStyleRes);
@@ -119,4 +131,67 @@ public class HomeButtonRoundedComponent extends LinearLayout {
             this.mainLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.component_home_button_rounded_background_red));
         }
     }
+
+    public static class ViewUtils {
+
+        public static Drawable generateBackgroundWithShadow(View view, @ColorRes int backgroundColor,
+                                                            @DimenRes int cornerRadius,
+                                                            @ColorRes int shadowColor,
+                                                            @DimenRes int elevation,
+                                                            int shadowGravity) {
+            float cornerRadiusValue = view.getContext().getResources().getDimension(cornerRadius);
+            int elevationValue = (int) view.getContext().getResources().getDimension(elevation);
+            int shadowColorValue = ContextCompat.getColor(view.getContext(),shadowColor);
+            int backgroundColorValue = ContextCompat.getColor(view.getContext(),backgroundColor);
+
+            float[] outerRadius = {cornerRadiusValue, cornerRadiusValue, cornerRadiusValue,
+                    cornerRadiusValue, cornerRadiusValue, cornerRadiusValue, cornerRadiusValue,
+                    cornerRadiusValue};
+
+            Paint backgroundPaint = new Paint();
+            backgroundPaint.setStyle(Paint.Style.FILL);
+            backgroundPaint.setShadowLayer(cornerRadiusValue, 0, 0, 0);
+
+            Rect shapeDrawablePadding = new Rect();
+            shapeDrawablePadding.left = elevationValue;
+            shapeDrawablePadding.right = elevationValue;
+
+            int DY;
+            switch (shadowGravity) {
+                case Gravity.CENTER:
+                    shapeDrawablePadding.top = elevationValue;
+                    shapeDrawablePadding.bottom = elevationValue;
+                    DY = 0;
+                    break;
+                case Gravity.TOP:
+                    shapeDrawablePadding.top = elevationValue*2;
+                    shapeDrawablePadding.bottom = elevationValue;
+                    DY = -1*elevationValue/3;
+                    break;
+                default:
+                case Gravity.BOTTOM:
+                    shapeDrawablePadding.top = elevationValue;
+                    shapeDrawablePadding.bottom = elevationValue*2;
+                    DY = elevationValue/3;
+                    break;
+            }
+
+            ShapeDrawable shapeDrawable = new ShapeDrawable();
+            shapeDrawable.setPadding(shapeDrawablePadding);
+
+            shapeDrawable.getPaint().setColor(backgroundColorValue);
+            shapeDrawable.getPaint().setShadowLayer(cornerRadiusValue, 0, DY, shadowColorValue);
+
+            view.setLayerType(LAYER_TYPE_SOFTWARE, shapeDrawable.getPaint());
+
+            shapeDrawable.setShape(new RoundRectShape(outerRadius, null, null));
+
+            LayerDrawable drawable = new LayerDrawable(new Drawable[]{ shapeDrawable });
+            drawable.setLayerInset(0, elevationValue, elevationValue, elevationValue, elevationValue);
+
+            return drawable;
+
+        }
+    }
+
 }
