@@ -9,13 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackground;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundSingleton;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundService;
 
 import java.io.File;
 
@@ -68,11 +67,11 @@ public class AudioPlayerComponent extends LinearLayout {
     public void setPlaying(boolean playing) {
         isPlaying = playing;
         if (playing) {
-            AudioPlayerBackgroundSingleton.continueCurrentAudio();
+            AudioPlayerBackgroundService.continueCurrentAudio();
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause);
         }
         else {
-            AudioPlayerBackgroundSingleton.pauseCurrentAudio();
+            AudioPlayerBackgroundService.pauseCurrentAudio();
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play);
         }
     }
@@ -84,8 +83,8 @@ public class AudioPlayerComponent extends LinearLayout {
     }
 
     public void loadAudioFile(File audioFile) {
-        AudioPlayerBackgroundSingleton.prepareAudio(this.getContext(), audioFile);
-        AudioPlayerBackgroundSingleton.setVolume(currentVolume);
+        AudioPlayerBackgroundService.prepareAudio(this.getContext(), audioFile);
+        AudioPlayerBackgroundService.setVolume(currentVolume);
         audioFile = audioFile;
         isPrepared = true;
     }
@@ -96,7 +95,7 @@ public class AudioPlayerComponent extends LinearLayout {
 
     public void setCurrentVolume(float currentVolume) {
         this.currentVolume = currentVolume;
-        AudioPlayerBackgroundSingleton.setVolume(currentVolume);
+        AudioPlayerBackgroundService.setVolume(currentVolume);
     }
 
     public boolean isPrepared() {
@@ -171,13 +170,13 @@ public class AudioPlayerComponent extends LinearLayout {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                AudioPlayerBackgroundSingleton.backupAudioPlayerState();
+                AudioPlayerBackgroundService.backupAudioPlayerState();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                AudioPlayerBackgroundSingleton.seekCurrentAudio(seekBar.getProgress());
-                AudioPlayerBackgroundSingleton.restoreAudioPlayerState();
+                AudioPlayerBackgroundService.seekCurrentAudio(seekBar.getProgress());
+                AudioPlayerBackgroundService.restoreAudioPlayerState();
             }
         });
     }
@@ -209,7 +208,7 @@ public class AudioPlayerComponent extends LinearLayout {
     }
 
     private void initAudioPlayerBackgroundService() {
-        AudioPlayerBackgroundSingleton.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
+        AudioPlayerBackgroundService.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
             @Override
             public void afterStarted() {
                 ((Activity)getContext()).runOnUiThread(new Runnable() {
@@ -232,7 +231,7 @@ public class AudioPlayerComponent extends LinearLayout {
 
             @Override
             public void onFinished() {
-                AudioPlayerBackgroundSingleton.seekCurrentAudio(0);
+                AudioPlayerBackgroundService.seekCurrentAudio(0);
                 setPlaying(false);
                 setCurrentTime(0);
             }
@@ -250,8 +249,8 @@ public class AudioPlayerComponent extends LinearLayout {
             @Override
             public void onReady() {
                 setEnabled(true);
-                if (getTotalTime() != AudioPlayerBackgroundSingleton.getCurrentAudioDuration())
-                    setTotalTime(AudioPlayerBackgroundSingleton.getCurrentAudioDuration());
+                if (getTotalTime() != AudioPlayerBackgroundService.getCurrentAudioDuration())
+                    setTotalTime(AudioPlayerBackgroundService.getCurrentAudioDuration());
             }
 
             @Override

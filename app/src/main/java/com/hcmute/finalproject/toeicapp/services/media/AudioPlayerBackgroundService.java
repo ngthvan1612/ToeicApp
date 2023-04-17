@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 
-public class AudioPlayerBackgroundSingleton {
+public class AudioPlayerBackgroundService {
     private static AudioPlayerBackground instance = null;
     private static AudioPlayerBackground.OnAudioPlayerRunningEvent onAudioPlayerRunningEventInstance;
 

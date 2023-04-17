@@ -12,7 +12,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
 import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
 import com.hcmute.finalproject.toeicapp.network.test.TestAPIService;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundSingleton;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,13 +39,13 @@ public class VanTestAudioPlayerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        AudioPlayerBackgroundSingleton.backupAudioPlayerState();
+        AudioPlayerBackgroundService.backupAudioPlayerState();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        AudioPlayerBackgroundSingleton.restoreAudioPlayerState();
+        AudioPlayerBackgroundService.restoreAudioPlayerState();
     }
 
     @Override
