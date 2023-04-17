@@ -7,7 +7,7 @@ import androidx.room.Update;
 
 public interface ToeicDao<T> {
     @Insert
-    void insert(T... items);
+    int[] insert(T... items);
 
     @Update
     void update(T... items);
