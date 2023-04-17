@@ -12,6 +12,7 @@ public class VocabularyTopicStatistic {
     public VocabularyTopicStatistic(VocabularyTopic topic) {
         this.setTopicName(topic.getTopicName());
         this.setTotal(topic.getNumberOfVocabularies());
+        this.setSuccess(0);
     }
 
     public String getTopicName() {

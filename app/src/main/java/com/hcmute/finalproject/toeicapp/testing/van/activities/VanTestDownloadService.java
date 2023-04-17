@@ -28,13 +28,22 @@ public class VanTestDownloadService extends AppCompatActivity {
         final String url = "http://ipv4.download.thinkbroadband.com/5MB.zip";
         final ToeicStorageDao storageDao = ToeicAppDatabase.getInstance(this).getToeicStorageDao();
 
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setMax(100);
+
         findViewById(R.id.activity_van_test_download_service_btn_download_1).setOnClickListener(view -> {
+            dialog.setProgress(0);
             dialog.show();
-            downloadFileService.downloadFileAndSaveToInternalStorage(url, new DownloadFileCallback<byte[]>() {
+            downloadFileService.downloadFileAndSaveToInternalStorageAsync(url, new DownloadFileCallback() {
                 @Override
-                public void onSuccess(ToeicStorage toeicStorage, byte[] data) {
-                    Toast.makeText(VanTestDownloadService.this, "Thành công", Toast.LENGTH_SHORT).show();
+                public void onSuccess(ToeicStorage toeicStorage) {
+                    Toast.makeText(VanTestDownloadService.this, "Thành công ", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
+                }
+
+                @Override
+                public void onProgressUpdate(int percent) {
+                    dialog.setProgress(percent);
                 }
 
                 @Override

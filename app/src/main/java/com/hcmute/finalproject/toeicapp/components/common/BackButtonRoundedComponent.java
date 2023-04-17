@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,5 +28,14 @@ public class BackButtonRoundedComponent extends LinearLayout {
 
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_back_button_rounded, this);
+        
+        if (this.isInEditMode()) {
+            return;
+        }
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        findViewById(R.id.component_back_button_rounded_image_view).setOnClickListener(l);
     }
 }

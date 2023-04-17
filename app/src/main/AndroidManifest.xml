@@ -38,11 +38,6 @@
         <activity
             android:name=".activities.PartOnePhotographsActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".testing.van.activities.VanTestActivity"
@@ -50,6 +45,14 @@
         <activity
             android:name=".activities.TestActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
