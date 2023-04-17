@@ -5,9 +5,11 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 public interface ToeicDao<T> {
     @Insert
-    int[] insert(T... items);
+    List<Long> insert(T... items);
 
     @Update
     void update(T... items);
