@@ -18,7 +18,7 @@ import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabula
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListGroupQuestionsActivity extends AppCompatActivity {
+public class ListGroupQuestionsActivity extends GradientActivity {
     private TextView txtPartName;
     private BackButtonRoundedComponent btnBack;
     private ListView listGroupQuestionsName;
