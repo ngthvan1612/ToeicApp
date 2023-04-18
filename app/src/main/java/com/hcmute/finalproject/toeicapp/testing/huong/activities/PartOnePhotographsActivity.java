@@ -1,19 +1,16 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.testing.huong.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
+import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
 
 public class PartOnePhotographsActivity extends GradientActivity {
@@ -31,7 +28,7 @@ public class PartOnePhotographsActivity extends GradientActivity {
     }
     private void initViewPager() {
         viewPager.setOffscreenPageLimit(NUMBER_OF_PAGES);
-        viewPager.setAdapter(new PartOnePhotographsActivity.ViewPagerNavigationAdapter());
+        viewPager.setAdapter(new ViewPagerNavigationAdapter());
 
     }
     private class ViewPagerNavigationAdapter extends PagerAdapter {

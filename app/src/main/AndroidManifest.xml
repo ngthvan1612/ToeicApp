@@ -42,9 +42,6 @@
         <!-- android:name=".activities.PartOnePhotographsActivity" -->
         <!-- android:exported="true" /> -->
         <activity
-            android:name=".activities.PartOnePhotographsActivity"
-            android:exported="true" />
-        <activity
             android:name=".testing.van.activities.VanTestActivity"
             android:exported="true" />
         <activity
