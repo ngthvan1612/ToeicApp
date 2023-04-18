@@ -95,6 +95,7 @@
                         android:weightSum="2">
 
                         <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:id="@+id/component_home_page_list_practice_btn_part_1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_margin="0dp"
@@ -104,6 +105,7 @@
                             app:toeic_title="Part 1" />
 
                         <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:id="@+id/component_home_page_list_practice_btn_part_2"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -121,6 +123,7 @@
                         android:weightSum="2">
 
                         <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:id="@+id/component_home_page_list_practice_btn_part_3"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -129,6 +132,7 @@
                             app:toeic_title="Part 3" />
 
                         <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                            android:id="@+id/component_home_page_list_practice_btn_part_4"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -174,6 +178,7 @@
                     android:weightSum="2">
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_part_5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="0dp"
@@ -183,6 +188,7 @@
                         app:toeic_title="Part 5" />
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_part_6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -200,6 +206,7 @@
                     android:weightSum="2">
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_part_7"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

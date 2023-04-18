@@ -36,6 +36,6 @@ public class BackButtonRoundedComponent extends LinearLayout {
 
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
-        findViewById(R.id.component_back_button_rounded_image_view).setOnClickListener(l);
+        findViewById(R.id.component_back_button_rounded_btn).setOnClickListener(l);
     }
 }

@@ -92,6 +92,12 @@ public class HomeButtonRoundedComponent extends LinearLayout {
         }
     }
 
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
+        this.mainLayout.setOnClickListener(l);
+    }
+
     public String getTitle() {
         return title;
     }

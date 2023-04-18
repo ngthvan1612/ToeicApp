@@ -30,7 +30,7 @@ public abstract class GradientActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
-        window.setNavigationBarColor(activity.getResources().getColor(android.R.color.transparent));
+        //window.setNavigationBarColor(activity.getResources().getColor(android.R.color.transparent));
         window.setBackgroundDrawable(background);
     }
 }
