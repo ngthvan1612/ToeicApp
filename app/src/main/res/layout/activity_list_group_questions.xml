@@ -28,6 +28,7 @@
         </com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent>
 
         <TextView
+            android:id="@+id/activity_list_group_questions_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Listening Practice - Part 1"
@@ -46,9 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="20dp">
 
         <ListView
             android:layout_width="match_parent"
@@ -56,7 +55,7 @@
             android:id="@+id/activity_list_group_questions_list_questions"
             android:listSelector="@android:color/transparent"
             android:divider="@null"
-            android:dividerHeight="0dp"
+            android:dividerHeight="15dp"
             />
 
     </LinearLayout>
