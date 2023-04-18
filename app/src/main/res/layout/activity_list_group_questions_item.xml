@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@drawable/activity_result_white_corner_background">
+
+    <TextView
+        android:id="@+id/activity_list_group_questions_text_name_group_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photographs 01"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6 questions"
+        android:textSize="23sp"
+        android:textColor="#1F0C91"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_list_group_questions_text_name_group_question" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

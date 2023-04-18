@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_home_background_linear_gradient"
+    android:paddingTop="20dp"
+    android:orientation="vertical"
+    tools:context=".activities.ListGroupQuestionsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
+            android:id="@+id/activity_list_group_questions_btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Listening Practice - Part 1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/activity_list_group_questions_btn_back"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
+
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_list_group_questions_list_questions"
+            android:listSelector="@android:color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

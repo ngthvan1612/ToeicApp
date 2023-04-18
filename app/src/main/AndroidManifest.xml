@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ListGroupQuestionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".testing.ngoc.activities.NgocTestBlurShadowActivity"
             android:exported="true" />
         <activity
