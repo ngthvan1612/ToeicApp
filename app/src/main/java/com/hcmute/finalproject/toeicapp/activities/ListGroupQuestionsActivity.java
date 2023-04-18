@@ -13,12 +13,13 @@ import android.widget.Toast;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
+import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListGroupQuestionsActivity extends AppCompatActivity {
-    private TextView txtGroupQuestionsName;
+    private TextView txtPartName;
     private BackButtonRoundedComponent btnBack;
     private ListView listGroupQuestionsName;
     private OnClickBackButton onClickBackButton;
@@ -33,16 +34,30 @@ public class ListGroupQuestionsActivity extends AppCompatActivity {
         initView();
     }
 
+
     private void initView() {
-        txtGroupQuestionsName = (TextView) findViewById(R.id.activity_list_group_questions_group_name);
+        txtPartName = (TextView) findViewById(R.id.activity_list_group_questions_group_name);
         btnBack = (BackButtonRoundedComponent) findViewById(R.id.activity_list_group_questions_btn_back);
         listGroupQuestionsName = (ListView) findViewById(R.id.activity_list_group_questions_list_questions);
+
+        Bundle bundle = getIntent().getExtras();
+        String partNameExtra = bundle.getString("partName");
+        int partIdExtra = bundle.getInt("partId");
+
+        txtPartName.setText(partNameExtra);
 
         this.listGroupQuestions = new ArrayList<>();
         listGroupQuestions = getListGroupQuestions();
 
         this.adapter = new ListGroupQuestionAdapter();
         this.listGroupQuestionsName.setAdapter(adapter);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private List<GroupQuestionsModel> getListGroupQuestions() {
