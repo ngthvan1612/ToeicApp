@@ -16,8 +16,8 @@
 
         <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
             android:id="@+id/activity_list_group_questions_btn_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
