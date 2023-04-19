@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+            android:id="@+id/common_part_two_header_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp" />

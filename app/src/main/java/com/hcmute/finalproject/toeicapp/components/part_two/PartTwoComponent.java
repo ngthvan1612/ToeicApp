@@ -8,8 +8,10 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 
 public class PartTwoComponent  extends LinearLayout {
+    private CommonHeaderComponent commonHeaderComponent;
     public PartTwoComponent(Context context) {
         this(context, null);
     }
@@ -24,7 +26,9 @@ public class PartTwoComponent  extends LinearLayout {
 
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        View view = inflate(context, R.layout.component_part_one_photographs, this);
+        View view = inflate(context, R.layout.component_part_two, this);
+        commonHeaderComponent=view.findViewById(R.id.common_part_two_header_title);
+        commonHeaderComponent.setTitle("Part two");
     }
 
 }
