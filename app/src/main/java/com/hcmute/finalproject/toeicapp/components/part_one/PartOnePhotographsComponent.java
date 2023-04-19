@@ -80,6 +80,8 @@ public class PartOnePhotographsComponent extends LinearLayout {
 
         byte[] imageStream = mockToeicTestDatabase.getImageFromDisk(partId, toeicQuestionGroup);
 
+        Log.d("FA", partId + "");
+
         assert imageStream != null;
 
         Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(imageStream));

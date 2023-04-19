@@ -47,7 +47,7 @@ public class ToeicTestListQuestionsActivity extends AppCompatActivity {
         this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                
+
             }
 
             @Override
