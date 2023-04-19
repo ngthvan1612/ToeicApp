@@ -1,22 +1,25 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.GroupQuestionModel;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListGroupQuestionsActivity extends GradientActivity {
@@ -26,7 +29,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
     private OnClickBackButton onClickBackButton;
     private List<GroupQuestionModel> listGroupQuestions;
     private ListGroupQuestionAdapter adapter;
-    private Integer partId;
+    private Integer partNumber;
     private MockToeicTestDatabase mockToeicTestDatabase;
 
     @Override
@@ -45,7 +48,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
 
         Bundle bundle = getIntent().getExtras();
         String partNameExtra = bundle.getString("partName");
-        this.partId = bundle.getInt("partId");
+        this.partNumber = bundle.getInt("partId");
 
         txtPartName.setText(partNameExtra);
 
@@ -71,7 +74,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
     }
 
     private void fetchListGroupQuestions() {
-        List<GroupQuestionModel> toeicPart = this.mockToeicTestDatabase.getToeicPartDataFromDisk(this.partId, null);
+        List<GroupQuestionModel> toeicPart = this.mockToeicTestDatabase.getToeicPartDataFromDisk(this.partNumber, null);
 
         if (toeicPart != null) {
             this.loadToeicPartModel(toeicPart);
@@ -84,14 +87,14 @@ public class ListGroupQuestionsActivity extends GradientActivity {
         progressDialog.show();
 
         this.mockToeicTestDatabase.refreshToeicDataFromInternet(
-                this.partId,
+                this.partNumber,
                 new MockToeicTestDatabase.OnMockToeicStateChanged() {
                     @Override
                     public void onSuccess(String message) {
                         Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
-                        List<GroupQuestionModel> questionModelList = mockToeicTestDatabase.getToeicPartDataFromDisk(partId, null);
+                        List<GroupQuestionModel> questionModelList = mockToeicTestDatabase.getToeicPartDataFromDisk(partNumber, null);
                         assert questionModelList != null;
                         loadToeicPartModel(questionModelList);
 
@@ -170,36 +173,65 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             txtGroupName.setText(groupQuestionModel.getName());
             txtNumberOfQuestions.setText(groupQuestionModel.getNumOfQuestions() + " questions");
 
-            view.setOnClickListener(v -> {
-                final Integer partId = groupQuestionModel.getPartId();
+            view.setOnClickListener(new View.OnClickListener() {
+                private void loadListToeicQuestionGroups(Integer partId, List<ToeicQuestionGroup> toeicQuestionGroups) {
+                    for (ToeicQuestionGroup group : toeicQuestionGroups) {
+                        group.setType(partNumber.toString());
+                    }
+                    ArrayList<ToeicQuestionGroup> toeicQuestionGroupsFixed = new ArrayList<>(Collections.unmodifiableList(toeicQuestionGroups));
+                    Intent intent = new Intent(ListGroupQuestionsActivity.this, ToeicTestListQuestionsActivity.class);
+                    intent.putExtra("part-id", partId);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("toeic-group-questions", toeicQuestionGroupsFixed);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
 
-                if (mockToeicTestDatabase.checkToeicPartQuestionsDataDownloaded(partId))
-                    return;
+                @Override
+                public void onClick(View v) {
+                    final Integer partId = groupQuestionModel.getPartId();
 
-                ProgressDialog progressDialog = new ProgressDialog(ListGroupQuestionsActivity.this);
-                progressDialog.setTitle("Đang tải");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setMax(100);
-                progressDialog.show();
-
-                mockToeicTestDatabase.refreshToeicPartQuestionsDataFromInternet(partId, new MockToeicTestDatabase.OnMockToeicStateChanged() {
-                    @Override
-                    public void onSuccess(String message) {
-                        Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                    if (mockToeicTestDatabase.checkToeicPartQuestionsDataDownloaded(partId)) {
+                        try {
+                            final List<ToeicQuestionGroup> toeicQuestionGroups = mockToeicTestDatabase.loadToeicPartFromDisk(partId);
+                            loadListToeicQuestionGroups(partId, toeicQuestionGroups);
+                        } catch (IOException e) {
+                            Toast.makeText(ListGroupQuestionsActivity.this, "Load file lỗi: " + e, Toast.LENGTH_SHORT).show();
+                        }
+                        return;
                     }
 
-                    @Override
-                    public void onProgress(int progress) {
-                        progressDialog.setProgress(progress);
-                    }
+                    ProgressDialog progressDialog = new ProgressDialog(ListGroupQuestionsActivity.this);
+                    progressDialog.setTitle("Đang tải");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.setMax(100);
+                    progressDialog.show();
 
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(ListGroupQuestionsActivity.this, error, Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
-                });
+                    mockToeicTestDatabase.refreshToeicPartQuestionsDataFromInternet(partId, new MockToeicTestDatabase.OnMockToeicStateChanged() {
+                        @Override
+                        public void onSuccess(String message) {
+                            try {
+                                final List<ToeicQuestionGroup> toeicQuestionGroups = mockToeicTestDatabase.loadToeicPartFromDisk(partId);
+                                loadListToeicQuestionGroups(partId, new ArrayList<>(toeicQuestionGroups));
+                                Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            } catch (IOException e) {
+                                Toast.makeText(ListGroupQuestionsActivity.this, "Load file lỗi: " + e, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onProgress(int progress) {
+                            progressDialog.setProgress(progress);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(ListGroupQuestionsActivity.this, error, Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
             });
 
             return view;

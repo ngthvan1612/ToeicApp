@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackground;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundService;
+import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundFactory;
 
 import java.io.File;
 
@@ -27,6 +27,7 @@ public class AudioPlayerComponent extends LinearLayout {
     private OnAudioPlayerChange onAudioPlayerChange;
     private File audioFile;
     private float currentVolume = 0.5f;
+    private AudioPlayerBackground audioPlayerBackground;
 
     public AudioPlayerComponent(Context context) {
         this(context, null);
@@ -67,11 +68,11 @@ public class AudioPlayerComponent extends LinearLayout {
     public void setPlaying(boolean playing) {
         isPlaying = playing;
         if (playing) {
-            AudioPlayerBackgroundService.continueCurrentAudio();
+            this.audioPlayerBackground.start(true);
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause);
         }
         else {
-            AudioPlayerBackgroundService.pauseCurrentAudio();
+            this.audioPlayerBackground.pause();
             this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play);
         }
     }
@@ -83,8 +84,8 @@ public class AudioPlayerComponent extends LinearLayout {
     }
 
     public void loadAudioFile(File audioFile) {
-        AudioPlayerBackgroundService.prepareAudio(this.getContext(), audioFile);
-        AudioPlayerBackgroundService.setVolume(currentVolume);
+        this.audioPlayerBackground.prepareAudioFile(audioFile);
+        this.audioPlayerBackground.setVolume(currentVolume);
         audioFile = audioFile;
         isPrepared = true;
     }
@@ -95,7 +96,7 @@ public class AudioPlayerComponent extends LinearLayout {
 
     public void setCurrentVolume(float currentVolume) {
         this.currentVolume = currentVolume;
-        AudioPlayerBackgroundService.setVolume(currentVolume);
+        this.audioPlayerBackground.setVolume(currentVolume);
     }
 
     public boolean isPrepared() {
@@ -132,6 +133,8 @@ public class AudioPlayerComponent extends LinearLayout {
         if (this.isInEditMode()) {
             return;
         }
+
+        this.audioPlayerBackground = AudioPlayerBackgroundFactory.createInstance(AudioPlayerBackgroundFactory.AudioMediaPlayerLibrary.GOOGLE_EXO_PLAYER, context);
 
         this.seekBarVolume.setMax(100);
         this.seekBarVolume.setProgress(50);
@@ -170,13 +173,15 @@ public class AudioPlayerComponent extends LinearLayout {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                AudioPlayerBackgroundService.backupAudioPlayerState();
+                //this.audioPlayerBackground.save();
+                audioPlayerBackground.pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                AudioPlayerBackgroundService.seekCurrentAudio(seekBar.getProgress());
-                AudioPlayerBackgroundService.restoreAudioPlayerState();
+                audioPlayerBackground.start(true);
+                //AudioPlayerBackgroundService.seekCurrentAudio(seekBar.getProgress());
+                //AudioPlayerBackgroundService.restoreAudioPlayerState();
             }
         });
     }
@@ -208,7 +213,7 @@ public class AudioPlayerComponent extends LinearLayout {
     }
 
     private void initAudioPlayerBackgroundService() {
-        AudioPlayerBackgroundService.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
+        this.audioPlayerBackground.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
             @Override
             public void afterStarted() {
                 ((Activity)getContext()).runOnUiThread(new Runnable() {
@@ -231,7 +236,7 @@ public class AudioPlayerComponent extends LinearLayout {
 
             @Override
             public void onFinished() {
-                AudioPlayerBackgroundService.seekCurrentAudio(0);
+                audioPlayerBackground.seekTo(0);
                 setPlaying(false);
                 setCurrentTime(0);
             }
@@ -249,8 +254,8 @@ public class AudioPlayerComponent extends LinearLayout {
             @Override
             public void onReady() {
                 setEnabled(true);
-                if (getTotalTime() != AudioPlayerBackgroundService.getCurrentAudioDuration())
-                    setTotalTime(AudioPlayerBackgroundService.getCurrentAudioDuration());
+                if (getTotalTime() != audioPlayerBackground.getDuration())
+                    setTotalTime((int) audioPlayerBackground.getDuration());
             }
 
             @Override

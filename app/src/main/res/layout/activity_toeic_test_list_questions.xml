@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activities.ToeicTestListQuestionsActivity">
 
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_toeic_test_list_questions_view_pager"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
