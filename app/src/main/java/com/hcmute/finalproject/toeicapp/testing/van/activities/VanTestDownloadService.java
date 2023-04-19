@@ -34,7 +34,7 @@ public class VanTestDownloadService extends AppCompatActivity {
         findViewById(R.id.activity_van_test_download_service_btn_download_1).setOnClickListener(view -> {
             dialog.setProgress(0);
             dialog.show();
-            downloadFileService.downloadFileAndSaveToInternalStorageAsync(url, new DownloadFileCallback() {
+            downloadFileService.downloadFileAndSaveToInternalStorageAsync(url, new DownloadFileCallback<ToeicStorage>() {
                 @Override
                 public void onSuccess(ToeicStorage toeicStorage) {
                     Toast.makeText(VanTestDownloadService.this, "Thành công ", Toast.LENGTH_SHORT).show();

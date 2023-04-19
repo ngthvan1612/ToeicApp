@@ -8,6 +8,7 @@ import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicStorage;
 import com.hcmute.finalproject.toeicapp.network.APIDownloadFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -82,18 +83,23 @@ public class DownloadFileService {
         });
     }
 
-    public void downloadFileAndSaveToInternalStorageAsync(String url, DownloadFileCallback callback) {
+    public void downloadFileAndSaveToInternalStorageAsync(String url, DownloadFileCallback<ToeicStorage> callback) {
         DownloadFileServiceAsyncTask downloadFileServiceAsyncTask = new DownloadFileServiceAsyncTask(this.context, callback);
+        downloadFileServiceAsyncTask.execute(url);
+    }
+
+    public void downloadFileByteArrayAsync(String url, DownloadFileCallback<byte[]> callback) {
+        DownloadFileServiceByteArrayAsyncTask downloadFileServiceAsyncTask = new DownloadFileServiceByteArrayAsyncTask(this.context, callback);
         downloadFileServiceAsyncTask.execute(url);
     }
 
     private static class DownloadFileServiceAsyncTask extends AsyncTask<String, Integer, ToeicStorage> {
         private final Context context;
-        private final DownloadFileCallback callback;
+        private final DownloadFileCallback<ToeicStorage> callback;
         private static final int DOWNLOAD_BUFFER = 4 * 1024;
         private String lastError = null;
 
-        public DownloadFileServiceAsyncTask(Context context, DownloadFileCallback callback) {
+        public DownloadFileServiceAsyncTask(Context context, DownloadFileCallback<ToeicStorage> callback) {
             this.context = context;
             this.callback = callback;
         }
@@ -178,6 +184,95 @@ public class DownloadFileService {
             }
             else {
                 this.callback.onSuccess(toeicStorage);
+            }
+        }
+    }
+
+    private static class DownloadFileServiceByteArrayAsyncTask extends AsyncTask<String, Integer, byte[]> {
+        private final Context context;
+        private final DownloadFileCallback<byte[]> callback;
+        private static final int DOWNLOAD_BUFFER = 4 * 1024;
+        private String lastError = null;
+
+        public DownloadFileServiceByteArrayAsyncTask(Context context, DownloadFileCallback<byte[]> callback) {
+            this.context = context;
+            this.callback = callback;
+        }
+
+        @Override
+        protected byte[] doInBackground(String... urls) {
+            final File storageRootDirectory = StorageConfiguration.getRootDirectory(this.context);
+            final String fileName = UUID.randomUUID() + getExtensions(urls[0]);
+            InputStream inputStream = null;
+            ByteArrayOutputStream outputStream = null;
+
+            try {
+                final URL url = new URL(urls[0]);
+                final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    this.lastError = connection.getResponseMessage();
+                    return null;
+                }
+
+                inputStream = connection.getInputStream();
+                outputStream = new ByteArrayOutputStream();
+
+                final int fileLength = connection.getContentLength();
+                byte[] buffer = new byte[DOWNLOAD_BUFFER];
+                int total = 0;
+                int count = 0;
+
+                while ((count = inputStream.read(buffer)) != -1) {
+                    if (isCancelled()) {
+                        inputStream.close();
+                        lastError = "Tải file bị hủy";
+                        return null;
+                    }
+                    total += count;
+                    if (fileLength > 0) publishProgress((total * 100) / fileLength);
+                    outputStream.write(buffer, 0, count);
+                }
+
+                return outputStream.toByteArray();
+            } catch (IOException e) {
+                lastError = e.toString();
+            }
+            finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        lastError = e.toString();
+                        return null;
+                    }
+                }
+                if (outputStream != null) {
+                    try {
+                        outputStream.close();
+                    } catch (IOException e) {
+                        lastError = e.toString();
+                        return null;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            this.callback.onProgressUpdate(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(byte[] data) {
+            assert (lastError == null) ^ (data == null);
+            if (lastError != null) {
+                this.callback.onError(lastError);
+            }
+            else {
+                this.callback.onSuccess(data);
             }
         }
     }
