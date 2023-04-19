@@ -11,12 +11,18 @@ import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public class MockToeicTestDatabase {
     private final Context context;
@@ -61,6 +67,74 @@ public class MockToeicTestDatabase {
                                 }
                                 fileOutputStream.write(gson.toJson(response.getData()).getBytes(StandardCharsets.UTF_8));
                                 fileOutputStream.close();
+                                onMockToeicStateChanged.onSuccess("Tải dữ liệu thành công");
+                            } catch (IOException e) {
+                                onMockToeicStateChanged.onError("Tải dữ liệu lỗi");
+                            }
+                        }
+
+                        @Override
+                        public void onProgressUpdate(int percent) {
+                            onMockToeicStateChanged.onProgress(percent);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            onMockToeicStateChanged.onError(error);
+                        }
+                    }
+            );
+        }
+    }
+
+    public boolean checkToeicPartQuestionsDataDownloaded(Integer id) {
+        File baseDir = new File(this.rootDirectory, "data-part");
+        File partsDirectory = new File(baseDir, id.toString());
+        if (!partsDirectory.exists())
+            partsDirectory.mkdirs();
+        final File partFileRef = new File(partsDirectory, "config.json");
+        return partFileRef.exists();
+    }
+
+    private byte[] readAllBytes(ZipInputStream stream) throws IOException {
+        final byte[] buffer = new byte[1024];
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        int read = 0;
+        while ((read = stream.read(buffer)) != -1) {
+            output.write(buffer, 0, read);
+        }
+        return output.toByteArray();
+    }
+
+    public void refreshToeicPartQuestionsDataFromInternet(
+            Integer id,
+            OnMockToeicStateChanged onMockToeicStateChanged
+    ) {
+        File baseDir = new File(this.rootDirectory, "data-part");
+        File partsDirectory = new File(baseDir, id.toString());
+        if (!partsDirectory.exists())
+            partsDirectory.mkdirs();
+        final File partFileRef = new File(partsDirectory, "config.json");
+        if (!partFileRef.exists()) {
+            downloadFileService.downloadFileByteArrayAsync(
+                    "http://toeic-app.uteoj.com/api/toeic-app/practice/part/" + id + "/download",
+                    new DownloadFileCallback<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] toeicStorage) {
+                            try {
+                                ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(toeicStorage));
+                                ZipEntry zipEntry = null;
+                                while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                                    if (zipEntry.isDirectory())
+                                        continue;
+                                    final String fileName = zipEntry.getName();
+                                    final byte[] buffer = readAllBytes(zipInputStream);
+                                    FileOutputStream fileOutputStream = new FileOutputStream(new File(partsDirectory, fileName).getAbsolutePath());
+                                    fileOutputStream.write(buffer);
+                                    fileOutputStream.close();
+                                    Log.d("ZIP", "wrote " + fileName + ", size = " + zipEntry.getSize());
+                                }
+                                zipInputStream.close();
                                 onMockToeicStateChanged.onSuccess("Tải dữ liệu thành công");
                             } catch (IOException e) {
                                 onMockToeicStateChanged.onError("Tải dữ liệu lỗi");

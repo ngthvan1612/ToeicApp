@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -162,12 +163,44 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             final LayoutInflater inflater = LayoutInflater.from(ListGroupQuestionsActivity.this);
             view = inflater.inflate(R.layout.activity_list_group_questions_item, viewGroup,false);
 
-            final GroupQuestionModel GroupQuestionModel = listGroupQuestions.get(i);
+            final GroupQuestionModel groupQuestionModel = listGroupQuestions.get(i);
             final TextView txtGroupName = view.findViewById(R.id.activity_list_group_questions_item_text_name_group_question);
             final TextView txtNumberOfQuestions = view.findViewById(R.id.activity_list_group_questions_item_text_number_of_question);
 
-            txtGroupName.setText(GroupQuestionModel.getName());
-            txtNumberOfQuestions.setText(GroupQuestionModel.getNumOfQuestions() + " questions");
+            txtGroupName.setText(groupQuestionModel.getName());
+            txtNumberOfQuestions.setText(groupQuestionModel.getNumOfQuestions() + " questions");
+
+            view.setOnClickListener(v -> {
+                final Integer partId = groupQuestionModel.getPartId();
+
+                if (mockToeicTestDatabase.checkToeicPartQuestionsDataDownloaded(partId))
+                    return;
+
+                ProgressDialog progressDialog = new ProgressDialog(ListGroupQuestionsActivity.this);
+                progressDialog.setTitle("Đang tải");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.setMax(100);
+                progressDialog.show();
+
+                mockToeicTestDatabase.refreshToeicPartQuestionsDataFromInternet(partId, new MockToeicTestDatabase.OnMockToeicStateChanged() {
+                    @Override
+                    public void onSuccess(String message) {
+                        Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onProgress(int progress) {
+                        progressDialog.setProgress(progress);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(ListGroupQuestionsActivity.this, error, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                });
+            });
 
             return view;
         }
