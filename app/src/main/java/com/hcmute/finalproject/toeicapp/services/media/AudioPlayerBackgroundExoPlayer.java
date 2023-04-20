@@ -79,7 +79,7 @@ public class AudioPlayerBackgroundExoPlayer implements AudioPlayerBackground {
                     try {
                         if (exoPlayer.isPlaying()) {
                             if (onAudioPlayerRunningEvent != null) {
-                                final long currentTime =  exoPlayer.getCurrentPosition() / 1000;
+                                final long currentTime =  Math.min(exoPlayer.getCurrentPosition() / 1000, exoPlayer.getDuration());
                                 onAudioPlayerRunningEvent.playing(currentTime);
                             }
                         }

@@ -23,7 +23,7 @@ import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundServ
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToeicTestListQuestionsActivity extends AppCompatActivity {
+public class ToeicTestListQuestionsActivity extends GradientActivity {
     private List<ToeicQuestionGroup> toeicQuestionGroups = new ArrayList<>();
     private ViewPager viewPager;
     private Integer partId;
@@ -58,6 +58,15 @@ public class ToeicTestListQuestionsActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        findViewById(R.id.activity_toeic_test_list_questions_btn_show_answer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int currentPosition = viewPager.getCurrentItem();
+                final PartOnePhotographsComponent component = viewPager.findViewWithTag("c-" + currentPosition);
+                component.showAnswer();
             }
         });
     }

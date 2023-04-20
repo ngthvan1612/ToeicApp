@@ -11,9 +11,11 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicItemContent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
@@ -71,16 +73,28 @@ public class PartOnePhotographsComponent extends LinearLayout {
         });
     }
 
+    public void showAnswer() {
+        this.answerSelectionComponent.setShowExplain(true);
+    }
+
     public void loadToeicQuestionGroup(Integer partId, ToeicQuestionGroup toeicQuestionGroup) {
         //Only one question
-        ToeicQuestion toeicQuestion = toeicQuestionGroup.getQuestions().get(0);
+        final ToeicQuestion toeicQuestionFixed = toeicQuestionGroup.getQuestions().get(0);
+        Gson gson = new Gson();
+        ToeicQuestion toeicQuestion = gson.fromJson(gson.toJson(toeicQuestionFixed), ToeicQuestion.class);
+
+        for (int i = 0; i < toeicQuestion.getChoices().size(); ++i) {
+            final ToeicAnswerChoice choice = toeicQuestion.getChoices().get(i);
+            final String content = choice.getContent();
+            choice.setExplain(content);
+            choice.setContent("");
+            choice.setLabel("" + (char)(i + 'A'));
+        }
 
         this.answerSelectionComponent.setToeicAnswerChoices(toeicQuestion.getChoices());
         this.answerSelectionComponent.setQuestionTitle("Question " + toeicQuestion.getQuestionId());
 
         byte[] imageStream = mockToeicTestDatabase.getImageFromDisk(partId, toeicQuestionGroup);
-
-        Log.d("FA", partId + "");
 
         assert imageStream != null;
 

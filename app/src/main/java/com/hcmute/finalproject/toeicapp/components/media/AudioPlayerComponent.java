@@ -167,8 +167,7 @@ public class AudioPlayerComponent extends LinearLayout {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (!fromUser)
                     return;
-
-                setCurrentTime(progress);
+                audioPlayerBackground.seekTo(progress);
             }
 
             @Override
