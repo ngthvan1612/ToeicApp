@@ -9,46 +9,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+            android:id="@+id/common_part_one_header_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp" />
 
-        <ImageView
-            android:id="@+id/component_part_one_photographs_img"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/component_question_rounded_image_background_transparent"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/man_reading_news" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/component_part_one_photographs_img"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/component_question_rounded_image_background_transparent"
+                android:scaleType="centerCrop"
+                android:textAlignment="gravity"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/man_reading_news"
+                tools:ignore="ContentDescription,MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent
             android:id="@+id/component_part_one_photographs_audio"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp" />
 
         <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
             android:id="@+id/component_part_one_photographs_answer_selection"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            tools:ignore="TextSizeCheck" />
+
         <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+            android:id="@+id/component_part_three_common_test_footer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintVertical_bias="0.988"
+            tools:ignore="MissingConstraints"
+            tools:layout_alignParentBottom="true" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -23,6 +23,12 @@
             android:name=".testing.huong.activities.PartTwoActivity"
             android:exported="true" />
         <activity
+            android:name=".testing.huong.activities.PartOnePhotographsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".testing.huong.activities.PartFourActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.ListGroupQuestionsActivity"
             android:exported="true" />
         <activity
@@ -48,9 +54,10 @@
             android:exported="true" />
         <activity
             android:name=".testing.huong.activities.HuongTestActivity"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".activities.PartOnePhotographsActivity" -->
-        <!-- android:exported="true" /> -->
+            android:exported="true" />
+        <activity
+            android:name=".testing.huong.activities.PartThreeActivity"
+            android:exported="true" />
         <activity
             android:name=".testing.van.activities.VanTestActivity"
             android:exported="true" />
