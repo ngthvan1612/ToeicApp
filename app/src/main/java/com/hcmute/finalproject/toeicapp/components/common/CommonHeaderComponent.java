@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 
-public class CommonHeaderComponent extends LinearLayout {
+    public class CommonHeaderComponent extends LinearLayout {
     private TextView txtTitle;
     public CommonHeaderComponent(Context context) {
         this(context, null);

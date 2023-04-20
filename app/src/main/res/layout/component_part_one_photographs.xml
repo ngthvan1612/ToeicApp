@@ -38,11 +38,13 @@
             android:layout_height="wrap_content"/>
 
         <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
-
+            android:layout_height="300dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp" />
+        <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
