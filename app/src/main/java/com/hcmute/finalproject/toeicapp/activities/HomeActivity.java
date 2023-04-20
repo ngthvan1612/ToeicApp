@@ -15,6 +15,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
+import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
 public class HomeActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
@@ -31,6 +32,7 @@ public class HomeActivity extends GradientActivity {
 
         this.initViewPager();
         this.initBottomNavigation();
+
     }
 
     private String getLayoutTagByPosition(int position) {

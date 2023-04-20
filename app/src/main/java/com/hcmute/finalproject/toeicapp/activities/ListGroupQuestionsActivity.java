@@ -1,7 +1,7 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +13,13 @@ import android.widget.Toast;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
-import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
+import com.hcmute.finalproject.toeicapp.model.toeic.GroupQuestionModel;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
+import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListGroupQuestionsActivity extends GradientActivity {
@@ -23,14 +27,16 @@ public class ListGroupQuestionsActivity extends GradientActivity {
     private BackButtonRoundedComponent btnBack;
     private ListView listGroupQuestionsName;
     private OnClickBackButton onClickBackButton;
-    private List<GroupQuestionsModel> listGroupQuestions;
+    private List<GroupQuestionModel> listGroupQuestions;
     private ListGroupQuestionAdapter adapter;
+    private Integer partNumber;
+    private MockToeicTestDatabase mockToeicTestDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_group_questions);
-
+        this.mockToeicTestDatabase = new MockToeicTestDatabase(this);
         initView();
     }
 
@@ -42,12 +48,11 @@ public class ListGroupQuestionsActivity extends GradientActivity {
 
         Bundle bundle = getIntent().getExtras();
         String partNameExtra = bundle.getString("partName");
-        int partIdExtra = bundle.getInt("partId");
+        this.partNumber = bundle.getInt("partId");
 
         txtPartName.setText(partNameExtra);
 
         this.listGroupQuestions = new ArrayList<>();
-        listGroupQuestions = getListGroupQuestions();
 
         this.adapter = new ListGroupQuestionAdapter();
         this.listGroupQuestionsName.setAdapter(adapter);
@@ -58,29 +63,79 @@ public class ListGroupQuestionsActivity extends GradientActivity {
                 finish();
             }
         });
+
+        fetchListGroupQuestions();
     }
 
-    private List<GroupQuestionsModel> getListGroupQuestions() {
-        List<GroupQuestionsModel> listGroups = new ArrayList<>();
+    private void loadToeicPartModel(final List<GroupQuestionModel> groupQuestionModels) {
+        this.listGroupQuestions.clear();
+        this.listGroupQuestions.addAll(groupQuestionModels);
+        this.adapter.notifyDataSetChanged();
+    }
 
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 01", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 02", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
-        listGroups.add(new GroupQuestionsModel(5, "Photograph 03", 6));
+    private void fetchListGroupQuestions() {
+        List<GroupQuestionModel> toeicPart = this.mockToeicTestDatabase.getToeicPartDataFromDisk(this.partNumber, null);
+
+        if (toeicPart != null) {
+            this.loadToeicPartModel(toeicPart);
+            return;
+        }
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Đang tải");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+
+        this.mockToeicTestDatabase.refreshToeicDataFromInternet(
+                this.partNumber,
+                new MockToeicTestDatabase.OnMockToeicStateChanged() {
+                    @Override
+                    public void onSuccess(String message) {
+                        Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+
+                        List<GroupQuestionModel> questionModelList = mockToeicTestDatabase.getToeicPartDataFromDisk(partNumber, null);
+                        assert questionModelList != null;
+                        loadToeicPartModel(questionModelList);
+
+                        progressDialog.setProgress(100);
+                    }
+
+                    @Override
+                    public void onProgress(int progress) {
+                        progressDialog.setProgress(progress);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(ListGroupQuestionsActivity.this, error, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private List<GroupQuestionModel> getSampleListGroupQuestions() {
+        List<GroupQuestionModel> listGroups = new ArrayList<>();
+
+        listGroups.add(new GroupQuestionModel(5, "Photograph 01", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 02", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
+        listGroups.add(new GroupQuestionModel(5, "Photograph 03", 6));
 
         return listGroups;
     }
@@ -111,50 +166,75 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             final LayoutInflater inflater = LayoutInflater.from(ListGroupQuestionsActivity.this);
             view = inflater.inflate(R.layout.activity_list_group_questions_item, viewGroup,false);
 
-            final GroupQuestionsModel groupQuestionsModel = listGroupQuestions.get(i);
+            final GroupQuestionModel groupQuestionModel = listGroupQuestions.get(i);
             final TextView txtGroupName = view.findViewById(R.id.activity_list_group_questions_item_text_name_group_question);
             final TextView txtNumberOfQuestions = view.findViewById(R.id.activity_list_group_questions_item_text_number_of_question);
 
-            txtGroupName.setText(groupQuestionsModel.getGroupQuestionName());
-            txtNumberOfQuestions.setText(groupQuestionsModel.getNumberOfQuestions() + " questions");
+            txtGroupName.setText(groupQuestionModel.getName());
+            txtNumberOfQuestions.setText(groupQuestionModel.getNumOfQuestions() + " questions");
+
+            view.setOnClickListener(new View.OnClickListener() {
+                private void loadListToeicQuestionGroups(Integer partId, List<ToeicQuestionGroup> toeicQuestionGroups) {
+                    for (ToeicQuestionGroup group : toeicQuestionGroups) {
+                        group.setType(partNumber.toString());
+                    }
+                    ArrayList<ToeicQuestionGroup> toeicQuestionGroupsFixed = new ArrayList<>(Collections.unmodifiableList(toeicQuestionGroups));
+                    Intent intent = new Intent(ListGroupQuestionsActivity.this, ToeicTestListQuestionsActivity.class);
+                    intent.putExtra("part-id", partId);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("toeic-group-questions", toeicQuestionGroupsFixed);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onClick(View v) {
+                    final Integer partId = groupQuestionModel.getPartId();
+
+                    if (mockToeicTestDatabase.checkToeicPartQuestionsDataDownloaded(partId)) {
+                        try {
+                            final List<ToeicQuestionGroup> toeicQuestionGroups = mockToeicTestDatabase.loadToeicPartFromDisk(partId);
+                            loadListToeicQuestionGroups(partId, toeicQuestionGroups);
+                        } catch (IOException e) {
+                            Toast.makeText(ListGroupQuestionsActivity.this, "Load file lỗi: " + e, Toast.LENGTH_SHORT).show();
+                        }
+                        return;
+                    }
+
+                    ProgressDialog progressDialog = new ProgressDialog(ListGroupQuestionsActivity.this);
+                    progressDialog.setTitle("Đang tải");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.setMax(100);
+                    progressDialog.show();
+
+                    mockToeicTestDatabase.refreshToeicPartQuestionsDataFromInternet(partId, new MockToeicTestDatabase.OnMockToeicStateChanged() {
+                        @Override
+                        public void onSuccess(String message) {
+                            try {
+                                final List<ToeicQuestionGroup> toeicQuestionGroups = mockToeicTestDatabase.loadToeicPartFromDisk(partId);
+                                loadListToeicQuestionGroups(partId, new ArrayList<>(toeicQuestionGroups));
+                                Toast.makeText(ListGroupQuestionsActivity.this, message, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            } catch (IOException e) {
+                                Toast.makeText(ListGroupQuestionsActivity.this, "Load file lỗi: " + e, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onProgress(int progress) {
+                            progressDialog.setProgress(progress);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(ListGroupQuestionsActivity.this, error, Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+            });
 
             return view;
-        }
-    }
-
-    private class GroupQuestionsModel {
-        private int partID;
-        private String groupQuestionName;
-        private int numberOfQuestions;
-
-        public GroupQuestionsModel(int partID, String groupQuestionName, int numberOfQuestions) {
-            this.partID = partID;
-            this.groupQuestionName = groupQuestionName;
-            this.numberOfQuestions = numberOfQuestions;
-        }
-
-        public int getPartID() {
-            return partID;
-        }
-
-        public void setPartID(int partID) {
-            this.partID = partID;
-        }
-
-        public String getGroupQuestionName() {
-            return groupQuestionName;
-        }
-
-        public void setGroupQuestionName(String groupQuestionName) {
-            this.groupQuestionName = groupQuestionName;
-        }
-
-        public int getNumberOfQuestions() {
-            return numberOfQuestions;
-        }
-
-        public void setNumberOfQuestions(int numberOfQuestions) {
-            this.numberOfQuestions = numberOfQuestions;
         }
     }
 }

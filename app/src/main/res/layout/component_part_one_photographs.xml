@@ -19,7 +19,7 @@
             android:layout_marginTop="15dp" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/component_part_one_photographs_img"
             android:layout_width="350dp"
             android:layout_height="200dp"
             android:layout_marginStart="20dp"
@@ -31,6 +31,7 @@
             app:srcCompat="@drawable/man_reading_news" />
 
         <com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent
+            android:id="@+id/component_part_one_photographs_audio"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -38,6 +39,9 @@
             android:layout_height="wrap_content"/>
 
         <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
+            android:id="@+id/component_part_one_photographs_answer_selection"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginLeft="20dp"
