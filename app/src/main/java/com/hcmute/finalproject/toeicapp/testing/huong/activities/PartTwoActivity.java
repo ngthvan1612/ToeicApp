@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.part_three.part_two.PartTwoComponent;
+import com.hcmute.finalproject.toeicapp.components.part_two.PartTwoComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
 
 import java.util.ArrayList;
