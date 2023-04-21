@@ -29,6 +29,15 @@
             android:name=".testing.huong.activities.PartFourActivity"
             android:exported="true" />
         <activity
+            android:name=".testing.huong.activities.PartFiveActivity"
+            android:exported="true" />
+        <activity
+            android:name=".testing.huong.activities.PartSixActivity"
+            android:exported="true" />
+        <activity
+            android:name=".testing.huong.activities.PartSevenActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.ListGroupQuestionsActivity"
             android:exported="true" />
         <activity
