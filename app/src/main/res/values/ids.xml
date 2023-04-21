@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="component_part_four_answer_selection_1" type="id" />
+    <item name="component_question_sentence_title" type="id">Press release</item>
 </resources>

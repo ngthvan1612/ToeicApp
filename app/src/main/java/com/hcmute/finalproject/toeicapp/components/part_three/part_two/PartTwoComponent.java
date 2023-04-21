@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_two;
+package com.hcmute.finalproject.toeicapp.components.part_three.part_two;
 
 import android.content.Context;
 import android.util.AttributeSet;

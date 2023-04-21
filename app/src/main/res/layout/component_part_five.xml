@@ -8,7 +8,7 @@
     tools:ignore="SpeakableTextPresentCheck">
 
     <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
-        android:id="@+id/common_part_two_header_title"
+        android:id="@+id/common_part_five_header_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -17,10 +17,10 @@
     </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
 
     <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-        android:id="@+id/component_part_one_photographs_answer_selection"
+        android:id="@+id/component_part_five_answer_selection"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:layout_below="@+id/common_part_two_header_title"
+        android:layout_below="@+id/common_part_five_header_title"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="20dp"
@@ -29,6 +29,7 @@
     </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
 
     <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_alignParentBottom="true"

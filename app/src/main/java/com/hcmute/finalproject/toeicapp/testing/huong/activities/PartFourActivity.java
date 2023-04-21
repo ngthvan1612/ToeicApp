@@ -84,9 +84,6 @@ public class PartFourActivity extends GradientActivity {
             PartFourComponent component =
                     new PartFourComponent(PartFourActivity.this);
             container.addView(component);
-//            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_four_answer_selection);
-//            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-//            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
             return component;
         }
 
