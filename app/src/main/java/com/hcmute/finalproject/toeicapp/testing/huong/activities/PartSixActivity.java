@@ -100,7 +100,8 @@ public class PartSixActivity extends GradientActivity {
             answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);
 
             questionSentenceComponent = container.findViewById(R.id.component_part_six_question_sentence);
-            questionSentenceComponent.setQuestionDescription("https://toeic-testpro.com/study/part-6-text-completion/test-3");
+            questionSentenceComponent.setQuestionDescription
+                    ("<h2>hello</h2>");
 
             return component;
         }
