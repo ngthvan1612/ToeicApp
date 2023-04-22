@@ -17,11 +17,11 @@
         android:textColor="@color/white"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/component_question_sentence_description"
+    <WebView
+        android:id="@+id/component_question_sentence_description_webview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="200dp"
+        android:layout_margin="0dp"
         android:text="TextView"
         android:textSize="25sp" />
 

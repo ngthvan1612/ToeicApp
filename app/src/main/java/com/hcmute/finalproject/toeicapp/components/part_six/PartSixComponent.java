@@ -8,10 +8,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 
 public class PartSixComponent  extends LinearLayout {
     private CommonHeaderComponent commonHeaderComponent;
+    private QuestionSentenceComponent questionSentenceComponent;
     public PartSixComponent(Context context) {
         this(context, null);
     }
@@ -29,5 +31,8 @@ public class PartSixComponent  extends LinearLayout {
         View view = inflate(context, R.layout.component_part_six, this);
         commonHeaderComponent=view.findViewById(R.id.common_part_six_header_title);
         commonHeaderComponent.setTitle("Part six - Text completion");
+
+
     }
+
 }

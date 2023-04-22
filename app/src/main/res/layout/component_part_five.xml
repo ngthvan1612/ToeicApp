@@ -29,6 +29,7 @@
     </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
 
     <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+        android:id="@+id/component_part_five_common_test_footer"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_alignParentBottom="true"
