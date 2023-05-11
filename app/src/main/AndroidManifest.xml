@@ -20,7 +20,22 @@
             android:name=".activities.ToeicTestListQuestionsActivity"
             android:exported="true" />
         <activity
-            android:name=".testing.huong.activities.PartTwoActivity"
+            android:name=".activities.PartTwoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PartOnePhotographsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PartFourActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PartFiveActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PartSixActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PartSevenActivity"
             android:exported="true" />
         <activity
             android:name=".activities.ListGroupQuestionsActivity"
@@ -48,9 +63,10 @@
             android:exported="true" />
         <activity
             android:name=".testing.huong.activities.HuongTestActivity"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".activities.PartOnePhotographsActivity" -->
-        <!-- android:exported="true" /> -->
+            android:exported="true" />
+        <activity
+            android:name=".testing.huong.activities.PartThreeActivity"
+            android:exported="true" />
         <activity
             android:name=".testing.van.activities.VanTestActivity"
             android:exported="true" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,21 +7,25 @@
     tools:context=".activities.ToeicTestListQuestionsActivity"
     android:id="@+id/activity_toeic_test_list_questions_layout">
 
-    <androidx.viewpager.widget.ViewPager
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_above="@id/activity_toeic_test_list_questions_btn_show_answer"
-        android:id="@+id/activity_toeic_test_list_questions_view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/activity_toeic_test_list_questions_btn_show_answer"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/activity_toeic_test_list_questions_view_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/activity_toeic_test_list_questions_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+        android:id="@+id/activity_toeic_test_list_questions_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Show answer" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

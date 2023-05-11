@@ -1,16 +1,13 @@
-package com.hcmute.finalproject.toeicapp.testing.huong.activities;
+package com.hcmute.finalproject.toeicapp.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.part_two.PartTwoComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;

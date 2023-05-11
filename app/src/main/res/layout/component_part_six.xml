@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="MissingDefaultResource,SpeakableTextPresentCheck">
+
+    <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+        android:id="@+id/common_part_six_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp" >
+
+    </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/component_part_six_common_test_footer"
+        android:layout_below="@+id/common_part_six_header_title"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:id="@+id/component_part_six_question_sentence"/>
+
+                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
+                    android:id="@+id/component_part_six_answer_selection_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp">
+
+                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
+
+                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
+                    android:id="@+id/component_part_six_answer_selection_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp">
+
+                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
+
+                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
+                    android:id="@+id/component_part_six_answer_selection_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp">
+
+                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
+        android:id="@+id/component_part_six_common_test_footer"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintVertical_bias="0.988"
+        tools:ignore="MissingConstraints" />
+
+</RelativeLayout>

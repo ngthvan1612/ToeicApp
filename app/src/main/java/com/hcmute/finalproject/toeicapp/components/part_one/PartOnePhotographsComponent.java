@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
+import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicItemContent;
@@ -29,6 +30,8 @@ public class PartOnePhotographsComponent extends LinearLayout {
     private AudioPlayerComponent audioPlayerComponent;
     private AnswerSelectionComponent answerSelectionComponent;
     private MockToeicTestDatabase mockToeicTestDatabase;
+    private CommonHeaderComponent commonHeaderComponent;
+
 
     public PartOnePhotographsComponent(Context context) {
         this(context, null);
@@ -49,6 +52,9 @@ public class PartOnePhotographsComponent extends LinearLayout {
         this.imageViewMainImage = view.findViewById(R.id.component_part_one_photographs_img);
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
+
+        commonHeaderComponent=view.findViewById(R.id.common_part_one_header_title);
+        commonHeaderComponent.setTitle("Part one - Photographs");
 
         if (this.isInEditMode()) {
             return;

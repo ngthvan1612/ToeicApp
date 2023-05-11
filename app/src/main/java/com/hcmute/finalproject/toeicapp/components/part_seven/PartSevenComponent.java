@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_two;
+package com.hcmute.finalproject.toeicapp.components.part_seven;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,25 +10,24 @@ import androidx.annotation.Nullable;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 
-public class PartTwoComponent  extends LinearLayout {
+public class PartSevenComponent  extends LinearLayout {
     private CommonHeaderComponent commonHeaderComponent;
-    public PartTwoComponent(Context context) {
+    public PartSevenComponent(Context context) {
         this(context, null);
     }
 
-    public PartTwoComponent(Context context, @Nullable AttributeSet attrs) {
+    public PartSevenComponent(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PartTwoComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public PartSevenComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.initComponent(context, attrs, defStyleAttr);
 
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        View view = inflate(context, R.layout.component_part_two, this);
-        commonHeaderComponent=view.findViewById(R.id.common_part_two_header_title);
-        commonHeaderComponent.setTitle("Part two - Questions and response");
+        View view = inflate(context, R.layout.component_part_seven, this);
+        commonHeaderComponent=view.findViewById(R.id.common_part_seven_header_title);
+        commonHeaderComponent.setTitle("Part seven - Reading comprehension");
     }
-
 }

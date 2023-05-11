@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#474544"
+    android:backgroundTint="#FFFFFF"
+    android:padding="0dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp">
 
     <ImageView
         android:id="@+id/component_audio_player_btn_start_pause"
         android:layout_width="18dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/component_audio_player_icon_play"
+        android:background="@color/white"
+        android:src="@drawable/component_audio_player_icon_play_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,41 +26,45 @@
     <SeekBar
         android:id="@+id/component_audio_player_seek_bar_status"
         android:layout_width="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/component_audio_player_layout_status"
+        android:layout_toEndOf="@id/component_audio_player_btn_start_pause"
+        android:background="@color/white"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:layout_toStartOf="@id/component_audio_player_layout_status"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/component_audio_player_btn_start_pause"
         app:layout_constraintRight_toLeftOf="@id/component_audio_player_layout_status"
-        android:layout_toEndOf="@id/component_audio_player_btn_start_pause"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/component_audio_player_layout_status"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        app:layout_constraintRight_toLeftOf="@id/component_audio_player_btn_volume"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/component_audio_player_btn_volume"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/component_audio_player_txt_current_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:text="0:10"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/component_audio_player_txt_total_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:text=" / 1:28"
             android:textColor="#88FFFFFF" />
@@ -66,22 +74,24 @@
     <ImageView
         android:id="@+id/component_audio_player_btn_volume"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@id/component_audio_player_seek_bar_volume"
-        app:layout_constraintRight_toLeftOf="@id/component_audio_player_seek_bar_volume"
-        android:src="@drawable/component_audio_player_icon_volume_max"
+        android:background="@color/white"
+        android:src="@drawable/component_audio_player_volume_max_black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/component_audio_player_seek_bar_volume"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/component_audio_player_seek_bar_volume"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:minWidth="60dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
