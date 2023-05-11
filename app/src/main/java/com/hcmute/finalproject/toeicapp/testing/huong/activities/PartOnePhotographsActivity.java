@@ -3,8 +3,6 @@ package com.hcmute.finalproject.toeicapp.testing.huong.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartOnePhotographsActivity extends GradientActivity {
-    private static final int NUMBER_OF_PAGES = 5;
+        private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
 
     @Override
