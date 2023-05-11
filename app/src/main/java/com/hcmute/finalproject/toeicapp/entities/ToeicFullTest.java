@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class ToeicFullTest {
-
     @PrimaryKey
     @NonNull
     private Integer id;
