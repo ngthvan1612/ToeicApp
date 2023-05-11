@@ -1,29 +1,47 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+@Entity(foreignKeys={
+        @ForeignKey(
+                entity = ToeicQuestionGroup.class,
+                parentColumns = "id",
+                childColumns = "toeicQuestionGroupEntityQuestionContentId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        ),
+        @ForeignKey(
+                entity = ToeicQuestionGroup.class,
+                parentColumns = "id",
+                childColumns = "toeicQuestionGroupEntityTranscriptId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        ),
+}
+)
 public class ToeicItemContent {
-
     @PrimaryKey
     @NonNull
     private Integer id;
     private Integer serverId;
     private String contentType;
     private String content;
-    private ToeicStorage toeicStorage;
-    private ToeicQuestionGroup toeicQuestionGroupEntityQuestionContent;
-    private ToeicQuestionGroup toeicQuestionGroupEntityTranscript;
+
+    private Integer toeicQuestionGroupEntityQuestionContentId;
+    private Integer toeicQuestionGroupEntityTranscriptId;
 
 //    constructor
     public ToeicItemContent() {}
-    public ToeicItemContent(@NonNull Integer id, Integer serverId, String contentType, String content, ToeicStorage toeicStorage, ToeicQuestionGroup toeicQuestionGroupEntityQuestionContent, ToeicQuestionGroup toeicQuestionGroupEntityTranscript) {
-        this.serverId = id;
+    public ToeicItemContent(@NonNull Integer id, Integer serverId, String contentType, String content, Integer toeicQuestionGroupEntityQuestionContentId, Integer toeicQuestionGroupEntityTranscriptId) {
+        this.id = id;
+        this.serverId = serverId;
         this.contentType = contentType;
         this.content = content;
-        this.toeicStorage = toeicStorage;
-        this.toeicQuestionGroupEntityQuestionContent = toeicQuestionGroupEntityQuestionContent;
-        this.toeicQuestionGroupEntityTranscript = toeicQuestionGroupEntityTranscript;
+        this.toeicQuestionGroupEntityQuestionContentId = toeicQuestionGroupEntityQuestionContentId;
+        this.toeicQuestionGroupEntityTranscriptId = toeicQuestionGroupEntityTranscriptId;
     }
 
 //    getter setter
@@ -59,29 +77,20 @@ public class ToeicItemContent {
     public void setContent(String content) {
         this.content = content;
     }
-
-    public ToeicStorage getToeicStorage() {
-        return toeicStorage;
+    public Integer getToeicQuestionGroupEntityQuestionContentId() {
+        return toeicQuestionGroupEntityQuestionContentId;
     }
 
-    public void setToeicStorage(ToeicStorage toeicStorage) {
-        this.toeicStorage = toeicStorage;
+    public void setToeicQuestionGroupEntityQuestionContentId(Integer toeicQuestionGroupEntityQuestionContentId) {
+        this.toeicQuestionGroupEntityQuestionContentId = toeicQuestionGroupEntityQuestionContentId;
     }
 
-    public ToeicQuestionGroup getToeicQuestionGroupEntityQuestionContent() {
-        return toeicQuestionGroupEntityQuestionContent;
+    public Integer getToeicQuestionGroupEntityTranscriptId() {
+        return toeicQuestionGroupEntityTranscriptId;
     }
 
-    public void setToeicQuestionGroupEntityQuestionContent(ToeicQuestionGroup toeicQuestionGroupEntityQuestionContent) {
-        this.toeicQuestionGroupEntityQuestionContent = toeicQuestionGroupEntityQuestionContent;
-    }
-
-    public ToeicQuestionGroup getToeicQuestionGroupEntityTranscript() {
-        return toeicQuestionGroupEntityTranscript;
-    }
-
-    public void setToeicQuestionGroupEntityTranscript(ToeicQuestionGroup toeicQuestionGroupEntityTranscript) {
-        this.toeicQuestionGroupEntityTranscript = toeicQuestionGroupEntityTranscript;
+    public void setToeicQuestionGroupEntityTranscriptId(Integer toeicQuestionGroupEntityTranscriptId) {
+        this.toeicQuestionGroupEntityTranscriptId = toeicQuestionGroupEntityTranscriptId;
     }
 
 }

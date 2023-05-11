@@ -1,23 +1,35 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+@Entity(foreignKeys= {
+        @ForeignKey(
+                entity = ToeicFullTest.class,
+                parentColumns = "id",
+                childColumns = "toeicFullTestId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+})
 public class ToeicPart {
     @PrimaryKey
     @NonNull
     private Integer id;
     private Integer serverId;
     private Integer partNumber;
-    private ToeicFullTest toeicFullTest;
+
+    private Integer toeicFullTestId;
 
 
 //    constructor
     public ToeicPart() {}
-    public ToeicPart(Integer id,Integer serverId, Integer partNumber, ToeicFullTest toeicFullTest) {
+    public ToeicPart(Integer id,Integer serverId, Integer partNumber, Integer toeicFullTestId) {
         this.serverId = id;
         this.partNumber = partNumber;
-        this.toeicFullTest = toeicFullTest;
+        this.toeicFullTestId = toeicFullTestId;
     }
 
 //    getter setter
@@ -45,12 +57,13 @@ public class ToeicPart {
     public void setPartNumber(Integer partNumber) {
         this.partNumber = partNumber;
     }
-
-    public ToeicFullTest getToeicFullTest() {
-        return toeicFullTest;
+    public Integer getToeicFullTestId() {
+        return toeicFullTestId;
     }
 
-    public void setToeicFullTest(ToeicFullTest toeicFullTest) {
-        this.toeicFullTest = toeicFullTest;
+    public void setToeicFullTestId(Integer toeicFullTestId) {
+        this.toeicFullTestId = toeicFullTestId;
     }
+
+
 }

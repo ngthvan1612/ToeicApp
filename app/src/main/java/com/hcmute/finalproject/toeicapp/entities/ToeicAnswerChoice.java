@@ -1,28 +1,42 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+@Entity(foreignKeys = {
+        @ForeignKey(
+                entity = ToeicQuestion.class,
+                parentColumns = "id",
+                childColumns = "toeicQuestionId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+})
 public class ToeicAnswerChoice {
 
     @PrimaryKey
     @NonNull
     private Integer id;
+
     private Integer serverId;
     private String label;
     private String content;
     private String explain;
-    private ToeicQuestion toeicQuestion;
+    private Integer toeicQuestionId;
 
     //    constructor
     public ToeicAnswerChoice(){}
-    public ToeicAnswerChoice(@NonNull Integer id, Integer serverId, String label, String content, String explain, ToeicQuestion toeicQuestion) {
-        this.serverId = id;
+    public ToeicAnswerChoice(@NonNull Integer id, Integer serverId, String label, String content, String explain, Integer toeicQuestionId) {
+        this.id = id;
+        this.serverId = serverId;
         this.label = label;
         this.content = content;
         this.explain = explain;
-        this.toeicQuestion = toeicQuestion;
+        this.toeicQuestionId = toeicQuestionId;
     }
+
 
     //    getter setter
     @NonNull
@@ -56,5 +70,21 @@ public class ToeicAnswerChoice {
 
     public void setExplain(String explain) {
         this.explain = explain;
+    }
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
+    public Integer getToeicQuestionId() {
+        return toeicQuestionId;
+    }
+
+    public void setToeicQuestionId(Integer toeicQuestionId) {
+        this.toeicQuestionId = toeicQuestionId;
     }
 }

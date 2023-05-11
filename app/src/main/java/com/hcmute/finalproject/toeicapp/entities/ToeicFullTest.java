@@ -1,8 +1,10 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+@Entity
 public class ToeicFullTest {
 
     @PrimaryKey

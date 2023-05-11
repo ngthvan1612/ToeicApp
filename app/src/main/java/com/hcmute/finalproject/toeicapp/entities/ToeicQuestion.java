@@ -1,8 +1,20 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+@Entity(foreignKeys = {
+        @ForeignKey(
+                entity = ToeicQuestionGroup.class,
+                parentColumns = "id",
+                childColumns = "toeicQuestionGroupId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+}
+)
 public class ToeicQuestion {
     @PrimaryKey
     @NonNull
@@ -11,16 +23,17 @@ public class ToeicQuestion {
     private Integer questionNumber;
     private String correctAnswer;
     private String content;
-    private ToeicQuestionGroup toeicQuestionGroup;
+
+    private Integer toeicQuestionGroupId;
 
 //    constructor
     public ToeicQuestion() {}
-    public ToeicQuestion(@NonNull Integer id, Integer serverId, Integer questionNumber, String correctAnswer, String content, ToeicQuestionGroup toeicQuestionGroup) {
+    public ToeicQuestion(@NonNull Integer id, Integer serverId, Integer questionNumber, String correctAnswer, String content, Integer toeicQuestionGroupId) {
         this.serverId = id;
         this.questionNumber = questionNumber;
         this.correctAnswer = correctAnswer;
         this.content = content;
-        this.toeicQuestionGroup = toeicQuestionGroup;
+        this.toeicQuestionGroupId = toeicQuestionGroupId;
     }
 
 //    getter setter
@@ -64,12 +77,13 @@ public class ToeicQuestion {
     public void setContent(String content) {
         this.content = content;
     }
-
-    public ToeicQuestionGroup getToeicQuestionGroup() {
-        return toeicQuestionGroup;
+    public Integer getToeicQuestionGroupId() {
+        return toeicQuestionGroupId;
     }
 
-    public void setToeicQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
-        this.toeicQuestionGroup = toeicQuestionGroup;
+    public void setToeicQuestionGroupId(Integer toeicQuestionGroupId) {
+        this.toeicQuestionGroupId = toeicQuestionGroupId;
     }
+
+
 }

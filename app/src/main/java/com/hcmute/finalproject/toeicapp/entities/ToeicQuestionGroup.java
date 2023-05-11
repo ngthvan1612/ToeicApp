@@ -1,20 +1,31 @@
 package com.hcmute.finalproject.toeicapp.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+@Entity(foreignKeys = {
+        @ForeignKey(
+                entity = ToeicPart.class,
+                parentColumns = "id",
+                childColumns = "toeicPartId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+})
 public class ToeicQuestionGroup {
     @PrimaryKey
     @NonNull
     private Integer id;
     private Integer serverId;
-    private ToeicPart toeicPart;
+    private Integer toeicPartId;
 
 //    constructor
     public ToeicQuestionGroup(){}
-    public ToeicQuestionGroup(Integer id, Integer serverId, ToeicPart toeicPart) {
+    public ToeicQuestionGroup(Integer id, Integer serverId, Integer toeicPartId) {
         this.serverId = id;
-        this.toeicPart = toeicPart;
+        this.toeicPartId = toeicPartId;
     }
 
 //    getter setter
@@ -33,12 +44,12 @@ public class ToeicQuestionGroup {
     public void setServerId(Integer serverId) {
         this.serverId = serverId;
     }
-
-    public ToeicPart getToeicPart() {
-        return toeicPart;
+    public Integer getToeicPartId() {
+        return toeicPartId;
     }
 
-    public void setToeicPart(ToeicPart toeicPart) {
-        this.toeicPart = toeicPart;
+    public void setToeicPartId(Integer toeicPartId) {
+        this.toeicPartId = toeicPartId;
     }
+
 }

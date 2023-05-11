@@ -6,10 +6,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPart;
+
+import java.util.List;
 
 public class PartOneTestListComponent extends LinearLayout {
+    private RecyclerView rvTestList;
+    private List<ToeicPart> toeicPartList;
     public PartOneTestListComponent(Context context) {
         this(context,null);
         this.initComponent(context);

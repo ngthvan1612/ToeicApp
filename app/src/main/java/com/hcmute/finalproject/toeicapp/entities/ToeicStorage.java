@@ -8,7 +8,6 @@ public class ToeicStorage {
     @PrimaryKey
     @NonNull
     private Integer id;
-
     private String fileName;
 
     @NonNull
