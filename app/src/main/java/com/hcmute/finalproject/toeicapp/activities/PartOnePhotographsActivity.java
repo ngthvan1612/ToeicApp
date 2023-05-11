@@ -10,7 +10,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
