@@ -33,9 +33,10 @@ public class QuestionSentenceComponent extends LinearLayout {
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_question_sentence, this);
     }
-    public void setQuestionDescription(String url) {
+    public void setQuestionDescription(String data) {
         webViewQuestionSentenceDescription = findViewById(R.id.component_question_sentence_description_webview);
-        webViewQuestionSentenceDescription.loadUrl(url);
+        //webViewQuestionSentenceDescription.loadUrl(url);
+        webViewQuestionSentenceDescription.loadData(data, "text/html", "UTF-8");
     }
 
 }

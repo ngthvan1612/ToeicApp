@@ -18,6 +18,7 @@
 
 
         <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
+            android:id="@+id/component_common_back_button"
             android:layout_width="50dp"
             android:layout_height="50dp">
 

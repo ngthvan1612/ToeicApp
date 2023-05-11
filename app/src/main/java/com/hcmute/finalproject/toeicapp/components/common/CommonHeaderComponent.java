@@ -1,6 +1,7 @@
 package com.hcmute.finalproject.toeicapp.components.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,4 +36,9 @@ import com.hcmute.finalproject.toeicapp.R;
     public void setTitle(String title) {
         this.txtTitle.setText(title);
     }
+    public void handleBackToHomepage(Intent intent) {
+        BackButtonRoundedComponent backBtn =  findViewById(R.id.component_common_back_button);
+        backBtn.handleBackToHomepage(intent);
+    }
+
 }

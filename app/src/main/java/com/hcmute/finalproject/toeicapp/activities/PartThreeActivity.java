@@ -1,30 +1,23 @@
-package com.hcmute.finalproject.toeicapp.testing.huong.activities;
+package com.hcmute.finalproject.toeicapp.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
-import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
-import com.hcmute.finalproject.toeicapp.components.part_five.PartFiveComponent;
-import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;
+import com.hcmute.finalproject.toeicapp.components.part_three.PartThreeComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartSixActivity extends GradientActivity {
+public class PartThreeActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
-    private QuestionSentenceComponent questionSentenceComponent;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,35 +33,35 @@ public class PartSixActivity extends GradientActivity {
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
 
     }
-    private List<ToeicAnswerChoice> getSamplePart1Choices() {
+    private List<ToeicAnswerChoice> getSamplePart3Choices() {
         List<ToeicAnswerChoice> choices = new ArrayList<>();
 
         // A.
         ToeicAnswerChoice a = new ToeicAnswerChoice();
-        a.setContent("");
+        a.setContent("Product quality testing");
         a.setLabel("A");
-        a.setExplain("She's tying her shoelaces.");
+        a.setExplain("Kiểm tra chất lượng sản phẩm");
         choices.add(a);
 
         // B
         ToeicAnswerChoice b = new ToeicAnswerChoice();
-        b.setContent("");
+        b.setContent("Candidates for a job");
         b.setLabel("B");
-        b.setExplain("She's holding a cup.");
+        b.setExplain("Ứng cử viên cho 1 công việ");
         choices.add(b);
 
         // C.
         ToeicAnswerChoice c = new ToeicAnswerChoice();
-        c.setContent("");
+        c.setContent("Contracts with vendors");
         c.setLabel("C");
-        c.setExplain("She's reading under an umbrella.");
+        c.setExplain("Hợp đồng với khách hàng");
         choices.add(c);
 
         // D.
         ToeicAnswerChoice d = new ToeicAnswerChoice();
-        d.setContent("");
+        d.setContent("Design modifications");
         d.setLabel("D");
-        d.setExplain("She's jogging through a park.");
+        d.setExplain("Sửa đổi thiết kế");
         choices.add(d);
 
         return choices;
@@ -88,21 +81,12 @@ public class PartSixActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartSixComponent component = new PartSixComponent(PartSixActivity.this);
+            PartThreeComponent component =
+                    new PartThreeComponent(PartThreeActivity.this);
             container.addView(component);
-
-            final AnswerSelectionComponent answerSelectionComponent1 = container.findViewById(R.id.component_part_six_answer_selection_1);
-            final AnswerSelectionComponent answerSelectionComponent2 = container.findViewById(R.id.component_part_six_answer_selection_2);
-            final AnswerSelectionComponent answerSelectionComponent3 = container.findViewById(R.id.component_part_six_answer_selection_3);
-            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent1.setToeicAnswerChoices(toeicAnswerChoices);
-            answerSelectionComponent2.setToeicAnswerChoices(toeicAnswerChoices);
-            answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);
-
-            questionSentenceComponent = container.findViewById(R.id.component_part_six_question_sentence);
-            questionSentenceComponent.setQuestionDescription
-                    ("<h2>hello</h2>");
-
+//            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_three_photographs_answer_selection);
+//            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart3Choices();
+//            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
             return component;
         }
 
