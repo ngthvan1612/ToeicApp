@@ -8,9 +8,17 @@ public class ToeicStorage {
     @PrimaryKey
     @NonNull
     private Integer id;
-
+    private Integer serverId;
     private String fileName;
 
+//    constructor
+    public ToeicStorage(){}
+    public ToeicStorage(Integer id, Integer serverId, String fileName) {
+        this.serverId = id;
+        this.fileName = fileName;
+    }
+
+//    getter setter
     @NonNull
     public Integer getId() {
         return id;
@@ -27,4 +35,6 @@ public class ToeicStorage {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+
 }

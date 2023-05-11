@@ -32,6 +32,8 @@ public class ToeicVocabulary {
         @NonNull
         private Integer id;
 
+        private Integer serverId;
+
         private String text;
 
         private String pronunciation;
@@ -42,6 +44,20 @@ public class ToeicVocabulary {
 
         private Integer audioStorageId;
 
+//        constructor
+        public ToeicVocabulary(){}
+        public ToeicVocabulary(@NonNull Integer id, Integer serverId, String text, String pronunciation, Integer topicId, Integer imageStorageId, Integer audioStorageId) {
+                this.serverId = id;
+                this.text = text;
+                this.pronunciation = pronunciation;
+                this.topicId = topicId;
+                this.imageStorageId = imageStorageId;
+                this.audioStorageId = audioStorageId;
+        }
+
+
+//        getter setter
+
         @NonNull
         public Integer getId() {
                 return id;
@@ -50,6 +66,9 @@ public class ToeicVocabulary {
         public void setId(@NonNull Integer id) {
                 this.id = id;
         }
+        public Integer getServerId() {return serverId;}
+
+        public void setServerId(Integer serverId) {this.serverId = serverId;}
 
         public String getText() {
                 return text;
