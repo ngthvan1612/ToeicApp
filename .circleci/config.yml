@@ -28,7 +28,7 @@ jobs:
 workflows:
   release-build:
     jobs:
-      - build:
+      - release-build:
           filters:
             branches:
               only:
