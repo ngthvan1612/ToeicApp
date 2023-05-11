@@ -17,7 +17,6 @@ jobs:
   release-build:
     executor:
       name: android/android-machine
-      resource-class: xlarge
       tag: 2021.10.1
     steps:
       - checkout
@@ -37,4 +36,3 @@ workflows:
             branches:
               only:
                 - deployment
-
