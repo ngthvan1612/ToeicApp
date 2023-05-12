@@ -56,9 +56,6 @@ public class HomeActivity extends GradientActivity {
     private void FetchNewData() {
 
         toeicAppDatabase = ToeicAppDatabase.getInstance(HomeActivity.this);
-        ToeicFullTestDao toeicFullTestDao = toeicAppDatabase.getToeicFullTestDao();
-//        toeicAppDatabase.getToeicAnswerChoiceDao();
-
         APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
             @Override
             public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
