@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -39,6 +41,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,6 +52,7 @@ import retrofit2.Response;
 public class HomeActivity extends GradientActivity {
     private ToeicAppDatabase toeicAppDatabase;
     private static final int NUMBER_OF_PAGES = 5;
+    private static final String CHECK_SUM_PREF = "Checksum";
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
 
@@ -65,12 +69,12 @@ public class HomeActivity extends GradientActivity {
         this.initViewPager();
         this.initBottomNavigation();
 
-        FetchNewData();
+        CheckDataSync();
     }
 
     private void FetchNewData() {
         ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
-        dialog.setTitle("Đang xử lý");
+        dialog.setTitle("Đang đồng bộ dữ liệu");
         dialog.setCancelable(false);
         dialog.setMessage("Đang tải...");
         dialog.show();
@@ -176,31 +180,39 @@ public class HomeActivity extends GradientActivity {
     private void CheckDataSync() {
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-       APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<CheckSumStringResponse>() {
-           @Override
-           public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
-               final CheckSumStringResponse checkSumStringResponse = response.body();
-//               Log.d("checksum",checkSumStringResponse.getData().toString());
-//               editor.putString("Checksum",checkSumStringResponse.getData().toString());
-//               editor.apply();
 
-               Log.d("ChecksumSharedpreference",sharedPref.getString("Checksum", checkSumStringResponse.getData().toString()));
+        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
+        dialog.setMessage("Đang cập nhật thông tin");
+        dialog.cancel();
+        dialog.show();
 
-               String currentChecksum = sharedPref.getString("Checksum", checkSumStringResponse.getData().toString());
-               String newChecksum = checkSumStringResponse.getData().toString();
+        APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
+                final CheckSumStringResponse checkSumStringResponse = response.body();
+                final String currentCheckSum = sharedPref.getString(CHECK_SUM_PREF, UUID.randomUUID() + "");
 
-               if(!currentChecksum.equals(newChecksum)) {
-                   FetchNewData();
-                   editor.putString("Checksum",newChecksum);
-                   editor.apply();
-               }
-           }
-           @Override
-           public void onFailure(Call<CheckSumStringResponse> call, Throwable t) {
-               Log.d("err",t.toString());
-           }
-       });
+                String newChecksum = checkSumStringResponse.getData();
+                Log.d("CHECKSUM_LOG", newChecksum);
 
+                if (!currentCheckSum.equals(newChecksum)) {
+                    dialog.dismiss();
+                    FetchNewData();
+                }
+                else {
+                    dialog.dismiss();
+                }
+
+                editor.putString(CHECK_SUM_PREF, newChecksum);
+                editor.commit();
+            }
+
+            @Override
+            public void onFailure(Call<CheckSumStringResponse> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
     private String getLayoutTagByPosition(int position) {
         return "layout-" + position;
