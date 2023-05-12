@@ -1,14 +1,19 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -20,11 +25,14 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.activities.ListVocabularyActivity;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
+import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
 import com.hcmute.finalproject.toeicapp.network.test.TestAPIService;
+import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -99,9 +107,9 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             }
         });
 
-        if (!this.getVocabsConfigFile().exists()) {
-            this.downloadConfigFile();
-        }
+//        if (!this.getVocabsConfigFile().exists()) {
+//            this.downloadConfigFile();
+//        }
 
         this.loadListVocabsTest();
     }
@@ -111,6 +119,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         this.statistics.clear();
         adapter.notifyDataSetChanged();
 
+        // TODO: viet lai
         try {
             final File file = this.getVocabsConfigFile();
             final FileInputStream fileInputStream = new FileInputStream(file);
@@ -123,22 +132,16 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         }
 
         Gson gson = new Gson();
-        List<Toeic600Topic> topics = List.of(gson.fromJson(json, Toeic600Topic[].class));
-        List<VocabularyTopic> vocabularyTopics = new ArrayList<>();
+        List<AndroidToeicVocabTopic> topics = List.of(gson.fromJson(json, AndroidToeicVocabTopic[].class));
+        //
 
-        for (Toeic600Topic topic : topics) {
-            VocabularyTopic vocabularyTopic = new VocabularyTopic();
-            vocabularyTopic.setTopicName(topic.getName());
-            vocabularyTopic.setNumberOfVocabularies(topic.vocabs.size());
-            vocabularyTopics.add(vocabularyTopic);
-        }
-
-        this.statistics.addAll(vocabularyTopics.stream()
+        this.statistics.addAll(topics.stream()
                 .map(VocabularyTopicStatistic::new).collect(Collectors.toList()));
 
         adapter.notifyDataSetChanged();
     }
 
+    @Deprecated
     private void downloadConfigFile() {
         ProgressDialog progressBar = new ProgressDialog(this.getContext());
         progressBar.setTitle("Đang tải 600 từ xuống");
@@ -172,9 +175,10 @@ public class HomePageListVocabularyComponent extends LinearLayout {
     }
 
     private File getVocabsConfigFile() {
-        ContextWrapper contextWrapper = new ContextWrapper(this.getContext().getApplicationContext());
-        File directory = contextWrapper.getDir("vocabs", Context.MODE_PRIVATE);
-        return new File(directory, VOCAB_CONFIG_FILE);
+        File rootDirectory = StorageConfiguration.getRootDirectory(this.getContext());
+        File testVocabDirectory = new File(rootDirectory, "test-vocab");
+        File config = new File(testVocabDirectory, "config.json");
+        return config;
     }
 
     private class ListVocabsAdapter extends BaseAdapter {
@@ -202,9 +206,27 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             final VocabularyTopicStatistic statistic = statistics.get(position);
             final TextView txtTopicName = view.findViewById(R.id.component_home_page_list_vocabulary_txt_topic_name);
             final TextView txtStatus = view.findViewById(R.id.component_home_page_list_vocabulary_txt_status);
+            final ImageView imgView = view.findViewById(R.id.component_home_page_list_vocabulary_image_view);
+
+            File rootDirectory = StorageConfiguration.getRootDirectory(getContext());
+            File vocabTestDirectory = new File(rootDirectory, "test-vocab");
+            File dataDirectory = new File(vocabTestDirectory, "data");
+            File imageFile = new File(dataDirectory, statistic.getImageFileName());
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            imgView.setImageBitmap(bitmap);
 
             txtTopicName.setText(statistic.getTopicName());
             txtStatus.setText(statistic.getSuccess() + "/" + statistic.getTotal());
+
+            view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ListVocabularyActivity.class);
+                    intent.putExtra("topicName", statistic.getTopicName());
+                    intent.putExtra("status", statistic.getSuccess() + "/" + statistic.getTotal());
+                    getContext().startActivity(intent);
+                }
+            });
 
             return view;
         }
