@@ -1,7 +1,6 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -11,14 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
-import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPart;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackground;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundFactory;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundService;
 
 import java.util.ArrayList;
 import java.util.List;
