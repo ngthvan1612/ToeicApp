@@ -37,7 +37,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
         ToeicVocabularyTopic.class
 }, version = 1)
 public abstract class ToeicAppDatabase extends RoomDatabase {
-    private final static String DATABASE_FILE_NAME = "toeic-db";
+    private final static String DATABASE_FILE_NAME = "toeic-db.sqlite3";
 
     public abstract ToeicAnswerChoiceDao getToeicAnswerChoiceDao();
     public abstract ToeicFullTestDao getToeicFullTestDao();
