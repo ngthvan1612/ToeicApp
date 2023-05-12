@@ -64,7 +64,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             }
         });
 
-        fetchListGroupQuestions();
+        loadToeicPartModel(this.getSampleListGroupQuestions());
     }
 
     private void loadToeicPartModel(final List<GroupQuestionModel> groupQuestionModels) {
