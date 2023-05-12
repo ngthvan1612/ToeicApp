@@ -19,4 +19,7 @@ public interface APIToeicTest {
 
     @GET("https://toeic-app.uteoj.com/api/android/toeic-test/get-tests-data")
     Call<AndroidToeicTestsResponse> getTestData();
+
+    @GET("https://toeic-app.uteoj.com/api/toeic/toeic-full-test/check-sum-string")
+    Call<AndroidToeicTestsResponse> getTestDataCheckSumString();
 }

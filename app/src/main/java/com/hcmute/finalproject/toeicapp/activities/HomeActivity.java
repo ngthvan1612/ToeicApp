@@ -53,16 +53,17 @@ public class HomeActivity extends GradientActivity {
                Log.d("testapi",androidToeicTestsResponse.isSuccess()+"");
                Log.d("testapi",androidToeicTestsResponse.getMessage()+"");
                Log.d("testapi",androidToeicTestsResponse.getData().size()+"");
-               dialog.dismiss();
+
            }
 
            @Override
            public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
                Log.d("testerr",t.toString());
-               dialog.dismiss();
 
            }
        });
+        CheckDataSync();
+        dialog.dismiss();
     }
 
     private String getLayoutTagByPosition(int position) {
@@ -90,6 +91,19 @@ public class HomeActivity extends GradientActivity {
                         viewPager.setCurrentItem(4, true);
                         break;
                 }
+            }
+        });
+    }
+    private void CheckDataSync() {
+        APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<AndroidToeicTestsResponse>() {
+            @Override
+            public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
+                Log.d("checksum:",response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
+
             }
         });
     }
