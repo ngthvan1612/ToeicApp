@@ -4,12 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.hcmute.finalproject.toeicapp.activities.ToeicTestListQuestionsActivity;
 import com.hcmute.finalproject.toeicapp.dto.GroupQuestionModelResponse;
-import com.hcmute.finalproject.toeicapp.model.toeic.GroupQuestionModel;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicFullTest;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPart;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
+import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPartItemView;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
@@ -19,21 +16,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 public class MockToeicTestDatabase {
     private final Context context;
     private final File rootDirectory;
     private final DownloadFileService downloadFileService;
-    private static List<ToeicFullTest> toeicFullTests = null;
 
     public MockToeicTestDatabase(Context context) {
         this.context = context;
@@ -49,14 +42,14 @@ public class MockToeicTestDatabase {
         return new File(this.rootDirectory, this.getToeicFileNameJson(partId));
     }
 
-    private String joinQuestionGroupIds(ToeicQuestionGroup toeicQuestionGroup) {
+    private String joinQuestionGroupIds(TestToeicQuestionGroup toeicQuestionGroup) {
         List<String> ids = toeicQuestionGroup.getQuestions()
                 .stream().map(q -> q.getQuestionId().toString()).collect(Collectors.toList());
 
         return String.join("-", ids);
     }
 
-    public byte[] getAudioFromDisk(Integer partId, ToeicQuestionGroup toeicQuestionGroup) {
+    public byte[] getAudioFromDisk(Integer partId, TestToeicQuestionGroup toeicQuestionGroup) {
         File baseDir = new File(this.rootDirectory, "data-part");
         File partsDirectory = new File(baseDir, partId.toString());
         final File partFileRef = new File(partsDirectory, joinQuestionGroupIds(toeicQuestionGroup) + ".mp3");
@@ -72,14 +65,14 @@ public class MockToeicTestDatabase {
         }
     }
 
-    public String getAudioAbsPathFromDisk(Integer partId, ToeicQuestionGroup toeicQuestionGroup) {
+    public String getAudioAbsPathFromDisk(Integer partId, TestToeicQuestionGroup toeicQuestionGroup) {
         File baseDir = new File(this.rootDirectory, "data-part");
         File partsDirectory = new File(baseDir, partId.toString());
         final File partFileRef = new File(partsDirectory, joinQuestionGroupIds(toeicQuestionGroup) + ".mp3");
         return partFileRef.getAbsolutePath();
     }
 
-    public byte[] getImageFromDisk(Integer partId, ToeicQuestionGroup toeicQuestionGroup) {
+    public byte[] getImageFromDisk(Integer partId, TestToeicQuestionGroup toeicQuestionGroup) {
         File baseDir = new File(this.rootDirectory, "data-part");
         File partsDirectory = new File(baseDir, partId.toString());
         final File partFileRef = new File(partsDirectory, joinQuestionGroupIds(toeicQuestionGroup) + ".png");
@@ -138,7 +131,7 @@ public class MockToeicTestDatabase {
         }
     }
 
-    public List<ToeicQuestionGroup> loadToeicPartFromDisk(Integer id) throws IOException {
+    public List<TestToeicQuestionGroup> loadToeicPartFromDisk(Integer id) throws IOException {
         File baseDir = new File(this.rootDirectory, "data-part");
         File partsDirectory = new File(baseDir, id.toString());
         final File partFileRef = new File(partsDirectory, "config.json");
@@ -148,7 +141,7 @@ public class MockToeicTestDatabase {
         final String json = new String(buffer, StandardCharsets.UTF_8);
         Gson gson = new Gson();
         Log.d("F", json);
-        return List.of(gson.fromJson(json, ToeicQuestionGroup[].class));
+        return List.of(gson.fromJson(json, TestToeicQuestionGroup[].class));
     }
 
     public boolean checkToeicPartQuestionsDataDownloaded(Integer id) {
@@ -219,7 +212,7 @@ public class MockToeicTestDatabase {
         }
     }
 
-    public List<GroupQuestionModel> getToeicPartDataFromDisk(Integer partId, OnMockToeicStateChanged onMockToeicStateChanged) {
+    public List<ToeicPartItemView> getToeicPartDataFromDisk(Integer partId, OnMockToeicStateChanged onMockToeicStateChanged) {
         final File partFileRef = this.getToeicFileReference(partId);
         try {
             FileInputStream fileInputStream = new FileInputStream(partFileRef);
@@ -228,7 +221,7 @@ public class MockToeicTestDatabase {
             final String json = new String(buffer, StandardCharsets.UTF_8);
             fileInputStream.close();
             Gson gson = new Gson();
-            List<GroupQuestionModel> result = List.of(gson.fromJson(json, GroupQuestionModel[].class));
+            List<ToeicPartItemView> result = List.of(gson.fromJson(json, ToeicPartItemView[].class));
             if (onMockToeicStateChanged != null) {
                 onMockToeicStateChanged.onSuccess("Đọc file thành công");
             }

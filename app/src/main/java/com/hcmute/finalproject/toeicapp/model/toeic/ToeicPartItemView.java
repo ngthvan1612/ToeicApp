@@ -6,6 +6,8 @@ public class ToeicPartItemView {
     private String name;
     private int numOfQuestions;
 
+    public ToeicPartItemView() { }
+
     public ToeicPartItemView(int partNumber, String name, int numOfQuestions) {
         this.partNumber = partNumber;
         this.name = name;
