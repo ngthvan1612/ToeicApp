@@ -1,15 +1,11 @@
 package com.hcmute.finalproject.toeicapp.network;
 
-import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicFullTest;
-import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicTestsResponse;
-
-import java.util.List;
+import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicTestsResponse;
+import com.hcmute.finalproject.toeicapp.assets.backend.CheckSumStringResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Url;
 
 public interface APIToeicTest {
     APIToeicTest instance = BaseRetrofitClient.createService(APIToeicTest.class, "https://khong-biet");
@@ -21,5 +17,5 @@ public interface APIToeicTest {
     Call<AndroidToeicTestsResponse> getTestData();
 
     @GET("https://toeic-app.uteoj.com/api/toeic/toeic-full-test/check-sum-string")
-    Call<AndroidToeicTestsResponse> getTestDataCheckSumString();
+    Call<CheckSumStringResponse> getTestDataCheckSumString();
 }

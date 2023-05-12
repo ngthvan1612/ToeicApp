@@ -1,34 +1,35 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.assets.backend.CheckSumStringResponse;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
-import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicFullTest;
-import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicTestsResponse;
+import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicTestsResponse;
+import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
+import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
-import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
-import java.util.List;
-
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class HomeActivity extends GradientActivity {
+    private ToeicAppDatabase toeicAppDatabase;
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
@@ -46,26 +47,61 @@ public class HomeActivity extends GradientActivity {
         ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
         dialog.setMessage("loading...");
         dialog.show();
-       APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
-           @Override
-           public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
-               final AndroidToeicTestsResponse androidToeicTestsResponse = response.body();
-               Log.d("testapi",androidToeicTestsResponse.isSuccess()+"");
-               Log.d("testapi",androidToeicTestsResponse.getMessage()+"");
-               Log.d("testapi",androidToeicTestsResponse.getData().size()+"");
 
-           }
-
-           @Override
-           public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
-               Log.d("testerr",t.toString());
-
-           }
-       });
-        CheckDataSync();
+//        CheckDataSync();
+        FetchNewData();
         dialog.dismiss();
     }
 
+    private void FetchNewData() {
+
+        toeicAppDatabase = ToeicAppDatabase.getInstance(HomeActivity.this);
+        ToeicFullTestDao toeicFullTestDao = toeicAppDatabase.getToeicFullTestDao();
+//        toeicAppDatabase.getToeicAnswerChoiceDao();
+
+        APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
+            @Override
+            public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
+                final AndroidToeicTestsResponse androidToeicTestsResponse = response.body();
+                androidToeicTestsResponse.getData().toString();
+
+            }
+
+            @Override
+            public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
+                Log.d("err",t.toString());
+            }
+        });
+    }
+    private void CheckDataSync() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+       APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<CheckSumStringResponse>() {
+           @Override
+           public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
+               final CheckSumStringResponse checkSumStringResponse = response.body();
+//               Log.d("checksum",checkSumStringResponse.getData().toString());
+//               editor.putString("Checksum",checkSumStringResponse.getData().toString());
+//               editor.apply();
+
+               Log.d("ChecksumSharedpreference",sharedPref.getString("Checksum", checkSumStringResponse.getData().toString()));
+
+               String currentChecksum = sharedPref.getString("Checksum", checkSumStringResponse.getData().toString());
+               String newChecksum = checkSumStringResponse.getData().toString();
+
+               if(!currentChecksum.equals(newChecksum)) {
+                   FetchNewData();
+                   editor.putString("Checksum",newChecksum);
+                   editor.apply();
+               }
+           }
+           @Override
+           public void onFailure(Call<CheckSumStringResponse> call, Throwable t) {
+               Log.d("err",t.toString());
+           }
+       });
+
+    }
     private String getLayoutTagByPosition(int position) {
         return "layout-" + position;
     }
@@ -91,19 +127,6 @@ public class HomeActivity extends GradientActivity {
                         viewPager.setCurrentItem(4, true);
                         break;
                 }
-            }
-        });
-    }
-    private void CheckDataSync() {
-        APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<AndroidToeicTestsResponse>() {
-            @Override
-            public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
-                Log.d("checksum:",response.toString());
-            }
-
-            @Override
-            public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
-
             }
         });
     }

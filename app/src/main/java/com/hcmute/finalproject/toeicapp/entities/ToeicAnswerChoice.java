@@ -19,7 +19,6 @@ public class ToeicAnswerChoice {
     @PrimaryKey
     @NonNull
     private Integer id;
-
     private Integer serverId;
     private String label;
     private String content;
