@@ -1,0 +1,38 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.3.0
+
+commands:
+  install_java_package:
+    steps:
+      - run:
+          name: Cài đặt java package
+          command: |
+            sudo apt-get update
+            sudo apt-get install maven openjdk-17-jdk git -y
+            sudo apt-get install python3 python3-pip -y
+            pip3 install paramiko requests
+jobs:
+  release-build:
+    executor:
+      name: android/android-machine
+      tag: 2021.10.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Assemble release build
+          command: |
+            ./gradlew assembleRelease
+      - store_artifacts:
+          path: app/build/outputs/apk/release
+workflows:
+  release-build-flowsg:
+    jobs:
+      - release-build:
+          filters:
+            branches:
+              only:
+                - deployment
