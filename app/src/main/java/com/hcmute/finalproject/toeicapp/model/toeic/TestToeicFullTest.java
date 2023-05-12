@@ -3,12 +3,12 @@ package com.hcmute.finalproject.toeicapp.model.toeic;
 import java.io.Serializable;
 import java.util.List;
 
-public class ToeicFullTest implements Serializable {
+public class TestToeicFullTest implements Serializable {
     private String slug;
     private String fullName;
-    private List<ToeicPart> parts;
+    private List<TestToeicPart> parts;
 
-    public ToeicFullTest() {
+    public TestToeicFullTest() {
 
     }
 
@@ -28,11 +28,11 @@ public class ToeicFullTest implements Serializable {
         this.fullName = fullName;
     }
 
-    public List<ToeicPart> getParts() {
+    public List<TestToeicPart> getParts() {
         return parts;
     }
 
-    public void setParts(List<ToeicPart> parts) {
+    public void setParts(List<TestToeicPart> parts) {
         this.parts = parts;
     }
 }

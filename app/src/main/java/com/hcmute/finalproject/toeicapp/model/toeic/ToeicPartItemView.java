@@ -1,22 +1,31 @@
 package com.hcmute.finalproject.toeicapp.model.toeic;
 
-public class GroupQuestionModel {
-    private int partId;
+public class ToeicPartItemView {
+    private int serverId;
+    private int partNumber;
     private String name;
     private int numOfQuestions;
 
-    public GroupQuestionModel(int partId, String name, int numOfQuestions) {
-        this.partId = partId;
+    public ToeicPartItemView(int partNumber, String name, int numOfQuestions) {
+        this.partNumber = partNumber;
         this.name = name;
         this.numOfQuestions = numOfQuestions;
     }
 
-    public int getPartId() {
-        return partId;
+    public int getServerId() {
+        return serverId;
     }
 
-    public void setPartId(int partId) {
-        this.partId = partId;
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
+
+    public int getPartNumber() {
+        return partNumber;
+    }
+
+    public void setPartNumber(int partNumber) {
+        this.partNumber = partNumber;
     }
 
     public String getName() {

@@ -6,16 +6,16 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
-public class ToeicQuestionGroup implements Serializable {
+public class TestToeicQuestionGroup implements Serializable {
     private String type;
     @SerializedName("question_content")
-    private List<ToeicItemContent> questionContent;
+    private List<TestToeicItemContent> questionContent;
     private String audio;
-    private List<ToeicItemContent> transcript;
-    private List<ToeicQuestion> questions;
+    private List<TestToeicItemContent> transcript;
+    private List<TestToeicQuestion> questions;
     private File questionGroupDirectory;
 
-    public ToeicQuestionGroup() {
+    public TestToeicQuestionGroup() {
 
     }
 
@@ -27,11 +27,11 @@ public class ToeicQuestionGroup implements Serializable {
         this.type = type;
     }
 
-    public List<ToeicItemContent> getQuestionContent() {
+    public List<TestToeicItemContent> getQuestionContent() {
         return questionContent;
     }
 
-    public void setQuestionContent(List<ToeicItemContent> questionContent) {
+    public void setQuestionContent(List<TestToeicItemContent> questionContent) {
         this.questionContent = questionContent;
     }
 
@@ -43,19 +43,19 @@ public class ToeicQuestionGroup implements Serializable {
         this.audio = audio;
     }
 
-    public List<ToeicItemContent> getTranscript() {
+    public List<TestToeicItemContent> getTranscript() {
         return transcript;
     }
 
-    public void setTranscript(List<ToeicItemContent> transcript) {
+    public void setTranscript(List<TestToeicItemContent> transcript) {
         this.transcript = transcript;
     }
 
-    public List<ToeicQuestion> getQuestions() {
+    public List<TestToeicQuestion> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<ToeicQuestion> questions) {
+    public void setQuestions(List<TestToeicQuestion> questions) {
         this.questions = questions;
     }
 

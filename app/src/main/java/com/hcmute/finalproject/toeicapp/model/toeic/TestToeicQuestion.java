@@ -6,17 +6,17 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
-public class ToeicQuestion implements Serializable {
+public class TestToeicQuestion implements Serializable {
     @SerializedName("question_id")
     private Integer questionId;
     private String question;
-    private List<ToeicAnswerChoice> choices;
+    private List<TestToeicAnswerChoice> choices;
     @SerializedName("correct_answer")
     private String correctAnswer;
     private String explain;
     private File resourceDirectory;
 
-    public ToeicQuestion() {
+    public TestToeicQuestion() {
 
     }
 
@@ -36,11 +36,11 @@ public class ToeicQuestion implements Serializable {
         this.question = question;
     }
 
-    public List<ToeicAnswerChoice> getChoices() {
+    public List<TestToeicAnswerChoice> getChoices() {
         return choices;
     }
 
-    public void setChoices(List<ToeicAnswerChoice> choices) {
+    public void setChoices(List<TestToeicAnswerChoice> choices) {
         this.choices = choices;
     }
 

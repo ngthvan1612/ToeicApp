@@ -2,12 +2,12 @@ package com.hcmute.finalproject.toeicapp.model.toeic;
 
 import java.io.Serializable;
 
-public class ToeicAnswerChoice implements Serializable {
+public class TestToeicAnswerChoice implements Serializable {
     private String label;
     private String content;
     private String explain;
 
-    public ToeicAnswerChoice() {
+    public TestToeicAnswerChoice() {
 
     }
 

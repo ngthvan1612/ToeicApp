@@ -2,11 +2,11 @@ package com.hcmute.finalproject.toeicapp.model.toeic;
 
 import java.io.Serializable;
 
-public class ToeicItemContent implements Serializable {
+public class TestToeicItemContent implements Serializable {
     private String type;
     private String content;
 
-    public ToeicItemContent() {
+    public TestToeicItemContent() {
 
     }
 
