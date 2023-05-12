@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -15,7 +17,16 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
+import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicFullTest;
+import com.hcmute.finalproject.toeicapp.dto.backend.AndroidToeicTestsResponse;
+import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
@@ -32,7 +43,26 @@ public class HomeActivity extends GradientActivity {
 
         this.initViewPager();
         this.initBottomNavigation();
+        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
+        dialog.setMessage("loading...");
+        dialog.show();
+       APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
+           @Override
+           public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
+               final AndroidToeicTestsResponse androidToeicTestsResponse = response.body();
+               Log.d("testapi",androidToeicTestsResponse.isSuccess()+"");
+               Log.d("testapi",androidToeicTestsResponse.getMessage()+"");
+               Log.d("testapi",androidToeicTestsResponse.getData().size()+"");
+               dialog.dismiss();
+           }
 
+           @Override
+           public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
+               Log.d("testerr",t.toString());
+               dialog.dismiss();
+
+           }
+       });
     }
 
     private String getLayoutTagByPosition(int position) {
