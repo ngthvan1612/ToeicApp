@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class AnswerSelectionComponent extends LinearLayout {
     private RecyclerView recyclerViewSelection;
     private AnswerSelectionRecyclerViewAdapter adapter;
     private int lastSelectedPosition = -1;
-    private List<ToeicAnswerChoice> toeicAnswerChoices;
+    private List<TestToeicAnswerChoice> toeicAnswerChoices;
     private boolean showExplain;
 
     private class AnswerSelectionItem {
@@ -76,15 +76,15 @@ public class AnswerSelectionComponent extends LinearLayout {
         this.txtTitle.setText(title);
     }
 
-    public List<ToeicAnswerChoice> getToeicAnswerChoices() {
+    public List<TestToeicAnswerChoice> getToeicAnswerChoices() {
         return toeicAnswerChoices;
     }
 
-    public void setToeicAnswerChoices(List<ToeicAnswerChoice> toeicAnswerChoices) {
+    public void setToeicAnswerChoices(List<TestToeicAnswerChoice> toeicAnswerChoices) {
         this.toeicAnswerChoices = toeicAnswerChoices;
         listItems.clear();
 
-        for (ToeicAnswerChoice choice : toeicAnswerChoices) {
+        for (TestToeicAnswerChoice choice : toeicAnswerChoices) {
             AnswerSelectionItem item = new AnswerSelectionItem();
 
             item.setLabel(choice.getLabel());

@@ -9,13 +9,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPart;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicPart;
 
 import java.util.List;
 
 public class PartOneTestListComponent extends LinearLayout {
     private RecyclerView rvTestList;
-    private List<ToeicPart> toeicPartList;
+    private List<TestToeicPart> toeicPartList;
     public PartOneTestListComponent(Context context) {
         this(context,null);
         this.initComponent(context);

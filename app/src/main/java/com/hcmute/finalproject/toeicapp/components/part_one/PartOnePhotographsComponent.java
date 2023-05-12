@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,10 +15,9 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicItemContent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestion;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestion;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
 import java.io.ByteArrayInputStream;
@@ -83,31 +81,31 @@ public class PartOnePhotographsComponent extends LinearLayout {
         this.answerSelectionComponent.setShowExplain(true);
     }
 
-    public void loadToeicQuestionGroup(Integer partId, ToeicQuestionGroup toeicQuestionGroup) {
+    public void loadToeicQuestionGroup(Integer partId, TestToeicQuestionGroup testToeicQuestionGroup) {
         //Only one question
-        final ToeicQuestion toeicQuestionFixed = toeicQuestionGroup.getQuestions().get(0);
+        final TestToeicQuestion testToeicQuestionFixed = testToeicQuestionGroup.getQuestions().get(0);
         Gson gson = new Gson();
-        ToeicQuestion toeicQuestion = gson.fromJson(gson.toJson(toeicQuestionFixed), ToeicQuestion.class);
+        TestToeicQuestion testToeicQuestion = gson.fromJson(gson.toJson(testToeicQuestionFixed), TestToeicQuestion.class);
 
-        for (int i = 0; i < toeicQuestion.getChoices().size(); ++i) {
-            final ToeicAnswerChoice choice = toeicQuestion.getChoices().get(i);
+        for (int i = 0; i < testToeicQuestion.getChoices().size(); ++i) {
+            final TestToeicAnswerChoice choice = testToeicQuestion.getChoices().get(i);
             final String content = choice.getContent();
             choice.setExplain(content);
             choice.setContent("");
             choice.setLabel("" + (char)(i + 'A'));
         }
 
-        this.answerSelectionComponent.setToeicAnswerChoices(toeicQuestion.getChoices());
-        this.answerSelectionComponent.setQuestionTitle("Question " + toeicQuestion.getQuestionId());
+        this.answerSelectionComponent.setToeicAnswerChoices(testToeicQuestion.getChoices());
+        this.answerSelectionComponent.setQuestionTitle("Question " + testToeicQuestion.getQuestionId());
 
-        byte[] imageStream = mockToeicTestDatabase.getImageFromDisk(partId, toeicQuestionGroup);
+        byte[] imageStream = mockToeicTestDatabase.getImageFromDisk(partId, testToeicQuestionGroup);
 
         assert imageStream != null;
 
         Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(imageStream));
         this.imageViewMainImage.setImageBitmap(bitmap);
 
-        File file = new File(mockToeicTestDatabase.getAudioAbsPathFromDisk(partId, toeicQuestionGroup));
+        File file = new File(mockToeicTestDatabase.getAudioAbsPathFromDisk(partId, testToeicQuestionGroup));
         this.audioPlayerComponent.loadAudioFile(file);
     }
 }

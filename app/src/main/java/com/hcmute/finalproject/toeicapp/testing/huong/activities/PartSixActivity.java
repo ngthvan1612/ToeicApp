@@ -3,7 +3,6 @@ package com.hcmute.finalproject.toeicapp.testing.huong.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +13,8 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
-import com.hcmute.finalproject.toeicapp.components.part_five.PartFiveComponent;
 import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,32 +38,32 @@ public class PartSixActivity extends GradientActivity {
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
 
     }
-    private List<ToeicAnswerChoice> getSamplePart1Choices() {
-        List<ToeicAnswerChoice> choices = new ArrayList<>();
+    private List<TestToeicAnswerChoice> getSamplePart1Choices() {
+        List<TestToeicAnswerChoice> choices = new ArrayList<>();
 
         // A.
-        ToeicAnswerChoice a = new ToeicAnswerChoice();
+        TestToeicAnswerChoice a = new TestToeicAnswerChoice();
         a.setContent("");
         a.setLabel("A");
         a.setExplain("She's tying her shoelaces.");
         choices.add(a);
 
         // B
-        ToeicAnswerChoice b = new ToeicAnswerChoice();
+        TestToeicAnswerChoice b = new TestToeicAnswerChoice();
         b.setContent("");
         b.setLabel("B");
         b.setExplain("She's holding a cup.");
         choices.add(b);
 
         // C.
-        ToeicAnswerChoice c = new ToeicAnswerChoice();
+        TestToeicAnswerChoice c = new TestToeicAnswerChoice();
         c.setContent("");
         c.setLabel("C");
         c.setExplain("She's reading under an umbrella.");
         choices.add(c);
 
         // D.
-        ToeicAnswerChoice d = new ToeicAnswerChoice();
+        TestToeicAnswerChoice d = new TestToeicAnswerChoice();
         d.setContent("");
         d.setLabel("D");
         d.setExplain("She's jogging through a park.");
@@ -94,7 +92,7 @@ public class PartSixActivity extends GradientActivity {
             final AnswerSelectionComponent answerSelectionComponent1 = container.findViewById(R.id.component_part_six_answer_selection_1);
             final AnswerSelectionComponent answerSelectionComponent2 = container.findViewById(R.id.component_part_six_answer_selection_2);
             final AnswerSelectionComponent answerSelectionComponent3 = container.findViewById(R.id.component_part_six_answer_selection_3);
-            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
+            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
             answerSelectionComponent1.setToeicAnswerChoices(toeicAnswerChoices);
             answerSelectionComponent2.setToeicAnswerChoices(toeicAnswerChoices);
             answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);

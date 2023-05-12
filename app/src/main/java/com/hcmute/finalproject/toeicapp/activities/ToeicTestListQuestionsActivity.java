@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestionGroup;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ToeicTestListQuestionsActivity extends GradientActivity {
-    private List<ToeicQuestionGroup> toeicQuestionGroups = new ArrayList<>();
+    private List<TestToeicQuestionGroup> toeicQuestionGroups = new ArrayList<>();
     private ViewPager viewPager;
     private Integer partId;
     private ViewPagerAdapter adapter;
@@ -60,10 +60,10 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         return intent.getIntExtra("part-id", 0);
     }
 
-    public List<ToeicQuestionGroup> loadToeicQuestionGroupsFromIntent() {
+    public List<TestToeicQuestionGroup> loadToeicQuestionGroupsFromIntent() {
         final Intent intent = getIntent();
         final Bundle bundle = intent.getExtras();
-        return (List<ToeicQuestionGroup>)bundle.get("toeic-group-questions");
+        return (List<TestToeicQuestionGroup>)bundle.get("toeic-group-questions");
     }
 
     private class ViewPagerAdapter extends PagerAdapter {
@@ -81,12 +81,12 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            final ToeicQuestionGroup toeicQuestionGroup = toeicQuestionGroups.get(position);
+            final TestToeicQuestionGroup testToeicQuestionGroup = toeicQuestionGroups.get(position);
 
-            if (toeicQuestionGroup.getType().equals("1")) {
+            if (testToeicQuestionGroup.getType().equals("1")) {
                 PartOnePhotographsComponent component = new PartOnePhotographsComponent(ToeicTestListQuestionsActivity.this);
                 container.addView(component);
-                component.loadToeicQuestionGroup(partId, toeicQuestionGroup);
+                component.loadToeicQuestionGroup(partId, testToeicQuestionGroup);
                 component.setTag("c-" + position);
                 return component;
             }
