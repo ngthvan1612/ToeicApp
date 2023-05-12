@@ -3,7 +3,7 @@ package com.hcmute.finalproject.toeicapp.dao;
 import androidx.room.Dao;
 import androidx.room.Query;
 
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicQuestion;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 
 import java.util.List;
 
