@@ -13,6 +13,9 @@ public interface ToeicVocabularyDao extends ToeicDao<ToeicVocabulary> {
     @Query("SELECT * FROM ToeicVocabulary")
     List<ToeicVocabulary> getAll();
 
+    @Query("SELECT * FROM ToeicVocabulary INNER JOIN ToeicVocabularyTopic ON ToeicVocabularyTopic.id = ToeicVocabulary.topicId WHERE ToeicVocabularyTopic.name = :topicName")
+    List<ToeicVocabulary> getByTopicName(String topicName); //FIX LAI THEO ID
+
     @Query("SELECT * FROM ToeicVocabulary WHERE id = :id")
     ToeicVocabulary getOne(Integer id);
 }

@@ -71,7 +71,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_weight="9"
             android:weightSum="8"
             android:orientation="vertical">
             <LinearLayout
@@ -109,25 +109,47 @@
                         android:textStyle="italic"/>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:layout_weight="1">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/activity_list_vocabulary_button_start_learning"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start Learning"
-                android:textColor="#E4026E"
-                android:textSize="18dp"
-                android:background="@drawable/activity_list_vocabulary_background_button"
-                tools:ignore="MissingConstraints">
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_background"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="2"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="phrase verb"
+                    android:textStyle="italic"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="tuân theo, chấp nhận, tuân thủ"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#008EF1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
 
-            </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+
+
         </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
