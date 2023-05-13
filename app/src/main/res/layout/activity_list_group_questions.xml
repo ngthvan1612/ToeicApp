@@ -49,13 +49,14 @@
         android:layout_marginTop="20dp">
 
         <ListView
+            android:id="@+id/activity_list_group_questions_list_questions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/activity_list_group_questions_list_questions"
-            android:listSelector="@android:color/transparent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:divider="@null"
             android:dividerHeight="15dp"
-            />
+            android:listSelector="@android:color/transparent" />
 
     </LinearLayout>
 

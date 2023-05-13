@@ -6,13 +6,14 @@
     android:layout_height="100dp"
     android:layout_marginStart="20dp"
     android:layout_marginLeft="0dp"
-    android:layout_marginEnd="20dp">
+    android:layout_marginEnd="20dp"
+    android:background="@drawable/component_home_button_rounded_background_bright_blue"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/component_home_button_rounded_background_bright_blue"
         tools:layout_editor_absoluteX="30dp">
 
         <LinearLayout
@@ -56,10 +57,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center|left"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/download"
                 tools:layout_weight="1" />
         </LinearLayout>
