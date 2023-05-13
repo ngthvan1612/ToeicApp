@@ -10,7 +10,11 @@ public class ToeicVocabularyTopic {
     @NonNull
     private Integer id;
 
+    private Integer serverId;
+
     private String name;
+
+    private String imageFileName;
 
     @NonNull
     public Integer getId() {
@@ -21,11 +25,27 @@ public class ToeicVocabularyTopic {
         this.id = id;
     }
 
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }

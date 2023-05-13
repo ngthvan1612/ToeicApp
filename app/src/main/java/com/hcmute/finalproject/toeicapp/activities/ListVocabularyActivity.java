@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,9 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
+import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
+import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
+import com.hcmute.finalproject.toeicapp.entities.ToeicVocabulary;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
@@ -33,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListVocabularyActivity extends AppCompatActivity {
+    private ToeicAppDatabase toeicAppDatabase;
     private TextView txtVocab, txtChecked;
     private AppCompatButton btnStartLearning;
     private BackButtonRoundedComponent btnBackButton;
@@ -59,31 +64,38 @@ public class ListVocabularyActivity extends AppCompatActivity {
         String json = null;
         adapter.notifyDataSetChanged();
 
-        try {
-            final File file = this.getVocabsConfigFile();
-            final FileInputStream fileInputStream = new FileInputStream(file);
-            final byte[] buffer = new byte[(int) file.length()];
-            fileInputStream.read(buffer);
-            json = new String(buffer, StandardCharsets.UTF_8);
-            fileInputStream.close();
-        } catch (IOException e) {
-            return;
-        }
+//        for (AndroidToeicVocabTopic topic : topics) {
+//            if (topic.getTopicName().equals(bundle.getString("topicName"))) {
+//                for (AndroidToeicVocabWord word: topic.getWords()) {
+//                    this.androidToeicVocabWords.add(word);
+//                    Log.d("WORD", word.getEnglish());
+//                }
+//                break;
+//            }
+//        }
+
+        Toast.makeText(this, "OK nha ahihi Ngoc Ben Tre", Toast.LENGTH_SHORT).show();
+
+        toeicAppDatabase = ToeicAppDatabase.getInstance(getApplicationContext());
+        final ToeicVocabularyDao vocabularyDao = toeicAppDatabase.getToeicVocabularyDao();
 
         Bundle bundle = getIntent().getExtras();
 
-        Gson gson = new Gson();
-        List<AndroidToeicVocabTopic> topics = List.of(gson.fromJson(json, AndroidToeicVocabTopic[].class));
+        List<AndroidToeicVocabWord> temps = vocabularyDao.getByTopicName(bundle.getString("topicName"))
+                .stream()
+                .map(v -> {
+                    AndroidToeicVocabWord w = new AndroidToeicVocabWord();
+                    w.setEnglish(v.getEnglish());
+                    w.setVietnamese(v.getExampleVietnamese()); // WRONG
+                    w.setExampleEnglish(v.getExampleEnglish());
+                    w.setExampleVietnamese(v.getExampleVietnamese());
+                    w.setPronounce(v.getPronunciation());
+                    return w;
+                })
+                .limit(10) // Lay 10 cai dau
+                .collect(Collectors.toList());
 
-        for (AndroidToeicVocabTopic topic : topics) {
-            if (topic.getTopicName().equals(bundle.getString("topicName"))) {
-                for (AndroidToeicVocabWord word: topic.getWords()) {
-                    this.androidToeicVocabWords.add(word);
-                    Log.d("WORD", word.getEnglish());
-                }
-                break;
-            }
-        }
+        this.androidToeicVocabWords.addAll(temps);
 
         adapter.notifyDataSetChanged();
     }
@@ -156,9 +168,9 @@ public class ListVocabularyActivity extends AppCompatActivity {
             public ListVocabularyItemViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                this.txtItemOrder = findViewById(R.id.activity_list_vocabulary_item_text_order);
-                this.txtItemVocab = findViewById(R.id.activity_list_vocabulary_item_text_vocabulary);
-                this.txtItemMeaning = findViewById(R.id.activity_list_vocabulary_item_text_meaning);
+                this.txtItemOrder = itemView.findViewById(R.id.activity_list_vocabulary_item_text_order);
+                this.txtItemVocab = itemView.findViewById(R.id.activity_list_vocabulary_item_text_vocabulary);
+                this.txtItemMeaning = itemView.findViewById(R.id.activity_list_vocabulary_item_text_meaning);
             }
 
             private void setData(AndroidToeicVocabWord androidToeicVocabWord, int position) {
