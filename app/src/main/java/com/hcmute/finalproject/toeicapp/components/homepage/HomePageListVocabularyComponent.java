@@ -27,7 +27,7 @@ import com.google.gson.annotations.SerializedName;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.ListVocabularyActivity;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
+//import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
@@ -132,11 +132,11 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         }
 
         Gson gson = new Gson();
-        List<AndroidToeicVocabTopic> topics = List.of(gson.fromJson(json, AndroidToeicVocabTopic[].class));
+        //List<AndroidToeicVocabTopic> topics = List.of(gson.fromJson(json, AndroidToeicVocabTopic[].class));
         //
 
-        this.statistics.addAll(topics.stream()
-                .map(VocabularyTopicStatistic::new).collect(Collectors.toList()));
+//        this.statistics.addAll(topics.stream()
+//                .map(VocabularyTopicStatistic::new).collect(Collectors.toList()));
 
         adapter.notifyDataSetChanged();
     }
@@ -206,27 +206,27 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             final VocabularyTopicStatistic statistic = statistics.get(position);
             final TextView txtTopicName = view.findViewById(R.id.component_home_page_list_vocabulary_txt_topic_name);
             final TextView txtStatus = view.findViewById(R.id.component_home_page_list_vocabulary_txt_status);
-            final ImageView imgView = view.findViewById(R.id.component_home_page_list_vocabulary_image_view);
+            //final ImageView imgView = view.findViewById(R.id.component_home_page_list_vocabulary_image_view);
 
             File rootDirectory = StorageConfiguration.getRootDirectory(getContext());
             File vocabTestDirectory = new File(rootDirectory, "test-vocab");
             File dataDirectory = new File(vocabTestDirectory, "data");
-            File imageFile = new File(dataDirectory, statistic.getImageFileName());
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            imgView.setImageBitmap(bitmap);
+            //File imageFile = new File(dataDirectory, statistic.getImageFileName());
+            //Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            //imgView.setImageBitmap(bitmap);
 
             txtTopicName.setText(statistic.getTopicName());
             txtStatus.setText(statistic.getSuccess() + "/" + statistic.getTotal());
 
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), ListVocabularyActivity.class);
-                    intent.putExtra("topicName", statistic.getTopicName());
-                    intent.putExtra("status", statistic.getSuccess() + "/" + statistic.getTotal());
-                    getContext().startActivity(intent);
-                }
-            });
+//            view.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //Intent intent = new Intent(getContext(), ListVocabularyActivity.class);
+//                    intent.putExtra("topicName", statistic.getTopicName());
+//                    intent.putExtra("status", statistic.getSuccess() + "/" + statistic.getTotal());
+//                    getContext().startActivity(intent);
+//                }
+//            });
 
             return view;
         }
