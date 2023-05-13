@@ -6,8 +6,9 @@
     android:paddingBottom="20dp">
 
     <ImageView
-        android:layout_width="74dp"
-        android:layout_height="74dp"
+        android:id="@+id/component_home_page_list_vocabulary_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:src="@drawable/component_home_page_list_vocabulary_item_background_icon"
         android:layout_gravity="center_horizontal"/>
 
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         android:maxWidth="200dp"
         android:text="Hợp đồng"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"

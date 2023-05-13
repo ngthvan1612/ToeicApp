@@ -5,6 +5,8 @@ public class VocabularyTopicStatistic {
     private Integer success;
     private Integer total;
 
+    private String imageFileName;
+
     public VocabularyTopicStatistic() {
 
     }
@@ -13,6 +15,21 @@ public class VocabularyTopicStatistic {
         this.setTopicName(topic.getTopicName());
         this.setTotal(topic.getNumberOfVocabularies());
         this.setSuccess(0);
+    }
+
+    public VocabularyTopicStatistic(AndroidToeicVocabTopic androidToeicVocabTopic) {
+        this.setTopicName(androidToeicVocabTopic.getTopicName());
+        this.setTotal(androidToeicVocabTopic.getWords().size());
+        this.setSuccess(0);
+        this.setImageFileName(androidToeicVocabTopic.getImageFileName());
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public String getTopicName() {

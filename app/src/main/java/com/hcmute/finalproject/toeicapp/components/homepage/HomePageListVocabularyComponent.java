@@ -107,9 +107,9 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             }
         });
 
-//        if (!this.getVocabsConfigFile().exists()) {
-//            this.downloadConfigFile();
-//        }
+        if (!this.getVocabsConfigFile().exists()) {
+            this.downloadConfigFile();
+        }
 
         this.loadListVocabsTest();
     }
@@ -141,7 +141,6 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         adapter.notifyDataSetChanged();
     }
 
-    @Deprecated
     private void downloadConfigFile() {
         ProgressDialog progressBar = new ProgressDialog(this.getContext());
         progressBar.setTitle("Đang tải 600 từ xuống");
