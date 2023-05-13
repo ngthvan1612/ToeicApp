@@ -1,7 +1,9 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
+import android.accounts.AuthenticatorException;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,6 +27,7 @@ import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicQuestionGroup
 import com.hcmute.finalproject.toeicapp.assets.backend.CheckSumStringResponse;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
+import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicTestsResponse;
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
@@ -39,6 +43,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
+import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 
 import java.util.List;
 import java.util.UUID;
@@ -56,10 +61,20 @@ public class HomeActivity extends GradientActivity {
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
 
+    private AuthenticationService authenticationService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        this.authenticationService = new AuthenticationService(this);
+
+        if (!this.authenticationService.isAuthenticated()) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
 
         this.toeicAppDatabase = ToeicAppDatabase.getInstance(this.getApplicationContext());
 
@@ -307,6 +322,12 @@ public class HomeActivity extends GradientActivity {
 
                 component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
 
+                return component;
+            }
+            else if (position == 4) {
+                HomePageUserProfileComponent component = new HomePageUserProfileComponent(HomeActivity.this);
+                container.addView(component);
+                component.setTag(getLayoutTagByPosition(4));
                 return component;
             }
 
