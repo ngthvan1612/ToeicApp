@@ -1,5 +1,6 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,31 +10,26 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
-import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;
+import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartSixActivity extends GradientActivity {
+public class PartOnePhotographsActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
-    private QuestionSentenceComponent questionSentenceComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_test);
         viewPager = findViewById(R.id.activity_home_view_pager);
         this.initViewPager();
-
     }
     private void initViewPager() {
         viewPager.setOffscreenPageLimit(NUMBER_OF_PAGES);
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
-
     }
     private List<TestToeicAnswerChoice> getSamplePart1Choices() {
         List<TestToeicAnswerChoice> choices = new ArrayList<>();
@@ -83,21 +79,19 @@ public class PartSixActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartSixComponent component = new PartSixComponent(PartSixActivity.this);
+            PartOnePhotographsComponent component = new PartOnePhotographsComponent(PartOnePhotographsActivity.this);
+            CommonHeaderComponent commonHeaderComponent = new CommonHeaderComponent(PartOnePhotographsActivity.this);
             container.addView(component);
+            container.addView(commonHeaderComponent);
 
-            final AnswerSelectionComponent answerSelectionComponent1 = container.findViewById(R.id.component_part_six_answer_selection_1);
-            final AnswerSelectionComponent answerSelectionComponent2 = container.findViewById(R.id.component_part_six_answer_selection_2);
-            final AnswerSelectionComponent answerSelectionComponent3 = container.findViewById(R.id.component_part_six_answer_selection_3);
+
+            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
             final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent1.setToeicAnswerChoices(toeicAnswerChoices);
-            answerSelectionComponent2.setToeicAnswerChoices(toeicAnswerChoices);
-            answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);
+            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
 
-            questionSentenceComponent = container.findViewById(R.id.component_part_six_question_sentence);
-            questionSentenceComponent.setQuestionDescription
-                    ("<h2>hello</h2>");
-
+            commonHeaderComponent = findViewById(R.id.common_part_one_header_title);
+            Intent intent = new Intent(PartOnePhotographsActivity.this,HomeActivity.class);
+            commonHeaderComponent.handleBackToHomepage(intent);
             return component;
         }
 
@@ -105,5 +99,7 @@ public class PartSixActivity extends GradientActivity {
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
+
+
     }
 }

@@ -10,7 +10,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
+import com.hcmute.finalproject.toeicapp.services.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
 import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;

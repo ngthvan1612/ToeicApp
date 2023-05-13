@@ -7,6 +7,7 @@ public class TestToeicPart implements Serializable {
     private Integer partId;
     private String slug;
     private List<TestToeicQuestionGroup> toeicQuestionGroups;
+    private Boolean downloaded = false;
 
     public TestToeicPart() {
 
@@ -34,5 +35,12 @@ public class TestToeicPart implements Serializable {
 
     public void setToeicQuestionGroups(List<TestToeicQuestionGroup> toeicQuestionGroups) {
         this.toeicQuestionGroups = toeicQuestionGroups;
+    }
+    public Boolean getDownloaded() {
+        return downloaded;
+    }
+
+    public void setDownloaded(Boolean downloaded) {
+        this.downloaded = downloaded;
     }
 }

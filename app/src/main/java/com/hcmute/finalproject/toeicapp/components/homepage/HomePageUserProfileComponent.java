@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,13 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.activities.LoginActivity;
+import com.hcmute.finalproject.toeicapp.services.activities.LoginActivity;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 
 public class HomePageUserProfileComponent extends LinearLayout {

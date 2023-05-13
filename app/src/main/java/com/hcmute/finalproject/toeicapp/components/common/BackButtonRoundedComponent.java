@@ -3,18 +3,13 @@ package com.hcmute.finalproject.toeicapp.components.common;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
-import com.hcmute.finalproject.toeicapp.activities.HomeActivity;
 
 public class BackButtonRoundedComponent extends LinearLayout {
     private Context context;

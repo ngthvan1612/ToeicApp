@@ -1,15 +1,8 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 

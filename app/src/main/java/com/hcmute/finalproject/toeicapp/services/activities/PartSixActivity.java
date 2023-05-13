@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,15 +9,17 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.part_two.PartTwoComponent;
+import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
+import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartTwoActivity extends GradientActivity {
+public class PartSixActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
+    private QuestionSentenceComponent questionSentenceComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,11 +83,21 @@ public class PartTwoActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartTwoComponent component = new PartTwoComponent(PartTwoActivity.this);
+            PartSixComponent component = new PartSixComponent(PartSixActivity.this);
             container.addView(component);
-            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
+
+            final AnswerSelectionComponent answerSelectionComponent1 = container.findViewById(R.id.component_part_six_answer_selection_1);
+            final AnswerSelectionComponent answerSelectionComponent2 = container.findViewById(R.id.component_part_six_answer_selection_2);
+            final AnswerSelectionComponent answerSelectionComponent3 = container.findViewById(R.id.component_part_six_answer_selection_3);
             final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+            answerSelectionComponent1.setToeicAnswerChoices(toeicAnswerChoices);
+            answerSelectionComponent2.setToeicAnswerChoices(toeicAnswerChoices);
+            answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);
+
+            questionSentenceComponent = container.findViewById(R.id.component_part_six_question_sentence);
+            questionSentenceComponent.setQuestionDescription
+                    ("<h2>hello</h2>");
+
             return component;
         }
 

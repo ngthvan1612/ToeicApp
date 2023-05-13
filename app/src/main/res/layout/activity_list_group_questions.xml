@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingTop="20dp"
     android:orientation="vertical"
-    tools:context=".activities.ListGroupQuestionsActivity">
+    tools:context=".services.activities.ListGroupQuestionsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

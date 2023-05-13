@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +16,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
-import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.File;
@@ -30,7 +27,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ListVocabularyActivity extends AppCompatActivity {
     private TextView txtVocab, txtChecked;

@@ -8,10 +8,6 @@ public class TestToeicFullTest implements Serializable {
     private String fullName;
     private List<TestToeicPart> parts;
 
-    public TestToeicFullTest() {
-
-    }
-
     public String getSlug() {
         return slug;
     }
@@ -34,5 +30,9 @@ public class TestToeicFullTest implements Serializable {
 
     public void setParts(List<TestToeicPart> parts) {
         this.parts = parts;
+    }
+
+    public TestToeicFullTest() {
+
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ToeicTestListQuestionsActivity"
+    tools:context=".services.activities.ToeicTestListQuestionsActivity"
     android:id="@+id/activity_toeic_test_list_questions_layout">
 
 

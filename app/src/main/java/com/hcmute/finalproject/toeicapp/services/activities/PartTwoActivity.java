@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +9,13 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.part_five.PartFiveComponent;
+import com.hcmute.finalproject.toeicapp.components.part_two.PartTwoComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartFiveActivity extends GradientActivity {
+public class PartTwoActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
 
@@ -80,9 +81,9 @@ public class PartFiveActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartFiveComponent component = new PartFiveComponent(PartFiveActivity.this);
+            PartTwoComponent component = new PartTwoComponent(PartTwoActivity.this);
             container.addView(component);
-            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_five_answer_selection);
+            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
             final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
             answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
             return component;

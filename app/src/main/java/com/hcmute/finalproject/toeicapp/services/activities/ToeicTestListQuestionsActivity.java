@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.activities;
+package com.hcmute.finalproject.toeicapp.services.activities;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;

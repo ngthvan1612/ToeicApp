@@ -20,16 +20,17 @@ public class ToeicPart {
     private Integer id;
     private Integer serverId;
     private Integer partNumber;
-
     private Integer toeicFullTestId;
+    private Boolean downloaded = false;
 
 
-//    constructor
+    //    constructor
     public ToeicPart() {}
-    public ToeicPart(Integer id,Integer serverId, Integer partNumber, Integer toeicFullTestId) {
+    public ToeicPart(Integer id,Integer serverId, Integer partNumber, Integer toeicFullTestId,Boolean downloaded) {
         this.serverId = id;
         this.partNumber = partNumber;
         this.toeicFullTestId = toeicFullTestId;
+        this.downloaded = downloaded;
     }
 
 //    getter setter
@@ -63,6 +64,12 @@ public class ToeicPart {
 
     public void setToeicFullTestId(Integer toeicFullTestId) {
         this.toeicFullTestId = toeicFullTestId;
+    }
+    public Boolean getDownloaded() {
+        return downloaded;
+    }
+    public void setDownloaded(Boolean downloaded) {
+        this.downloaded = downloaded;
     }
 
 
