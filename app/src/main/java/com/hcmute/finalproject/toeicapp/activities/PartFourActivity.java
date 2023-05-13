@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.services.activities;
+package com.hcmute.finalproject.toeicapp.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.part_five.PartFiveComponent;
+import com.hcmute.finalproject.toeicapp.components.part_four.PartFourComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartFiveActivity extends GradientActivity {
+public class PartFourActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +30,6 @@ public class PartFiveActivity extends GradientActivity {
     private void initViewPager() {
         viewPager.setOffscreenPageLimit(NUMBER_OF_PAGES);
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
-
     }
     private List<TestToeicAnswerChoice> getSamplePart1Choices() {
         List<TestToeicAnswerChoice> choices = new ArrayList<>();
@@ -80,11 +79,12 @@ public class PartFiveActivity extends GradientActivity {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartFiveComponent component = new PartFiveComponent(PartFiveActivity.this);
+            PartFourComponent component =
+                    new PartFourComponent(PartFourActivity.this);
             container.addView(component);
-            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_five_answer_selection);
-            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+//            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_four_answer_selection);
+//            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
+//            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
             return component;
         }
 

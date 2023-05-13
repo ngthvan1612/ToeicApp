@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_home_background_linear_gradient"
-    tools:context=".services.activities.HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
         android:layout_width="200dp"

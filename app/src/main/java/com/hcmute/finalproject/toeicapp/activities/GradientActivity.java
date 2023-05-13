@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.services.activities;
+package com.hcmute.finalproject.toeicapp.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.services.activities.ListGroupQuestionsActivity;
+import com.hcmute.finalproject.toeicapp.activities.ListGroupQuestionsActivity;
 import com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent;
 
 public class HomePageListPracticeComponent extends LinearLayout {

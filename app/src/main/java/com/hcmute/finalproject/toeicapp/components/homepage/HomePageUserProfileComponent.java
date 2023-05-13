@@ -15,9 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.services.activities.LoginActivity;
+import com.hcmute.finalproject.toeicapp.activities.LoginActivity;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 
 public class HomePageUserProfileComponent extends LinearLayout {

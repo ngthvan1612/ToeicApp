@@ -17,43 +17,43 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".services.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"/>
         <activity
-            android:name=".services.activities.VocabularyDetailsActivity"
+            android:name=".activities.VocabularyDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.ListVocabularyActivity"
+            android:name=".activities.ListVocabularyActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.ToeicTestListQuestionsActivity"
+            android:name=".activities.ToeicTestListQuestionsActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartTwoActivity"
+            android:name=".activities.PartTwoActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartOnePhotographsActivity"
+            android:name=".activities.PartOnePhotographsActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartFourActivity"
+            android:name=".activities.PartFourActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartFiveActivity"
+            android:name=".activities.PartFiveActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartSixActivity"
+            android:name=".activities.PartSixActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.PartSevenActivity"
+            android:name=".activities.PartSevenActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.ListGroupQuestionsActivity"
+            android:name=".activities.ListGroupQuestionsActivity"
             android:exported="true" />
         <activity
             android:name=".testing.ngoc.activities.NgocTestBlurShadowActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.ResultActivity"
+            android:name=".activities.ResultActivity"
             android:exported="true" />
         <activity
             android:name=".testing.van.activities.VanTestDownloadService"
@@ -80,10 +80,10 @@
             android:name=".testing.van.activities.VanTestActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.TestActivity"
+            android:name=".activities.TestActivity"
             android:exported="true" />
         <activity
-            android:name=".services.activities.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
