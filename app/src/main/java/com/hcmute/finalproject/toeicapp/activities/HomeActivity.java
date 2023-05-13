@@ -28,6 +28,7 @@ import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigation
 import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicTestsResponse;
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
+import com.hcmute.finalproject.toeicapp.dao.ToeicItemContentDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicPartDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionGroupDao;
@@ -41,8 +42,10 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,6 +83,37 @@ public class HomeActivity extends GradientActivity {
         this.initBottomNavigation();
 
         CheckDataSync();
+
+
+       for(Integer item :getAllToeicStorageIdsByPartServerId(23)) {
+           Log.d("item",item.toString());
+       }
+//        test(22);
+    }
+
+    private void test(Integer partServerId) {
+        final ToeicPartDao partDao = toeicAppDatabase.getToeicPartDao();
+        final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
+        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
+        final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
+        Log.d("toeicPart",toeicPart.getPartNumber().toString());
+    }
+
+    private List<Integer> getAllToeicStorageIdsByPartServerId(Integer partServerId) {
+        final ToeicPartDao partDao = toeicAppDatabase.getToeicPartDao();
+        final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
+        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
+        final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
+        Log.d("toeicPart",toeicPart.getPartNumber().toString());
+        final List<ToeicQuestionGroup> toeicQuestionGroups = toeicQuestionGroupDao.getGroupsByPartId(toeicPart.getId());
+        final List<ToeicItemContent> itemContents = new ArrayList<>();
+
+        for(ToeicQuestionGroup toeicQuestionGroupItem: toeicQuestionGroups) {
+            final List<ToeicItemContent> temps =
+                    toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroupItem.getId());
+            itemContents.addAll(temps);
+        }
+        return itemContents.stream().map(item -> item.getId()).collect(Collectors.toList());
     }
 
     private void FetchNewData() {

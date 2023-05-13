@@ -17,4 +17,7 @@ public interface ToeicPartDao extends ToeicDao<ToeicPart> {
 
     @Query("SELECT * FROM ToeicPart WHERE id = :id")
     ToeicPart getOne(Integer id);
+
+    @Query("SELECT * FROM ToeicPart WHERE ToeicPart.serverId = :serverId")
+    ToeicPart getToeicPartByServerId(Integer serverId);
 }
