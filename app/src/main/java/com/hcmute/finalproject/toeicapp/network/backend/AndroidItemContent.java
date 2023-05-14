@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.assets.backend;
+package com.hcmute.finalproject.toeicapp.network.backend;
 
 public class AndroidItemContent {
     private Integer storageServerId;
