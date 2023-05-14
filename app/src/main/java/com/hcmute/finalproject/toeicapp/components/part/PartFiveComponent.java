@@ -11,7 +11,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-public class PartFiveComponent  extends LinearLayout implements ToeicPartComponent {
+public class PartFiveComponent extends ToeicPartComponentBase {
     private CommonHeaderComponent commonHeaderComponent;
     public PartFiveComponent(Context context) {
         this(context, null);
