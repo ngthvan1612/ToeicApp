@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
@@ -17,10 +15,8 @@ import com.hcmute.finalproject.toeicapp.services.backend.vocabs.ToeicVocabularyB
 import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackground;
 import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundFactory;
-import com.hcmute.finalproject.toeicapp.services.media.AudioPlayerBackgroundService;
 
 import java.io.File;
-import java.util.Map;
 
 public class VocabularyDetailsActivity extends AppCompatActivity {
     private TextView txtEnglish, txtVietnamese, txtPronounce, txtEnglishExample, txtVietnameseExample, txtTopicName, txtChecked;
@@ -40,7 +36,7 @@ public class VocabularyDetailsActivity extends AppCompatActivity {
     }
 
     private void initView(AndroidToeicVocabWord word) {
-        this.txtTopicName = findViewById(R.id.activity_vocabulary_details_topic_name);
+        this.txtTopicName = findViewById(R.id.activity_learn_vocabulary_result_topic_name);
         this.txtChecked = findViewById(R.id.activity_vocabulary_details_text_checked);
         this.txtEnglish = findViewById(R.id.activity_vocabulary_details_txt_english);
         this.txtVietnamese = findViewById(R.id.activity_vocabulary_details_txt_vietnamese);
@@ -49,7 +45,7 @@ public class VocabularyDetailsActivity extends AppCompatActivity {
         this.txtVietnameseExample = findViewById(R.id.activity_vocabulary_details_txt_vietnamese_example);
         this.imgWord = findViewById(R.id.activity_vocabulary_details_img_word);
         this.imgVolumn = findViewById(R.id.activity_vocabulary_details_img_volumn);
-        this.btnBack = findViewById(R.id.activity_vocabulary_details_btn_back);
+        this.btnBack = findViewById(R.id.activity_learn_vocabulary_result_btn_back);
 
         Bundle topicBundle = getIntent().getExtras();
         txtTopicName.setText(topicBundle.getString("topicName").split(" ")[2]);

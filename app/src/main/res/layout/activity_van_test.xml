@@ -4,21 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".testing.van.activities.VanTestActivity"
-    android:background="@drawable/activity_home_background_linear_gradient"
-    android:orientation="vertical">
+    tools:context=".testing.van.activities.VanTestActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show explain"
-        android:id="@+id/activity_van_test_answer_btn_show_answer"/>
-
-
-    <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:id="@+id/activity_van_test_answer_selection_test"
+    <com.hcmute.finalproject.toeicapp.components.learnvocab.LearnVocabularyQuestionComponent
+        android:id="@+id/activity_van_test_question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

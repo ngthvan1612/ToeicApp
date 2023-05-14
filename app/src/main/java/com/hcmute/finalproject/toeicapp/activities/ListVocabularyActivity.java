@@ -18,7 +18,10 @@ import android.widget.Toast;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
+import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyTopicDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
+import com.hcmute.finalproject.toeicapp.entities.ToeicVocabulary;
+import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
 import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
@@ -106,7 +109,11 @@ public class ListVocabularyActivity extends AppCompatActivity {
         btnStartLearning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ListVocabularyActivity.this, "click start", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListVocabularyActivity.this, LearnVocabularyActivity.class);
+                ToeicVocabularyTopicDao dao = toeicAppDatabase.getToeicVocabularyTopicDao();
+                ToeicVocabularyTopic topic = dao.getByTopicName(getIntent().getStringExtra("topicName"));
+                intent.putExtra("topicId", topic.getId());
+                startActivity(intent);
             }
         });
     }

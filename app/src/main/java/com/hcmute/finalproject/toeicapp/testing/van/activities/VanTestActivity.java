@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
+import com.hcmute.finalproject.toeicapp.components.learnvocab.LearnVocabularyQuestionComponent;
+import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
+import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
+import com.hcmute.finalproject.toeicapp.entities.ToeicVocabulary;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
@@ -19,18 +23,14 @@ public class VanTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_van_test);
 
-        final AnswerSelectionComponent answerSelectionComponent = findViewById(R.id.activity_van_test_answer_selection_test);
-        final List<TestToeicAnswerChoice> testToeicAnswerChoices = this.getSamplePart3Choices();
-        final Button btnShowAnswer = findViewById(R.id.activity_van_test_answer_btn_show_answer);
+        final ToeicAppDatabase toeicAppDatabase = ToeicAppDatabase.getInstance(this);
+        final ToeicVocabularyDao dao = toeicAppDatabase.getToeicVocabularyDao();
+        ToeicVocabulary vocabulary = dao.getOne(10);
 
-        answerSelectionComponent.setToeicAnswerChoices(testToeicAnswerChoices);
+        LearnVocabularyQuestionComponent component = findViewById(R.id.activity_van_test_question);
+        component.loadVocabulary(vocabulary);
 
-
-        btnShowAnswer.setOnClickListener(view -> {
-            counter++;
-            answerSelectionComponent.setQuestionTitle("Question " + counter);
-            answerSelectionComponent.setShowExplain(!answerSelectionComponent.isShowExplain());
-        });
+        component.setViewMode(LearnVocabularyQuestionComponent.MODE_WRONG_ANSWER);
     }
 
     int counter = 0;
