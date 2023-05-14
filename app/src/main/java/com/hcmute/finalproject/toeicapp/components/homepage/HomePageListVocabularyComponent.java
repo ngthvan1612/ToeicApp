@@ -1,5 +1,6 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
+import com.hcmute.finalproject.toeicapp.services.backend.vocabs.ToeicVocabularyBackendService;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
@@ -66,6 +68,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
     private ListVocabsAdapter adapter;
     private List<VocabularyTopicStatistic> statistics;
     private OnClickBackButton onClickBackButton;
+    private ToeicVocabularyBackendService toeicVocabularyBackendService;
 
     public HomePageListVocabularyComponent(Context context) {
         this(context, null);
@@ -109,6 +112,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         }
 
         this.toeicAppDatabase = ToeicAppDatabase.getInstance(context);
+        this.toeicVocabularyBackendService = new ToeicVocabularyBackendService(context);
 
         this.adapter = new ListVocabsAdapter();
         this.listViewVocabs.setAdapter(this.adapter);
@@ -120,8 +124,44 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             }
         });
 
-        //this.downloadVocabulary();
-        this.loadListVocabsTest();
+        this.checkListVocabTestsIsUpdated();
+    }
+
+    public void checkListVocabTestsIsUpdated() {
+        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
+        progressDialog.setTitle("Đang tải từ vựng");
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
+
+        this.toeicVocabularyBackendService.checkToeicTestDatabaseIsUpdated(new ToeicVocabularyBackendService.OnBackupToeicListener() {
+            @Override
+            public void prepare() {
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess() {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Vocabulary is up to date", Toast.LENGTH_SHORT).show();
+                loadListVocabsTest();
+            }
+
+            @Override
+            public void onUpdateMessage(String message) {
+                progressDialog.setMessage(message);
+            }
+
+            @Override
+            public void onUpdateProgress(Integer progress) {
+                progressDialog.setProgress(progress);
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadListVocabsTest() {
@@ -141,111 +181,6 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         }
 
         adapter.notifyDataSetChanged();
-    }
-
-    private void downloadVocabulary() {
-        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
-        progressDialog.setTitle("Đang tải từ vựng");
-        progressDialog.setMessage("Đang tải ...");
-        progressDialog.setCancelable(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMax(100);
-        progressDialog.show();
-        DownloadFileService downloadFileService = new DownloadFileService(this.getContext());
-        downloadFileService.downloadFileByteArrayAsync("https://toeic-app.uteoj.com/api/android/toeic-test/get-vocabs-data-zip", new DownloadFileCallback<byte[]>() {
-            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-            @Override
-            public void onSuccess(byte[] toeicStorage) {
-                Toast.makeText(getContext(), "Download success", Toast.LENGTH_SHORT).show();
-                ToeicVocabularyTopicDao topicDao = toeicAppDatabase.getToeicVocabularyTopicDao();
-                ToeicVocabularyDao vocabularyDao = toeicAppDatabase.getToeicVocabularyDao();
-                List<AndroidToeicVocabTopic> topics = new ArrayList<>();
-                progressDialog.setMessage("Đang xử lý ...");
-
-                final File vocabRoot = StorageConfiguration.getVocabularyDataDirectory(getContext().getApplicationContext());
-
-                try {
-                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(toeicStorage);
-                    ZipInputStream zipInputStream = new ZipInputStream(byteArrayInputStream);
-                    ZipEntry zipEntry = null;
-                    while ((zipEntry =zipInputStream.getNextEntry()) != null) {
-                        if (zipEntry.getName().equals("config.json")) {
-                            ByteArrayOutputStream output = new ByteArrayOutputStream();
-                            byte[] buffer = new byte[1024];
-                            int n = 0;
-                            while ((n = zipInputStream.read(buffer, 0, 1024)) != -1) {
-                                output.write(buffer, 0, n);
-                            }
-                            String json = new String(output.toByteArray(), StandardCharsets.UTF_8);
-                            Log.d("json", json);
-                            Gson gson = new Gson();
-                            topics = List.of(gson.fromJson(json, AndroidToeicVocabTopic[].class));
-                            Log.d("json", topics.size() + "");
-                        }
-                        else {
-                            ByteArrayOutputStream output = new ByteArrayOutputStream();
-                            byte[] buffer = new byte[1024];
-                            int n = 0;
-                            while ((n = zipInputStream.read(buffer, 0, 1024)) != -1) {
-                                output.write(buffer, 0, n);
-                            }
-                            final String fileName = zipEntry.getName().split("/")[1];
-                            Log.d("WRITE_FILE", fileName + " " + zipEntry.getName());
-                            File outputFile = new File(vocabRoot, fileName);
-                            FileOutputStream fos = new FileOutputStream(outputFile);
-                            fos.write(output.toByteArray());
-                            fos.close();
-                        }
-                    }
-                    zipInputStream.close();
-                    progressDialog.dismiss();
-                    List<ToeicVocabularyTopic> vocabularyTopicList = topicDao.getAll();
-                    for(ToeicVocabularyTopic topic: vocabularyTopicList) {
-                        topicDao.delete(topic);
-                    }
-
-                    for (AndroidToeicVocabTopic topic: topics) {
-                        ToeicVocabularyTopic toeicVocabularyTopic = new ToeicVocabularyTopic();
-                        toeicVocabularyTopic.setServerId(topic.getServerId());
-                        toeicVocabularyTopic.setName(topic.getTopicName());
-                        toeicVocabularyTopic.setImageFileName(topic.getImageFileName());
-
-                        final Integer newTopicId = Math.toIntExact(topicDao.insert(toeicVocabularyTopic).get(0));
-
-                        List<AndroidToeicVocabWord> androidToeicVocabWords = topic.getWords();
-                        for (AndroidToeicVocabWord word: androidToeicVocabWords) {
-                            ToeicVocabulary toeicVocabulary = new ToeicVocabulary();
-                            toeicVocabulary.setServerId(word.getServerId());
-                            toeicVocabulary.setEnglish(word.getEnglish());
-                            toeicVocabulary.setPronunciation(word.getPronounce());
-                            toeicVocabulary.setExampleEnglish(word.getExampleEnglish());
-                            toeicVocabulary.setExampleVietnamese(word.getExampleVietnamese());
-                            toeicVocabulary.setImagePath(word.getImageFilename());
-                            toeicVocabulary.setAudioPath(word.getAudioFileName());
-                            toeicVocabulary.setTopicId(newTopicId);
-
-                            vocabularyDao.insert(toeicVocabulary);
-                        }
-                    }
-
-                    loadListVocabsTest();
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onProgressUpdate(int percent) {
-                progressDialog.setProgress(percent);
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
-                Log.d("on_error", error.toString());
-            }
-        });
     }
 
     private class ListVocabsAdapter extends BaseAdapter {
