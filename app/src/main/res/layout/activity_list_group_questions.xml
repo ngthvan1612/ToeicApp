@@ -22,7 +22,8 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="DuplicateClickableBoundsCheck">
 
         </com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent>
 
@@ -59,5 +60,11 @@
             android:listSelector="@android:color/transparent" />
 
     </LinearLayout>
+
+    <com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent
+        android:id="@+id/activity_home_bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
 </LinearLayout>
