@@ -1,9 +1,7 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +37,6 @@ import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
-import com.hcmute.finalproject.toeicapp.network.test.RetrofitTestRetrofitClient01;
-import com.hcmute.finalproject.toeicapp.network.test.TestAPIService;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
 import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
@@ -50,12 +44,9 @@ import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -257,46 +248,6 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         });
     }
 
-    @Deprecated
-    private void downloadConfigFile() {
-        ProgressDialog progressBar = new ProgressDialog(this.getContext());
-        progressBar.setTitle("Đang tải 600 từ xuống");
-        TestAPIService apiService = RetrofitTestRetrofitClient01.getInstance();
-        apiService.download600ToeicVocabularies().enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                final ResponseBody responseBody = response.body();
-
-                try {
-                    final byte[] content = responseBody.bytes();
-                    FileOutputStream outputStream = new FileOutputStream(getVocabsConfigFile());
-                    outputStream.write(content);
-                    outputStream.close();
-                    Toast.makeText(getContext(), "Tải file thành công", Toast.LENGTH_SHORT).show();
-
-                    loadListVocabsTest();
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), "Tải file lỗi", Toast.LENGTH_SHORT).show();
-                }
-
-                progressBar.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Tải file lỗi", Toast.LENGTH_SHORT).show();
-                progressBar.dismiss();
-            }
-        });
-    }
-
-    private File getVocabsConfigFile() {
-        File rootDirectory = StorageConfiguration.getRootDirectory(this.getContext());
-        File testVocabDirectory = new File(rootDirectory, "test-vocab");
-        File config = new File(testVocabDirectory, "config.json");
-        return config;
-    }
-
     private class ListVocabsAdapter extends BaseAdapter {
 
         @Override
@@ -348,98 +299,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
         }
     }
 
-    public void loadSampleStatistics() {
-        this.setStatistics(this.getSampleVocabStatistic(this.getSampleTopics()));
-    }
-
-    @Deprecated
-    private List<VocabularyTopic> getSampleTopics() {
-        List<VocabularyTopic> topics = new ArrayList<>();
-
-        topics.add(new VocabularyTopic("Contracts - Hợp Đồng", 12));
-        topics.add(new VocabularyTopic("Marketing - Nghiên Cứu Thị Trường", 12));
-        topics.add(new VocabularyTopic("Warrranties - Sự Bảo Hành", 12));
-        topics.add(new VocabularyTopic("Business Planning - Kế Hoạch Kinh Doanh", 12));
-        topics.add(new VocabularyTopic("Conferences - Hội Nghị", 12));
-
-        return topics;
-    }
-
-    @Deprecated
-    private List<VocabularyTopicStatistic> getSampleVocabStatistic(final List<VocabularyTopic> topics) {
-        final Random randomEngine = new Random();
-        List<VocabularyTopicStatistic> result = topics.stream().map(VocabularyTopicStatistic::new).collect(Collectors.toList());
-
-        for (VocabularyTopicStatistic statistic : result) {
-            statistic.setSuccess(Math.abs(randomEngine.nextInt()) % (statistic.getTotal() + 1));
-        }
-
-        return result;
-    }
-
     public interface OnClickBackButton {
         void onClick();
-    }
-
-    private class Toeic600Topic {
-        private String name;
-        private List<Toeic600Vocab> vocabs;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public List<Toeic600Vocab> getVocabs() {
-            return vocabs;
-        }
-
-        public void setVocabs(List<Toeic600Vocab> vocabs) {
-            this.vocabs = vocabs;
-        }
-    }
-
-    private class Toeic600Vocab {
-        @SerializedName("image_url")
-        private String imageUrl;
-        private String text;
-        private String pronunciation;
-        @SerializedName("audio_url")
-        private String audioUrl;
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getPronunciation() {
-            return pronunciation;
-        }
-
-        public void setPronunciation(String pronunciation) {
-            this.pronunciation = pronunciation;
-        }
-
-        public String getAudioUrl() {
-            return audioUrl;
-        }
-
-        public void setAudioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
-        }
     }
 }
