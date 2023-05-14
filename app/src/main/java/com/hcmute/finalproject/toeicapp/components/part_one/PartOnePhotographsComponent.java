@@ -18,7 +18,6 @@ import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestion;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
-import com.hcmute.finalproject.toeicapp.services.mocktoeic.MockToeicTestDatabase;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,7 +26,6 @@ public class PartOnePhotographsComponent extends LinearLayout {
     private ImageView imageViewMainImage;
     private AudioPlayerComponent audioPlayerComponent;
     private AnswerSelectionComponent answerSelectionComponent;
-    private MockToeicTestDatabase mockToeicTestDatabase;
     private CommonHeaderComponent commonHeaderComponent;
 
 
@@ -58,7 +56,6 @@ public class PartOnePhotographsComponent extends LinearLayout {
             return;
         }
 
-        mockToeicTestDatabase = new MockToeicTestDatabase(context);
         this.audioPlayerComponent.setOnAudioPlayerStateChanged(new AudioPlayerComponent.OnAudioPlayerChange() {
             @Override
             public boolean onPlayButtonClicked() {
@@ -83,29 +80,5 @@ public class PartOnePhotographsComponent extends LinearLayout {
 
     public void loadToeicQuestionGroup(Integer partId, TestToeicQuestionGroup testToeicQuestionGroup) {
         //Only one question
-        final TestToeicQuestion testToeicQuestionFixed = testToeicQuestionGroup.getQuestions().get(0);
-        Gson gson = new Gson();
-        TestToeicQuestion testToeicQuestion = gson.fromJson(gson.toJson(testToeicQuestionFixed), TestToeicQuestion.class);
-
-        for (int i = 0; i < testToeicQuestion.getChoices().size(); ++i) {
-            final TestToeicAnswerChoice choice = testToeicQuestion.getChoices().get(i);
-            final String content = choice.getContent();
-            choice.setExplain(content);
-            choice.setContent("");
-            choice.setLabel("" + (char)(i + 'A'));
-        }
-
-        this.answerSelectionComponent.setToeicAnswerChoices(testToeicQuestion.getChoices());
-        this.answerSelectionComponent.setQuestionTitle("Question " + testToeicQuestion.getQuestionId());
-
-        byte[] imageStream = mockToeicTestDatabase.getImageFromDisk(partId, testToeicQuestionGroup);
-
-        assert imageStream != null;
-
-        Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(imageStream));
-        this.imageViewMainImage.setImageBitmap(bitmap);
-
-        File file = new File(mockToeicTestDatabase.getAudioAbsPathFromDisk(partId, testToeicQuestionGroup));
-        this.audioPlayerComponent.loadAudioFile(file);
     }
 }
