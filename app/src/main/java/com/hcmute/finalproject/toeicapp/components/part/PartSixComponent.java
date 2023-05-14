@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_six;
+package com.hcmute.finalproject.toeicapp.components.part;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,8 +10,9 @@ import androidx.annotation.Nullable;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-public class PartSixComponent  extends LinearLayout {
+public class PartSixComponent extends ToeicPartComponentBase {
     private CommonHeaderComponent commonHeaderComponent;
     private QuestionSentenceComponent questionSentenceComponent;
     public PartSixComponent(Context context) {
@@ -35,4 +36,13 @@ public class PartSixComponent  extends LinearLayout {
 
     }
 
+    @Override
+    public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
+
+    }
+
+    @Override
+    public void showExplain() {
+
+    }
 }

@@ -9,7 +9,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
-import com.hcmute.finalproject.toeicapp.components.part_seven.PartSevenComponent;
+import com.hcmute.finalproject.toeicapp.components.part.PartSevenComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;

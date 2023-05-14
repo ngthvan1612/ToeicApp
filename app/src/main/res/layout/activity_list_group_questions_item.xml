@@ -4,20 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="30dp">
+        android:layout_weight="1">
 
         <LinearLayout
             android:background="@drawable/component_home_button_rounded_background_bright_blue"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"

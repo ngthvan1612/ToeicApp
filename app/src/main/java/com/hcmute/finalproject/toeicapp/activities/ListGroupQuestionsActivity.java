@@ -13,11 +13,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.source.BundledExtractorsAdapter;
+import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
+import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.dao.ToeicPartDao;
+import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionGroupDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPartItemView;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
@@ -140,6 +145,25 @@ public class ListGroupQuestionsActivity extends GradientActivity {
 
             if (toeicPartItemView.isDownloaded()) {
                 btnDownload.setVisibility(View.GONE);
+
+                View.OnClickListener onClicked = v -> {
+                    Intent intent = new Intent(ListGroupQuestionsActivity.this, ToeicTestListQuestionsActivity.class);
+                    List<ToeicGroupItemViewModel> groupViews = new ArrayList<>();
+                    final ToeicQuestionGroupDao groupDao = toeicAppDatabase.getToeicQuestionGroupDao();
+                    for (ToeicQuestionGroup group : groupDao.getGroupsByPartId(toeicPartItemView.getId())) {
+                        ToeicGroupItemViewModel itemView = new ToeicGroupItemViewModel();
+                        itemView.setGroup(group);
+                        itemView.setPartNumber(partNumber);
+                        groupViews.add(itemView);
+                    }
+                    Gson gson = new Gson();
+                    intent.putExtra("question-data", gson.toJson(groupViews));
+                    startActivity(intent);
+                };
+
+                view.setOnClickListener(onClicked);
+                txtGroupName.setOnClickListener(onClicked);
+                txtNumberOfQuestions.setOnClickListener(onClicked);
             }
             else {
                 btnDownload.setOnClickListener(v -> {

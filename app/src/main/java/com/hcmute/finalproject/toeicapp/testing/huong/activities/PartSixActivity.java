@@ -13,7 +13,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.GradientActivity;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
-import com.hcmute.finalproject.toeicapp.components.part_six.PartSixComponent;
+import com.hcmute.finalproject.toeicapp.components.part.PartSixComponent;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
