@@ -7,6 +7,7 @@ import com.hcmute.finalproject.toeicapp.dao.ToeicStorageDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicStorage;
 import com.hcmute.finalproject.toeicapp.network.APIDownloadFile;
+import com.hcmute.finalproject.toeicapp.services.base.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Service
 public class DownloadFileService {
     private final Context context;
     private final ToeicAppDatabase toeicAppDatabase;
