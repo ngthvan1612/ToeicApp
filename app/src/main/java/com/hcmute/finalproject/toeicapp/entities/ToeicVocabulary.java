@@ -3,7 +3,6 @@ package com.hcmute.finalproject.toeicapp.entities;
 import androidx.room.*;
 
 import androidx.annotation.NonNull;
-
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = ToeicVocabularyTopic.class,
@@ -21,6 +20,8 @@ public class ToeicVocabulary {
         private Integer serverId;
 
         private String english;
+
+        private String vietnamese;
 
         private String pronunciation;
 
@@ -57,6 +58,14 @@ public class ToeicVocabulary {
 
         public void setEnglish(String english) {
                 this.english = english;
+        }
+
+        public String getVietnamese() {
+                return vietnamese;
+        }
+
+        public void setVietnamese(String vietnamese) {
+                this.vietnamese = vietnamese;
         }
 
         public String getPronunciation() {

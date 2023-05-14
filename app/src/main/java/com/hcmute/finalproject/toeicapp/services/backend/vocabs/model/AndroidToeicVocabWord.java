@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.services.backend.vocabs.model;
 
-public class AndroidToeicVocabWord {
+import java.io.Serializable;
+
+public class AndroidToeicVocabWord implements Serializable {
     private Integer serverId;
 
     private String english;

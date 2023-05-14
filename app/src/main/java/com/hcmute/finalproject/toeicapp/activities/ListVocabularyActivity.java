@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,7 +65,6 @@ public class ListVocabularyActivity extends AppCompatActivity {
 //            }
 //        }
 
-        Toast.makeText(this, "OK nha ahihi Ngoc Ben Tre", Toast.LENGTH_SHORT).show();
 
         toeicAppDatabase = ToeicAppDatabase.getInstance(getApplicationContext());
         final ToeicVocabularyDao vocabularyDao = toeicAppDatabase.getToeicVocabularyDao();
@@ -145,6 +145,7 @@ public class ListVocabularyActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ListVocabularyAdapter.ListVocabularyItemViewHolder holder, int position) {
             holder.setData(androidToeicVocabWords.get(position), position);
+
         }
 
         @Override
@@ -161,6 +162,8 @@ public class ListVocabularyActivity extends AppCompatActivity {
                 this.txtItemOrder = itemView.findViewById(R.id.activity_list_vocabulary_item_text_order);
                 this.txtItemVocab = itemView.findViewById(R.id.activity_list_vocabulary_item_text_vocabulary);
                 this.txtItemMeaning = itemView.findViewById(R.id.activity_list_vocabulary_item_text_meaning);
+
+
             }
 
             private void setData(AndroidToeicVocabWord androidToeicVocabWord, int position) {
@@ -169,7 +172,21 @@ public class ListVocabularyActivity extends AppCompatActivity {
                 this.txtItemOrder.setText(String.valueOf(order));
                 this.txtItemVocab.setText(androidToeicVocabWord.getEnglish());
                 this.txtItemMeaning.setText(androidToeicVocabWord.getVietnamese());
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(ListVocabularyActivity.this, VocabularyDetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("word", androidToeicVocabWord);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
+
+
         }
     }
 }

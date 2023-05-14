@@ -131,6 +131,7 @@ public class ToeicVocabularyBackendService {
                                 ToeicVocabulary toeicVocabulary = new ToeicVocabulary();
                                 toeicVocabulary.setServerId(word.getServerId());
                                 toeicVocabulary.setEnglish(word.getEnglish());
+                                toeicVocabulary.setVietnamese(word.getVietnamese());
                                 toeicVocabulary.setPronunciation(word.getPronounce());
                                 toeicVocabulary.setExampleEnglish(word.getExampleEnglish());
                                 toeicVocabulary.setExampleVietnamese(word.getExampleVietnamese());

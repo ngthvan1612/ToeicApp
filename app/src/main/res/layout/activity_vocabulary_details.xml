@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".activities.ListVocabularyActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,7 +42,7 @@
                     android:paddingEnd="10dp"
                     android:weightSum="2">
                     <TextView
-                        android:id="@+id/activity_list_vocabulary_text_vocab"
+                        android:id="@+id/activity_vocabulary_details_vocab"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -50,7 +51,7 @@
                         android:textStyle="bold"
                         android:textColor="#000"/>
                     <TextView
-                        android:id="@+id/activity_list_vocabulary_text_checked"
+                        android:id="@+id/activity_vocabulary_details_text_checked"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -80,6 +81,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="1">
                 <ImageView
+                    android:id="@+id/activity_vocabulary_details_img_volumn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -93,23 +95,27 @@
                     android:paddingTop="5dp"
                     android:layout_weight="4">
                     <TextView
+                        android:id="@+id/activity_vocabulary_details_txt_english"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="abibe by"
+                        android:text="abide by"
                         android:textSize="25dp"
                         android:textStyle="bold"
                         android:textColor="#008EF1"/>
                     <TextView
+                        android:id="@+id/activity_vocabulary_details_txt_pronoune"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:textSize="20dp"
-                        android:text="/a'baid bai/"
+                        android:text="//"
+                        android:textColor="#000"
                         android:textStyle="italic"/>
                 </LinearLayout>
             </LinearLayout>
             <ImageView
+                android:id="@+id/activity_vocabulary_details_img_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -123,26 +129,45 @@
                 android:layout_weight="1"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp">
+
                 <TextView
+                    android:id="@+id/activity_vocabulary_details_txt_vietnamese"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:text="Từ loại: (v): tôn trọng, tuân theo, giữ (lời)"
                     android:textSize="20dp"
-                    android:text="phrase verb"
-                    android:textStyle="italic"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="tuân theo, chấp nhận, tuân thủ"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="#008EF1"/>
+                    android:textStyle="italic" />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_weight="4"
+                android:paddingLeft="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Example"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="#000"/>
+                <TextView
+                    android:id="@+id/activity_vocabulary_details_txt_english_example"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is an english example"
+                    android:textSize="20dp"
+                    android:textColor="#000"/>
+                <TextView
+                    android:id="@+id/activity_vocabulary_details_txt_vietnamese_example"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is an vietnamese example"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    android:textColor="#000"/>
 
             </LinearLayout>
 
