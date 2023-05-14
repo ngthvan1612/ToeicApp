@@ -2,26 +2,33 @@ package com.hcmute.finalproject.toeicapp.network.downloadfile;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.hcmute.finalproject.toeicapp.entities.ToeicStorage;
-import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
+import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public class DownloadFileProgress {
+public class DownloadFileWithProgressService {
+    public static final String METHOD_GET = "GET";
+    public static final String METHOD_POST = "POST";
+
     private final File downloadFileCachedDirectory;
     private final Context context;
 
-    public DownloadFileProgress(
+    public DownloadFileWithProgressService(
             @NonNull Context context
     ) {
         this.context = context;
@@ -30,17 +37,38 @@ public class DownloadFileProgress {
 
     public void downloadFileAsync(
             @NonNull String url,
-            @NonNull OnDownloadListener onDownloadListener
+            @NonNull OnDownloadListener<byte[]> onDownloadListener
     ) {
-        new DownloadFileServiceAsyncTask(onDownloadListener).execute(url);
+        this.downloadFileAsync(METHOD_GET, url, null, onDownloadListener);
+    }
+
+    public void downloadFileAsync(
+            @NonNull String method,
+            @NonNull String url,
+            @Nullable Map<String, Object> data,
+            @NonNull OnDownloadListener<byte[]> onDownloadListener
+    ) {
+        new DownloadFileServiceAsyncTask(
+                method,
+                data,
+                onDownloadListener
+        ).execute(url);
     }
 
     private static class DownloadFileServiceAsyncTask extends AsyncTask<String, Integer, byte[]> {
         private final OnDownloadListener<byte[]> callback;
         private static final int DOWNLOAD_BUFFER = 4 * 1024;
         private Exception exception = null;
+        private final String method;
+        private final Map<String, Object> data;
 
-        public DownloadFileServiceAsyncTask(OnDownloadListener<byte[]> callback) {
+        public DownloadFileServiceAsyncTask(
+                String method,
+                Map<String, Object> data,
+                OnDownloadListener<byte[]> callback
+        ) {
+            this.data = data;
+            this.method = method;
             this.callback = callback;
         }
 
@@ -52,6 +80,17 @@ public class DownloadFileProgress {
             try {
                 final URL url = new URL(urls[0]);
                 final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod(this.method);
+
+                if (this.method.equals(METHOD_POST) && this.data != null) {
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    Gson gson = new Gson();
+                    String json = gson.toJson(this.data);
+                    DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
+                    dataOutputStream.write(json.getBytes(StandardCharsets.UTF_8));
+                    dataOutputStream.flush();
+                    dataOutputStream.close();
+                }
 
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     this.exception = new Exception(connection.getResponseMessage());

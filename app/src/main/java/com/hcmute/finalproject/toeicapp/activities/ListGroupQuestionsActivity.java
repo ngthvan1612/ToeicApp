@@ -3,10 +3,12 @@ package com.hcmute.finalproject.toeicapp.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPartItemView;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
+import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
     private Integer partNumber;
     private String partName;
     private ToeicAppDatabase toeicAppDatabase;
+    private ToeicTestBackendService toeicTestBackendService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
         setContentView(R.layout.activity_list_group_questions);
 
         this.toeicAppDatabase = ToeicAppDatabase.getInstance(ListGroupQuestionsActivity.this);
+        this.toeicTestBackendService = new ToeicTestBackendService(this);
 
         initView();
     }
@@ -85,6 +90,8 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             itemView.setName(this.partName + " " + counter);
             itemView.setPartNumber(toeicPart.getPartNumber());
             itemView.setServerId(toeicPart.getServerId());
+            itemView.setId(toeicPart.getId());
+            itemView.setDownloaded(toeicPart.getDownloaded());
 
             counter++;
 
@@ -98,31 +105,6 @@ public class ListGroupQuestionsActivity extends GradientActivity {
         this.listGroupQuestions.clear();
         this.listGroupQuestions.addAll(toeicPartItemViews);
         this.adapter.notifyDataSetChanged();
-    }
-
-    private List<ToeicPartItemView> getSampleListGroupQuestions() {
-        List<ToeicPartItemView> listGroups = new ArrayList<>();
-
-        listGroups.add(new ToeicPartItemView(5, "Photograph 01", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 02", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-        listGroups.add(new ToeicPartItemView(5, "Photograph 03", 6));
-
-        return listGroups;
     }
 
     public interface OnClickBackButton {
@@ -154,6 +136,53 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             final ToeicPartItemView toeicPartItemView = listGroupQuestions.get(i);
             final TextView txtGroupName = view.findViewById(R.id.activity_list_group_questions_item_text_name_group_question);
             final TextView txtNumberOfQuestions = view.findViewById(R.id.activity_list_group_questions_item_text_number_of_question);
+            final ImageView btnDownload = view.findViewById(R.id.activity_list_group_questions_btn_download);
+
+            if (toeicPartItemView.isDownloaded()) {
+                btnDownload.setVisibility(View.GONE);
+            }
+            else {
+                btnDownload.setOnClickListener(v -> {
+                    ProgressDialog dialog = new ProgressDialog(ListGroupQuestionsActivity.this);
+                    dialog.setCancelable(false);
+                    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    dialog.setTitle("Đang tải về");
+                    dialog.setMax(100);
+
+                    toeicTestBackendService.downloadPartStorageData(
+                            toeicPartItemView.getServerId(),
+                            new ToeicTestBackendService.OnBackupToeicListener() {
+                                @Override
+                                public void prepare() {
+                                    dialog.show();
+                                }
+
+                                @Override
+                                public void onSuccess() {
+                                    final ToeicPartDao toeicPartDao = toeicAppDatabase.getToeicPartDao();
+                                    ToeicPart toeicPart = toeicPartDao.getOne(toeicPartItemView.getId());
+                                    toeicPart.setDownloaded(true);
+                                    toeicPartDao.update(toeicPart);
+
+                                    loadLocalDatabase();
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onUpdateProgress(int progress) {
+                                    dialog.setProgress(progress);
+                                }
+
+                                @Override
+                                public void onException(Exception exception) {
+                                    Toast.makeText(ListGroupQuestionsActivity.this, "Loi r nha " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("DOWNLOAD_ERR", exception.getMessage());
+                                    dialog.dismiss();
+                                }
+                            }
+                    );
+                });
+            }
 
             txtGroupName.setText(toeicPartItemView.getName());
             txtNumberOfQuestions.setText(toeicPartItemView.getNumOfQuestions() + " questions");

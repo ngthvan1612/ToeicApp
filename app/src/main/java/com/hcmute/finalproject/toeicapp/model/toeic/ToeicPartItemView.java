@@ -1,17 +1,37 @@
 package com.hcmute.finalproject.toeicapp.model.toeic;
 
 public class ToeicPartItemView {
+    private int id;
     private int serverId;
     private int partNumber;
     private String name;
     private int numOfQuestions;
+    private boolean isDownloaded;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ToeicPartItemView() { }
 
-    public ToeicPartItemView(int partNumber, String name, int numOfQuestions) {
+    public ToeicPartItemView(int id, int partNumber, String name, int numOfQuestions) {
+        this.isDownloaded = false;
+        this.id = id;
         this.partNumber = partNumber;
         this.name = name;
         this.numOfQuestions = numOfQuestions;
+    }
+
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        isDownloaded = downloaded;
     }
 
     public int getServerId() {

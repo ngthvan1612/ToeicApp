@@ -1,9 +1,12 @@
 package com.hcmute.finalproject.toeicapp.services.backend.tests;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
@@ -19,6 +22,8 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
+import com.hcmute.finalproject.toeicapp.network.downloadfile.DownloadFileWithProgressService;
+import com.hcmute.finalproject.toeicapp.network.downloadfile.OnDownloadListener;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidAnswerChoice;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidItemContent;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicFullTest;
@@ -29,10 +34,20 @@ import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToei
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.CheckSumStringResponse;
 import com.hcmute.finalproject.toeicapp.services.base.Service;
 import com.hcmute.finalproject.toeicapp.services.sharedpreference.SharedPreferenceService;
+import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +58,7 @@ public class ToeicTestBackendService {
     private final Context context;
     private final SharedPreferenceService sharedPreferenceService;
     private final ToeicAppDatabase toeicAppDatabase;
+    private DownloadFileWithProgressService downloadFileWithProgressService;
 
     public ToeicTestBackendService(
             @NonNull Context context
@@ -50,6 +66,7 @@ public class ToeicTestBackendService {
         this.toeicAppDatabase = ToeicAppDatabase.getInstance(context);
         this.sharedPreferenceService = new SharedPreferenceService(context);
         this.context = context;
+        this.downloadFileWithProgressService = new DownloadFileWithProgressService(context);
     }
 
     private void backupNewDatabaseFromServer(
@@ -217,9 +234,89 @@ public class ToeicTestBackendService {
         return itemContents.stream().map(item -> item.getId()).collect(Collectors.toList());
     }
 
+    public void downloadPartStorageData(
+            @NonNull Integer partServerId,
+            @NonNull OnBackupToeicListener listener
+    ) {
+        listener.prepare();
+
+        final List<Integer> ids = this.getAllToeicStorageIdsByPartServerId(partServerId);
+        final Map<String, Object> postData = new HashMap<>();
+
+        postData.put("storageIdList", ids);
+
+        if (ids.size() == 0) {
+            listener.onSuccess();
+            return;
+        }
+
+        this.downloadFileWithProgressService.downloadFileAsync(
+                DownloadFileWithProgressService.METHOD_POST,
+                "https://toeic-app.uteoj.com/api/toeic/toeic-storage/get-list-storage",
+                postData,
+                new OnDownloadListener<byte[]>() {
+                    @Override
+                    public void onProgressUpdate(@NonNull Integer percent) {
+                        listener.onUpdateProgress(percent);
+                    }
+
+                    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+                    @Override
+                    public void onSuccess(@NonNull byte[] bytes) {
+                        final File testStorageRootDir = StorageConfiguration.getTestDataDirectory(context);
+                        try {
+                            ZipInputStream zipInputStream = new ZipInputStream(
+                                    new ByteArrayInputStream(bytes)
+                            );
+                            ZipEntry zipEntry = null;
+                            Map<Integer, byte[]> dict = new HashMap<>();
+
+                            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                                try {
+                                    Integer id = Integer.parseInt(zipEntry.getName().split("\\.")[0]);
+                                    byte[] data = zipInputStream.readAllBytes();
+                                    dict.put(id, data);
+                                }
+                                catch (RuntimeException | IOException e) {
+                                    listener.onException(new Exception("WRONG DATA FORMAT"));
+                                }
+                            }
+
+                            zipInputStream.close();
+
+                            for (Integer id : ids) {
+                                if (!dict.containsKey(id)) {
+                                    listener.onException(new Exception("MISSING DOWNLOADED DATA"));
+                                }
+                            }
+
+                            for (Map.Entry<Integer, byte[]> entry : dict.entrySet()) {
+                                final File outputFile = new File(testStorageRootDir, entry.getKey() + ".bin");
+                                FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+                                fileOutputStream.write(entry.getValue());
+                                fileOutputStream.close();
+                                Log.d("WRITE_F", entry.getKey() + " " + outputFile.getAbsoluteFile());
+                            }
+
+                            listener.onSuccess();
+                        }
+                        catch (IOException e) {
+                            listener.onException(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Exception exception) {
+                        listener.onException(exception);
+                    }
+                }
+        );
+    }
+
     public interface OnBackupToeicListener {
         void prepare();
         void onSuccess();
+        default void onUpdateProgress(int progress) { }
         void onException(Exception exception);
     }
 }

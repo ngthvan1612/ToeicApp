@@ -57,6 +57,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
+                android:id="@+id/activity_list_group_questions_btn_download"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center|left"
