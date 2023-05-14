@@ -18,7 +18,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
+import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabWord;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.File;

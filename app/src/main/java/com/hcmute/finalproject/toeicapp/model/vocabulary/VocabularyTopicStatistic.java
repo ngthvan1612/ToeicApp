@@ -1,5 +1,7 @@
 package com.hcmute.finalproject.toeicapp.model.vocabulary;
 
+import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabTopic;
+
 public class VocabularyTopicStatistic {
     private String topicName;
     private Integer success;

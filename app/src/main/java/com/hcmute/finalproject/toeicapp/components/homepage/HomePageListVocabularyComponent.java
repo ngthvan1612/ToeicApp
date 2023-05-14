@@ -1,12 +1,10 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,46 +18,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import com.hcmute.finalproject.toeicapp.R;
 // import com.hcmute.finalproject.toeicapp.activities.ListVocabularyActivity;
 import com.hcmute.finalproject.toeicapp.activities.ListVocabularyActivity;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
-//import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
-import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
+//import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabTopic;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyTopicDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
-import com.hcmute.finalproject.toeicapp.entities.ToeicVocabulary;
 import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabTopic;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.AndroidToeicVocabWord;
-import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 import com.hcmute.finalproject.toeicapp.services.backend.vocabs.ToeicVocabularyBackendService;
-import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileCallback;
-import com.hcmute.finalproject.toeicapp.services.storage.DownloadFileService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomePageListVocabularyComponent extends LinearLayout {
     private final static String VOCAB_CONFIG_FILE = "vocab.json";
