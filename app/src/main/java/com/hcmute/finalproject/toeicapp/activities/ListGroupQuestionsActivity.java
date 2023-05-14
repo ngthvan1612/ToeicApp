@@ -65,11 +65,9 @@ public class ListGroupQuestionsActivity extends GradientActivity {
         String partNameExtra = bundle.getString("partName");
         this.partName = partNameExtra;
         this.partNumber = bundle.getInt("partId");
-
         txtPartName.setText(partNameExtra);
 
         this.listGroupQuestions = new ArrayList<>();
-
         this.adapter = new ListGroupQuestionAdapter();
         this.listGroupQuestionsName.setAdapter(adapter);
 

@@ -62,6 +62,8 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         });
     }
 
+
+
     private Integer getPartIdFromIntent() {
         final Intent intent = getIntent();
         return intent.getIntExtra("part-id", 0);
