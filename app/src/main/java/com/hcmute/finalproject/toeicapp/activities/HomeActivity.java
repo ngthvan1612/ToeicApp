@@ -1,5 +1,6 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicPart;
 import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicQuestion;
 import com.hcmute.finalproject.toeicapp.assets.backend.AndroidToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.assets.backend.CheckSumStringResponse;
+import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
@@ -41,6 +43,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.testing.huong.activities.HuongTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,16 +56,20 @@ import retrofit2.Response;
 
 
 public class HomeActivity extends GradientActivity {
+    private LoadingDialogComponent loadingDialogComponent = new LoadingDialogComponent(HomeActivity.this);
     private ToeicAppDatabase toeicAppDatabase;
     private static final int NUMBER_OF_PAGES = 5;
     private static final String CHECK_SUM_PREF = "Checksum";
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
+//    Dialog dialog = new Dialog(this,android.R.style.Theme_Light);
 
     private AuthenticationService authenticationService;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dialog = new Dialog(this,android.R.style.Theme_Light);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -117,25 +124,30 @@ public class HomeActivity extends GradientActivity {
     }
 
     private void FetchNewData() {
-        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
-        dialog.setTitle("Đang đồng bộ dữ liệu");
-        dialog.setCancelable(false);
-        dialog.setMessage("Đang tải...");
-        dialog.show();
+//        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
+//        dialog.setTitle("Đang đồng bộ dữ liệu");
+//        dialog.setCancelable(false);
+//        dialog.setMessage("Đang tải...");
+//        dialog.show();
+
+        loadingDialogComponent.startLoadingDialog(dialog,"Đang đồng bộ dữ liệu...");
 
         APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
             @Override
             public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
                 final AndroidToeicTestsResponse androidToeicTestsResponse = response.body();
                 resetDatabase(androidToeicTestsResponse.getData());
-                dialog.setMessage("Đang đồng bộ...");
-                dialog.dismiss();
+//                dialog.setMessage("Đang đồng bộ...");
+//                dialog.dismiss();
+                loadingDialogComponent.dismissDialog(dialog);
             }
 
             @Override
             public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
                 Log.d("err", t.toString());
-                dialog.dismiss();
+//                dialog.dismiss();
+                loadingDialogComponent.dismissDialog(dialog);
+
             }
         });
     }
@@ -230,10 +242,13 @@ public class HomeActivity extends GradientActivity {
         SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
-        dialog.setMessage("Đang cập nhật thông tin");
-        dialog.cancel();
-        dialog.show();
+//        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
+//        dialog.setMessage("Đang cập nhật thông tin");
+//        dialog.cancel();
+//        dialog.show();
+
+        loadingDialogComponent.startLoadingDialog(dialog,"Đang cập nhật thông tin...");
+
 
         APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<>() {
             @Override
@@ -245,11 +260,14 @@ public class HomeActivity extends GradientActivity {
                 Log.d("CHECKSUM_LOG", newChecksum);
 
                 if (!currentCheckSum.equals(newChecksum)) {
-                    dialog.dismiss();
+//                    dialog.dismiss();
+                    loadingDialogComponent.dismissDialog(dialog);
                     FetchNewData();
                 } else {
-                    dialog.dismiss();
+//                    dialog.dismiss();
+                    loadingDialogComponent.dismissDialog(dialog);
                 }
+
 
                 editor.putString(CHECK_SUM_PREF, newChecksum);
                 editor.commit();
@@ -258,7 +276,9 @@ public class HomeActivity extends GradientActivity {
             @Override
             public void onFailure(Call<CheckSumStringResponse> call, Throwable t) {
                 Toast.makeText(HomeActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+//                dialog.dismiss();
+                loadingDialogComponent.dismissDialog(dialog);
+
             }
         });
     }
