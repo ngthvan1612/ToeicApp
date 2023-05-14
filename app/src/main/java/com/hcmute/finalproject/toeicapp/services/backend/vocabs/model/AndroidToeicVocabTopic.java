@@ -1,6 +1,4 @@
-package com.hcmute.finalproject.toeicapp.model.vocabulary;
-
-import androidx.annotation.NonNull;
+package com.hcmute.finalproject.toeicapp.services.backend.vocabs.model;
 
 import java.util.List;
 

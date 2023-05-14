@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.model.vocabulary;
+package com.hcmute.finalproject.toeicapp.services.backend.vocabs.model;
 
 public class AndroidToeicVocabWord {
     private Integer serverId;
