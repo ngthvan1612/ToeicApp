@@ -84,10 +84,9 @@ public class HomeActivity extends GradientActivity {
 
         CheckDataSync();
 
-
-       for(Integer item :getAllToeicStorageIdsByPartServerId(23)) {
-           Log.d("item",item.toString());
-       }
+//        for (Integer item : getAllToeicStorageIdsByPartServerId(23)) {
+//            Log.d("item", item.toString());
+//        }
 //        test(22);
     }
 
@@ -96,7 +95,7 @@ public class HomeActivity extends GradientActivity {
         final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
         final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
-        Log.d("toeicPart",toeicPart.getPartNumber().toString());
+        Log.d("toeicPart", toeicPart.getPartNumber().toString());
     }
 
     private List<Integer> getAllToeicStorageIdsByPartServerId(Integer partServerId) {
@@ -104,15 +103,16 @@ public class HomeActivity extends GradientActivity {
         final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
         final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
-        Log.d("toeicPart",toeicPart.getPartNumber().toString());
+        Log.d("toeicPart", toeicPart.getPartNumber().toString());
         final List<ToeicQuestionGroup> toeicQuestionGroups = toeicQuestionGroupDao.getGroupsByPartId(toeicPart.getId());
         final List<ToeicItemContent> itemContents = new ArrayList<>();
 
-        for(ToeicQuestionGroup toeicQuestionGroupItem: toeicQuestionGroups) {
+        for (ToeicQuestionGroup toeicQuestionGroupItem : toeicQuestionGroups) {
             final List<ToeicItemContent> temps =
                     toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroupItem.getId());
             itemContents.addAll(temps);
         }
+
         return itemContents.stream().map(item -> item.getId()).collect(Collectors.toList());
     }
 
@@ -134,7 +134,7 @@ public class HomeActivity extends GradientActivity {
 
             @Override
             public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
-                Log.d("err",t.toString());
+                Log.d("err", t.toString());
                 dialog.dismiss();
             }
         });
@@ -149,6 +149,7 @@ public class HomeActivity extends GradientActivity {
         final ToeicQuestionGroupDao groupDao = toeicAppDatabase.getToeicQuestionGroupDao();
         final ToeicQuestionDao questionDao = toeicAppDatabase.getToeicQuestionDao();
         final ToeicAnswerChoiceDao answerChoiceDao = toeicAppDatabase.getToeicAnswerChoiceDao();
+        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
 
         // Clean all database
         List<ToeicFullTest> preparedDeleteTests = testDao.getAll();
@@ -204,6 +205,8 @@ public class HomeActivity extends GradientActivity {
                             itemContentEntity.setContentType(itemContentBackend.getContentType());
                             itemContentEntity.setServerId(itemContentBackend.getStorageServerId());
                             itemContentEntity.setToeicQuestionGroupEntityQuestionContentId(newGroupId);
+
+                            toeicItemContentDao.insert(itemContentEntity);
                         }
                     }
 
@@ -214,6 +217,8 @@ public class HomeActivity extends GradientActivity {
                             itemContentEntity.setContentType(itemContentBackend.getContentType());
                             itemContentEntity.setServerId(itemContentBackend.getStorageServerId());
                             itemContentEntity.setToeicQuestionGroupEntityTranscriptId(newGroupId);
+
+                            toeicItemContentDao.insert(itemContentEntity);
                         }
                     }
                 }
@@ -242,8 +247,7 @@ public class HomeActivity extends GradientActivity {
                 if (!currentCheckSum.equals(newChecksum)) {
                     dialog.dismiss();
                     FetchNewData();
-                }
-                else {
+                } else {
                     dialog.dismiss();
                 }
 
@@ -258,6 +262,7 @@ public class HomeActivity extends GradientActivity {
             }
         });
     }
+
     private String getLayoutTagByPosition(int position) {
         return "layout-" + position;
     }
@@ -297,7 +302,7 @@ public class HomeActivity extends GradientActivity {
                 final View view = viewPager.findViewWithTag(getLayoutTagByPosition(position));
                 if (position == 0) {
                     //List Practice
-                    HomePageListPracticeComponent component = (HomePageListPracticeComponent)view;
+                    HomePageListPracticeComponent component = (HomePageListPracticeComponent) view;
                 }
             }
 
@@ -338,7 +343,7 @@ public class HomeActivity extends GradientActivity {
 
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @NonNull
@@ -352,8 +357,7 @@ public class HomeActivity extends GradientActivity {
                 component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
 
                 return component;
-            }
-            else if (position == 4) {
+            } else if (position == 4) {
                 HomePageUserProfileComponent component = new HomePageUserProfileComponent(HomeActivity.this);
                 container.addView(component);
                 component.setTag(getLayoutTagByPosition(4));
