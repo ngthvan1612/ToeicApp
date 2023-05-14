@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_two;
+package com.hcmute.finalproject.toeicapp.components.part;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-public class PartTwoComponent  extends LinearLayout {
+public class PartTwoComponent extends ToeicPartComponentBase {
     private CommonHeaderComponent commonHeaderComponent;
     public PartTwoComponent(Context context) {
         this(context, null);
@@ -31,4 +32,13 @@ public class PartTwoComponent  extends LinearLayout {
         commonHeaderComponent.setTitle("Part two - Questions and response");
     }
 
+    @Override
+    public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
+
+    }
+
+    @Override
+    public void showExplain() {
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_one;
+package com.hcmute.finalproject.toeicapp.components.part;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +15,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestion;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
@@ -22,7 +23,7 @@ import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 
-public class PartOnePhotographsComponent extends LinearLayout {
+public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private ImageView imageViewMainImage;
     private AudioPlayerComponent audioPlayerComponent;
     private AnswerSelectionComponent answerSelectionComponent;
@@ -80,5 +81,15 @@ public class PartOnePhotographsComponent extends LinearLayout {
 
     public void loadToeicQuestionGroup(Integer partId, TestToeicQuestionGroup testToeicQuestionGroup) {
         //Only one question
+    }
+
+    @Override
+    public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
+
+    }
+
+    @Override
+    public void showExplain() {
+
     }
 }
