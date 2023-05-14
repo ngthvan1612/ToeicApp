@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,51 +13,20 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidAnswerChoice;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidItemContent;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicFullTest;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicPart;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicQuestion;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicQuestionGroup;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.CheckSumStringResponse;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicTestsResponse;
-import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
-import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
-import com.hcmute.finalproject.toeicapp.dao.ToeicItemContentDao;
-import com.hcmute.finalproject.toeicapp.dao.ToeicPartDao;
-import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionDao;
-import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionGroupDao;
-import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
-import com.hcmute.finalproject.toeicapp.entities.ToeicAnswerChoice;
-import com.hcmute.finalproject.toeicapp.entities.ToeicFullTest;
-import com.hcmute.finalproject.toeicapp.entities.ToeicItemContent;
-import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
-import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
-import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
-import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
 
 
 public class HomeActivity extends GradientActivity {
-    private ToeicAppDatabase toeicAppDatabase;
     private static final int NUMBER_OF_PAGES = 5;
     private static final String CHECK_SUM_PREF = "Checksum";
     private ViewPager viewPager;
     private MainBottomNavigationComponent mainBottomNavigationComponent;
-
+    private ToeicTestBackendService toeicTestBackendService;
     private AuthenticationService authenticationService;
 
     @Override
@@ -67,6 +35,7 @@ public class HomeActivity extends GradientActivity {
         setContentView(R.layout.activity_home);
 
         this.authenticationService = new AuthenticationService(this);
+        this.toeicTestBackendService = new ToeicTestBackendService(this);
 
         if (!this.authenticationService.isAuthenticated()) {
             finish();
@@ -74,190 +43,34 @@ public class HomeActivity extends GradientActivity {
             return;
         }
 
-        this.toeicAppDatabase = ToeicAppDatabase.getInstance(this.getApplicationContext());
-
         viewPager = findViewById(R.id.activity_home_view_pager);
         mainBottomNavigationComponent = findViewById(R.id.activity_home_bottom_navigation_view);
 
         this.initViewPager();
         this.initBottomNavigation();
 
-        CheckDataSync();
-
-//        for (Integer item : getAllToeicStorageIdsByPartServerId(23)) {
-//            Log.d("item", item.toString());
-//        }
-//        test(22);
+        CheckDataAsync();
     }
 
-    private void test(Integer partServerId) {
-        final ToeicPartDao partDao = toeicAppDatabase.getToeicPartDao();
-        final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
-        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
-        final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
-        Log.d("toeicPart", toeicPart.getPartNumber().toString());
-    }
+    private void CheckDataAsync() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Để tạm thời");
+        dialog.setMessage("Đang đồng bộ");
 
-    private List<Integer> getAllToeicStorageIdsByPartServerId(Integer partServerId) {
-        final ToeicPartDao partDao = toeicAppDatabase.getToeicPartDao();
-        final ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
-        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
-        final ToeicPart toeicPart = partDao.getToeicPartByServerId(partServerId);
-        Log.d("toeicPart", toeicPart.getPartNumber().toString());
-        final List<ToeicQuestionGroup> toeicQuestionGroups = toeicQuestionGroupDao.getGroupsByPartId(toeicPart.getId());
-        final List<ToeicItemContent> itemContents = new ArrayList<>();
-
-        for (ToeicQuestionGroup toeicQuestionGroupItem : toeicQuestionGroups) {
-            final List<ToeicItemContent> temps =
-                    toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroupItem.getId());
-            itemContents.addAll(temps);
-        }
-
-        return itemContents.stream().map(item -> item.getId()).collect(Collectors.toList());
-    }
-
-    private void FetchNewData() {
-        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
-        dialog.setTitle("Đang đồng bộ dữ liệu");
-        dialog.setCancelable(false);
-        dialog.setMessage("Đang tải...");
-        dialog.show();
-
-        APIToeicTest.getInstance().getTestData().enqueue(new Callback<AndroidToeicTestsResponse>() {
+        this.toeicTestBackendService.checkToeicTestDatabaseIsUpdated(new ToeicTestBackendService.OnBackupToeicListener() {
             @Override
-            public void onResponse(Call<AndroidToeicTestsResponse> call, Response<AndroidToeicTestsResponse> response) {
-                final AndroidToeicTestsResponse androidToeicTestsResponse = response.body();
-                resetDatabase(androidToeicTestsResponse.getData());
-                dialog.setMessage("Đang đồng bộ...");
+            public void prepare() {
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess() {
                 dialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<AndroidToeicTestsResponse> call, Throwable t) {
-                Log.d("err", t.toString());
-                dialog.dismiss();
-            }
-        });
-    }
-
-    //TODO: chuan bi chuyen ra file rieng
-    private void resetDatabase(
-            @NonNull List<AndroidToeicFullTest> tests
-    ) {
-        final ToeicFullTestDao testDao = toeicAppDatabase.getToeicFullTestDao();
-        final ToeicPartDao partDao = toeicAppDatabase.getToeicPartDao();
-        final ToeicQuestionGroupDao groupDao = toeicAppDatabase.getToeicQuestionGroupDao();
-        final ToeicQuestionDao questionDao = toeicAppDatabase.getToeicQuestionDao();
-        final ToeicAnswerChoiceDao answerChoiceDao = toeicAppDatabase.getToeicAnswerChoiceDao();
-        final ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
-
-        // Clean all database
-        List<ToeicFullTest> preparedDeleteTests = testDao.getAll();
-        for (ToeicFullTest deleteTest : preparedDeleteTests) {
-            testDao.delete(deleteTest);
-        }
-
-        // Write new data
-        for (AndroidToeicFullTest testBackend : tests) {
-            ToeicFullTest testEntity = new ToeicFullTest();
-            testEntity.setServerId(testBackend.getServerId());
-            final Integer newTestId = Math.toIntExact(testDao.insert(testEntity).get(0));
-
-            for (AndroidToeicPart partBackend : testBackend.getParts()) {
-                ToeicPart partEntity = new ToeicPart();
-                partEntity.setServerId(partBackend.getServerId());
-                partEntity.setPartNumber(partBackend.getPartNumber());
-                partEntity.setToeicFullTestId(newTestId);
-                final Integer newPartId = Math.toIntExact(partDao.insert(partEntity).get(0));
-
-                for (AndroidToeicQuestionGroup questionGroupBackend : partBackend.getGroups()) {
-                    ToeicQuestionGroup groupEntity = new ToeicQuestionGroup();
-                    groupEntity.setServerId(questionGroupBackend.getServerId());
-                    groupEntity.setToeicPartId(newPartId);
-                    final Integer newGroupId = Math.toIntExact(groupDao.insert(groupEntity).get(0));
-
-                    for (AndroidToeicQuestion questionBackend : questionGroupBackend.getQuestions()) {
-                        ToeicQuestion questionEntity = new ToeicQuestion();
-                        questionEntity.setContent(questionBackend.getContent());
-                        questionEntity.setCorrectAnswer(questionBackend.getContent());
-                        questionEntity.setServerId(questionBackend.getServerId());
-                        questionEntity.setToeicQuestionGroupId(newGroupId);
-                        questionEntity.setQuestionNumber(questionBackend.getQuestionNumber());
-                        final Integer newQuestionId = Math.toIntExact(questionDao.insert(questionEntity).get(0));
-
-                        for (AndroidAnswerChoice answerChoiceBackend : questionBackend.getChoices()) {
-                            ToeicAnswerChoice answerChoiceEntity = new ToeicAnswerChoice();
-                            answerChoiceEntity.setContent(answerChoiceBackend.getContent());
-                            answerChoiceEntity.setExplain(answerChoiceBackend.getExplain());
-                            answerChoiceEntity.setServerId(answerChoiceBackend.getServerId());
-                            answerChoiceEntity.setLabel(answerChoiceBackend.getLabel());
-                            answerChoiceEntity.setToeicQuestionId(newQuestionId);
-
-                            answerChoiceDao.insert(answerChoiceEntity);
-                        }
-                    }
-
-                    // Question Contents
-                    if (questionGroupBackend.getQuestionContents() != null) {
-                        for (AndroidItemContent itemContentBackend : questionGroupBackend.getQuestionContents()) {
-                            ToeicItemContent itemContentEntity = new ToeicItemContent();
-                            itemContentEntity.setContent(itemContentBackend.getRawContent());
-                            itemContentEntity.setContentType(itemContentBackend.getContentType());
-                            itemContentEntity.setServerId(itemContentBackend.getStorageServerId());
-                            itemContentEntity.setToeicQuestionGroupEntityQuestionContentId(newGroupId);
-
-                            toeicItemContentDao.insert(itemContentEntity);
-                        }
-                    }
-
-                    if (questionGroupBackend.getTranscriptContents() != null) {
-                        for (AndroidItemContent itemContentBackend : questionGroupBackend.getTranscriptContents()) {
-                            ToeicItemContent itemContentEntity = new ToeicItemContent();
-                            itemContentEntity.setContent(itemContentBackend.getRawContent());
-                            itemContentEntity.setContentType(itemContentBackend.getContentType());
-                            itemContentEntity.setServerId(itemContentBackend.getStorageServerId());
-                            itemContentEntity.setToeicQuestionGroupEntityTranscriptId(newGroupId);
-
-                            toeicItemContentDao.insert(itemContentEntity);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void CheckDataSync() {
-        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        ProgressDialog dialog = new ProgressDialog(HomeActivity.this);
-        dialog.setMessage("Đang cập nhật thông tin");
-        dialog.cancel();
-        dialog.show();
-
-        APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
-                final CheckSumStringResponse checkSumStringResponse = response.body();
-                final String currentCheckSum = sharedPref.getString(CHECK_SUM_PREF, UUID.randomUUID() + "");
-
-                String newChecksum = checkSumStringResponse.getData();
-                Log.d("CHECKSUM_LOG", newChecksum);
-
-                if (!currentCheckSum.equals(newChecksum)) {
-                    dialog.dismiss();
-                    FetchNewData();
-                } else {
-                    dialog.dismiss();
-                }
-
-                editor.putString(CHECK_SUM_PREF, newChecksum);
-                editor.commit();
-            }
-
-            @Override
-            public void onFailure(Call<CheckSumStringResponse> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+            public void onException(Exception exception) {
+                Toast.makeText(HomeActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
