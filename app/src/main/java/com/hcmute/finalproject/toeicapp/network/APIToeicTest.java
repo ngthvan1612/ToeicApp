@@ -1,7 +1,7 @@
 package com.hcmute.finalproject.toeicapp.network;
 
-import com.hcmute.finalproject.toeicapp.network.backend.AndroidToeicTestsResponse;
-import com.hcmute.finalproject.toeicapp.network.backend.CheckSumStringResponse;
+import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicTestsResponse;
+import com.hcmute.finalproject.toeicapp.services.backend.tests.model.CheckSumStringResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
