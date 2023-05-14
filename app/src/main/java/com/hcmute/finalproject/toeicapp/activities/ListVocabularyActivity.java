@@ -54,18 +54,6 @@ public class ListVocabularyActivity extends AppCompatActivity {
     private void loadListVocabs() {
         String json = null;
         adapter.notifyDataSetChanged();
-
-//        for (AndroidToeicVocabTopic topic : topics) {
-//            if (topic.getTopicName().equals(bundle.getString("topicName"))) {
-//                for (AndroidToeicVocabWord word: topic.getWords()) {
-//                    this.androidToeicVocabWords.add(word);
-//                    Log.d("WORD", word.getEnglish());
-//                }
-//                break;
-//            }
-//        }
-
-
         toeicAppDatabase = ToeicAppDatabase.getInstance(getApplicationContext());
         final ToeicVocabularyDao vocabularyDao = toeicAppDatabase.getToeicVocabularyDao();
 
@@ -76,13 +64,14 @@ public class ListVocabularyActivity extends AppCompatActivity {
                 .map(v -> {
                     AndroidToeicVocabWord w = new AndroidToeicVocabWord();
                     w.setEnglish(v.getEnglish());
-                    w.setVietnamese(v.getExampleVietnamese()); // WRONG
+                    w.setVietnamese(v.getVietnamese());
                     w.setExampleEnglish(v.getExampleEnglish());
                     w.setExampleVietnamese(v.getExampleVietnamese());
                     w.setPronounce(v.getPronunciation());
+                    w.setImageFilename(v.getImagePath());
+                    w.setAudioFileName(v.getAudioPath());
                     return w;
                 })
-                .limit(10) // Lay 10 cai dau
                 .collect(Collectors.toList());
 
         this.androidToeicVocabWords.addAll(temps);
@@ -98,19 +87,14 @@ public class ListVocabularyActivity extends AppCompatActivity {
         btnBackButton = findViewById(R.id.activity_list_vocabulary_btn_back);
 
         Bundle bundle = getIntent().getExtras();
-        txtVocab.setText(bundle.getString("topicName"));
+        txtVocab.setText(bundle.getString("topicName").split(" ")[2]);
         txtChecked.setText(bundle.getString("status") + " checked");
-        Toast.makeText(this, bundle.getString("topicName").split(" ")[2], Toast.LENGTH_SHORT).show();
 
         this.adapter = new ListVocabularyAdapter();
         recylerviewListVocab.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
         this.recylerviewListVocab.setAdapter(this.adapter);
 
         loadListVocabs();
-
-        for (AndroidToeicVocabWord word: androidToeicVocabWords) {
-            Log.d("WORD", word.getEnglish() + ": " + word.getVietnamese());
-        }
 
         btnBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +122,6 @@ public class ListVocabularyActivity extends AppCompatActivity {
                     parent,
                     false
             );
-
             return new ListVocabularyItemViewHolder(view);
         }
 
@@ -162,13 +145,10 @@ public class ListVocabularyActivity extends AppCompatActivity {
                 this.txtItemOrder = itemView.findViewById(R.id.activity_list_vocabulary_item_text_order);
                 this.txtItemVocab = itemView.findViewById(R.id.activity_list_vocabulary_item_text_vocabulary);
                 this.txtItemMeaning = itemView.findViewById(R.id.activity_list_vocabulary_item_text_meaning);
-
-
             }
 
             private void setData(AndroidToeicVocabWord androidToeicVocabWord, int position) {
                 int order = position + 1;
-                Log.d("order", String.valueOf(order) + "--->" + androidToeicVocabWord.getEnglish());
                 this.txtItemOrder.setText(String.valueOf(order));
                 this.txtItemVocab.setText(androidToeicVocabWord.getEnglish());
                 this.txtItemMeaning.setText(androidToeicVocabWord.getVietnamese());
@@ -177,6 +157,11 @@ public class ListVocabularyActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(ListVocabularyActivity.this, VocabularyDetailsActivity.class);
+                        Bundle topicBundle = getIntent().getExtras();
+                        String topicName = topicBundle.getString("topicName");
+                        String checked = topicBundle.getString("status") + " checked";
+                        intent.putExtra("topicName", topicName);
+                        intent.putExtra("status", checked);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("word", androidToeicVocabWord);
                         intent.putExtras(bundle);
@@ -185,8 +170,6 @@ public class ListVocabularyActivity extends AppCompatActivity {
                     }
                 });
             }
-
-
         }
     }
 }

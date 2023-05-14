@@ -24,6 +24,7 @@ import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.ListVocabularyActivity;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
 //import com.hcmute.finalproject.toeicapp.services.backend.vocabs.model.AndroidToeicVocabTopic;
+import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyTopicDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
@@ -117,7 +118,6 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             @Override
             public void onSuccess() {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "Vocabulary is up to date", Toast.LENGTH_SHORT).show();
                 loadListVocabsTest();
             }
 
@@ -140,6 +140,7 @@ public class HomePageListVocabularyComponent extends LinearLayout {
 
     private void loadListVocabsTest() {
         ToeicVocabularyTopicDao topicDao = toeicAppDatabase.getToeicVocabularyTopicDao();
+        ToeicVocabularyDao vocabularyDao = toeicAppDatabase.getToeicVocabularyDao();
         this.statistics.clear();
 
         List<ToeicVocabularyTopic> topics = topicDao.getAll();
@@ -147,7 +148,9 @@ public class HomePageListVocabularyComponent extends LinearLayout {
             VocabularyTopicStatistic vocabularyTopicStatistic = new VocabularyTopicStatistic();
             vocabularyTopicStatistic.setTopicName(topic.getName());
             vocabularyTopicStatistic.setSuccess(0);
-            vocabularyTopicStatistic.setTotal(10); //TODO
+
+            int vocabTotal = vocabularyDao.getByTopicId(topic.getId()).size();
+            vocabularyTopicStatistic.setTotal(vocabTotal); //TODO
             vocabularyTopicStatistic.setImageFileName(topic.getImageFileName());
 
             this.statistics.add(vocabularyTopicStatistic);

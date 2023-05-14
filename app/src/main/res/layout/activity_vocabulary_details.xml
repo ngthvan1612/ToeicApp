@@ -7,24 +7,25 @@
     android:background="@color/white"
     tools:context=".activities.ListVocabularyActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="10">
         <LinearLayout
+            android:id="@+id/activity_vocabulary_details_linear_layout_topic"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="70dp"
             android:orientation="vertical"
-            android:layout_weight="1"
-            android:weightSum="10">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="9"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent
-                    android:id="@+id/activity_list_vocabulary_btn_back"
+                    android:id="@+id/activity_vocabulary_details_btn_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -42,7 +43,7 @@
                     android:paddingEnd="10dp"
                     android:weightSum="2">
                     <TextView
-                        android:id="@+id/activity_vocabulary_details_vocab"
+                        android:id="@+id/activity_vocabulary_details_topic_name"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -69,16 +70,27 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9"
             android:weightSum="8"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_vocabulary_details_linear_layout_topic"
             android:orientation="vertical">
             <LinearLayout
+                android:id="@+id/activity_vocabulary_details_linear_layout_word"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:weightSum="5"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
                 android:layout_weight="1">
                 <ImageView
                     android:id="@+id/activity_vocabulary_details_img_volumn"
@@ -88,8 +100,8 @@
                     android:layout_gravity="center"
                     android:src="@drawable/volumn"/>
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="2"
                     android:paddingTop="5dp"
@@ -97,8 +109,7 @@
                     <TextView
                         android:id="@+id/activity_vocabulary_details_txt_english"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:text="abide by"
                         android:textSize="25dp"
                         android:textStyle="bold"
@@ -106,8 +117,7 @@
                     <TextView
                         android:id="@+id/activity_vocabulary_details_txt_pronoune"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:textSize="20dp"
                         android:text="//"
                         android:textColor="#000"
@@ -116,40 +126,48 @@
             </LinearLayout>
             <ImageView
                 android:id="@+id/activity_vocabulary_details_img_word"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_vocabulary_details_linear_layout_word"
                 android:src="@drawable/ic_launcher_background"/>
+
+            <TextView
+                android:id="@+id/activity_vocabulary_details_txt_vietnamese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Từ loại: (v): tôn trọng, tuân theo, giữ (lời)"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_vocabulary_details_img_word"
+                android:textStyle="italic" />
+
             <LinearLayout
+                android:id="@+id/activity_vocabulary_details_linear_layout_example"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
-                android:weightSum="2"
-                android:layout_weight="1"
                 android:paddingLeft="20dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/activity_vocabulary_details_txt_vietnamese"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="Từ loại: (v): tôn trọng, tuân theo, giữ (lời)"
-                    android:textSize="20dp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_vocabulary_details_txt_vietnamese"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Example"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000"/>
@@ -157,6 +175,7 @@
                     android:id="@+id/activity_vocabulary_details_txt_english_example"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="this is an english example"
                     android:textSize="20dp"
                     android:textColor="#000"/>
@@ -166,15 +185,16 @@
                     android:layout_height="wrap_content"
                     android:text="this is an vietnamese example"
                     android:textSize="20dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="italic"
                     android:textColor="#000"/>
 
             </LinearLayout>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
