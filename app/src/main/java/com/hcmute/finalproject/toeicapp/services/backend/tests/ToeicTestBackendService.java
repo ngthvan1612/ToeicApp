@@ -152,6 +152,30 @@ public class ToeicTestBackendService {
                 }
             }
         }
+
+        // Renew downloaded
+        final File testDataRootDirectory = StorageConfiguration.getTestDataDirectory(context);
+
+        for (ToeicFullTest test : testDao.getAll()) {
+            for (ToeicPart part : partDao.getToeicPartByToeicTestId(test.getId())) {
+                // Check required storage
+                final List<Integer> requiredStorageIds = getAllToeicStorageIdsByPartServerId(part.getServerId());
+                File testFile = null;
+                boolean testok = true;
+                for (final Integer storageId : requiredStorageIds) {
+                    testFile = new File(testDataRootDirectory, storageId + ".bin");
+                    if (!testFile.exists()) {
+                        testok = false;
+                        break;
+                    }
+                }
+
+                if (testok) {
+                    part.setDownloaded(true);
+                    partDao.update(part);
+                }
+            }
+        }
     }
 
     private void getNewToeicDatabaseFromServer(
@@ -231,7 +255,10 @@ public class ToeicTestBackendService {
             itemContents.addAll(temps);
         }
 
-        return itemContents.stream().map(item -> item.getId()).collect(Collectors.toList());
+        return itemContents.stream()
+                .filter(u -> u.getContentType().equals("AUDIO") || u.getContentType().equals("IMAGE"))
+                .map(ToeicItemContent::getServerId)
+                .collect(Collectors.toList());
     }
 
     public void downloadPartStorageData(
