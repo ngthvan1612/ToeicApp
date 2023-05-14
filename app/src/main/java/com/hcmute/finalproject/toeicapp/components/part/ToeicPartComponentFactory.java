@@ -20,8 +20,21 @@ public class ToeicPartComponentFactory {
         else if (viewModel.getPartNumber() == 2) {
             component = new PartTwoComponent(activity);
         }
-
-        // Khong co gi het nua a
+        else if (viewModel.getPartNumber() == 3) {
+            component = new PartThreeComponent(activity);
+        }
+        else if (viewModel.getPartNumber() == 4) {
+            component = new PartFourComponent(activity);
+        }
+        else if (viewModel.getPartNumber() == 5) {
+            component = new PartFiveComponent(activity);
+        }
+        else if (viewModel.getPartNumber() == 6) {
+            component = new PartSixComponent(activity);
+        }
+        else if (viewModel.getPartNumber() == 7) {
+            component = new PartSevenComponent(activity);
+        }
 
         component.loadQuestionGroup(viewModel.getGroup());
         return component;

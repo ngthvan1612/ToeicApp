@@ -12,7 +12,7 @@ import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-public class PartSixComponent  extends LinearLayout implements ToeicPartComponent {
+public class PartSixComponent extends ToeicPartComponentBase {
     private CommonHeaderComponent commonHeaderComponent;
     private QuestionSentenceComponent questionSentenceComponent;
     public PartSixComponent(Context context) {
