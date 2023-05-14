@@ -7,5 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="colorTransparent">#43000000</color>
     <color name="component_home_page_list_practice_color_blue">#006088</color>
 </resources>
