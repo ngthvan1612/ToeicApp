@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.components.part_four;
+package com.hcmute.finalproject.toeicapp.components.part;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-public class PartFourComponent  extends LinearLayout {
+public class PartFourComponent  extends LinearLayout implements ToeicPartComponent {
     private CommonHeaderComponent commonHeaderComponent;
     public PartFourComponent(Context context) {
         this(context, null);
@@ -31,4 +32,13 @@ public class PartFourComponent  extends LinearLayout {
         commonHeaderComponent.setTitle("Part four - Short talks");
     }
 
+    @Override
+    public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
+
+    }
+
+    @Override
+    public void showExplain() {
+
+    }
 }
