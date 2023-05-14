@@ -1,5 +1,6 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,12 +14,14 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
+import com.hcmute.finalproject.toeicapp.testing.huong.activities.HuongTestActivity;
 
 
 public class HomeActivity extends GradientActivity {
@@ -28,12 +31,15 @@ public class HomeActivity extends GradientActivity {
     private MainBottomNavigationComponent mainBottomNavigationComponent;
     private ToeicTestBackendService toeicTestBackendService;
     private AuthenticationService authenticationService;
+    private Dialog dialog;
+    private LoadingDialogComponent loadingDialogComponent = new LoadingDialogComponent(HomeActivity.this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        dialog = new Dialog(this,android.R.style.Theme_Light);
         this.authenticationService = new AuthenticationService(this);
         this.toeicTestBackendService = new ToeicTestBackendService(this);
 
@@ -53,9 +59,11 @@ public class HomeActivity extends GradientActivity {
     }
 
     private void CheckDataAsync() {
-        ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setTitle("Để tạm thời");
-        dialog.setMessage("Đang đồng bộ");
+//        ProgressDialog dialog = new ProgressDialog(this);
+//        dialog.setTitle("Để tạm thời");
+//        dialog.setMessage("Đang đồng bộ");
+        loadingDialogComponent.startLoadingDialog(dialog,"Đang đồng bộ...");
+
 
         this.toeicTestBackendService.checkToeicTestDatabaseIsUpdated(new ToeicTestBackendService.OnBackupToeicListener() {
             @Override
@@ -71,7 +79,8 @@ public class HomeActivity extends GradientActivity {
             @Override
             public void onException(Exception exception) {
                 Toast.makeText(HomeActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+//                dialog.dismiss();
+                loadingDialogComponent.dismissDialog(dialog);
             }
         });
     }
