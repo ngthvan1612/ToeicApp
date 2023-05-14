@@ -7,6 +7,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyTopicDao;
@@ -60,6 +61,18 @@ public class ToeicVocabularyBackendService {
 
     private void runUIThread(Runnable runnable) {
         ((Activity)context).runOnUiThread(runnable);
+    }
+
+    public File getImageFileByPath(String imagePath) {
+        assert imagePath.endsWith(".png") || imagePath.endsWith(".jpg");
+        final File vocabRoot = StorageConfiguration.getVocabularyDataDirectory(this.context);
+        return new File(vocabRoot, imagePath);
+    }
+
+    public File getAudioFileByPath(String audioPath) {
+        assert audioPath.endsWith(".mp3");
+        final File vocabRoot = StorageConfiguration.getVocabularyDataDirectory(this.context);
+        return new File(vocabRoot, audioPath);
     }
 
     private void downloadVocabulary(
