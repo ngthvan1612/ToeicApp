@@ -112,9 +112,11 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                     intent.putExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, totalQuestions);
                     if(2 * numberOfCorrectAnswers >= totalQuestions) {
                         intent.putExtra("score", ResultActivity.MODE_GOOD);
+                        startActivity(intent);
                     }
                     else {
                         intent.putExtra("score",ResultActivity.MODE_BAD);
+                        startActivity(intent);
                     }
 
                     //startActivity(intent);
