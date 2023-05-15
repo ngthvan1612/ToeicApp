@@ -21,6 +21,7 @@ import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileC
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
+import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 import com.hcmute.finalproject.toeicapp.testing.huong.activities.HuongTestActivity;
 
 
@@ -31,15 +32,12 @@ public class HomeActivity extends GradientActivity {
     private MainBottomNavigationComponent mainBottomNavigationComponent;
     private ToeicTestBackendService toeicTestBackendService;
     private AuthenticationService authenticationService;
-    private Dialog dialog;
-    private LoadingDialogComponent loadingDialogComponent = new LoadingDialogComponent(HomeActivity.this);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        dialog = new Dialog(this,android.R.style.Theme_Light);
         this.authenticationService = new AuthenticationService(this);
         this.toeicTestBackendService = new ToeicTestBackendService(this);
 
@@ -59,28 +57,21 @@ public class HomeActivity extends GradientActivity {
     }
 
     private void CheckDataAsync() {
-//        ProgressDialog dialog = new ProgressDialog(this);
-//        dialog.setTitle("Để tạm thời");
-//        dialog.setMessage("Đang đồng bộ");
-        loadingDialogComponent.startLoadingDialog(dialog,"Đang đồng bộ...");
-
-
         this.toeicTestBackendService.checkToeicTestDatabaseIsUpdated(new ToeicTestBackendService.OnBackupToeicListener() {
             @Override
             public void prepare() {
-                dialog.show();
+                DialogSyncService.showDialog(HomeActivity.this);
             }
 
             @Override
             public void onSuccess() {
-                dialog.dismiss();
+                DialogSyncService.dismissDialog();
             }
 
             @Override
             public void onException(Exception exception) {
                 Toast.makeText(HomeActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
-//                dialog.dismiss();
-                loadingDialogComponent.dismissDialog(dialog);
+                DialogSyncService.dismissDialog();
             }
         });
     }
