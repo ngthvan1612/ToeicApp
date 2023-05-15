@@ -25,8 +25,6 @@ public abstract class ToeicPartComponentBase extends LinearLayout implements Toe
 
     public ToeicPartComponentBase(Context context) {
         this(context, null);
-        this.toeicTestGradeService = new ToeicTestGradeService();
-        this.answerSelectionComponents = new ArrayList<>();
     }
 
     protected void setPartNumber(Integer partNumber) {
@@ -39,6 +37,8 @@ public abstract class ToeicPartComponentBase extends LinearLayout implements Toe
 
     public ToeicPartComponentBase(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.toeicTestGradeService = new ToeicTestGradeService();
+        this.answerSelectionComponents = new ArrayList<>();
     }
 
     protected void setListQuestions(@NonNull List<ToeicQuestion> questions) {
