@@ -113,6 +113,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("result", gradeToeicResult);
+                    intent.putExtras(bundle);
 
                     startActivityForResult(intent, 1234);
                 }
