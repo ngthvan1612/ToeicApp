@@ -158,7 +158,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
                     Gson gson = new Gson();
                     Bundle bundle = getIntent().getExtras();
                     Integer partId = bundle.getInt("partId");
-                    intent.putExtra("part-id", partId);
+                    intent.putExtra("partId", partId);
                     intent.putExtra("question-data", gson.toJson(groupViews));
                     startActivity(intent);
                 };

@@ -76,24 +76,24 @@ public class PartOnePhotographsActivity extends GradientActivity {
             container.removeView((View)object);
         }
 
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            PartOnePhotographsComponent component = new PartOnePhotographsComponent(PartOnePhotographsActivity.this);
-            CommonHeaderComponent commonHeaderComponent = new CommonHeaderComponent(PartOnePhotographsActivity.this);
-            container.addView(component);
-            container.addView(commonHeaderComponent);
-
-
-            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
-            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            //answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
-
-            commonHeaderComponent = findViewById(R.id.common_part_one_header_title);
-            Intent intent = new Intent(PartOnePhotographsActivity.this,HomeActivity.class);
-            commonHeaderComponent.handleBackToHomepage(intent);
-            return component;
-        }
+//        @NonNull
+//        @Override
+//        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//            PartOnePhotographsComponent component = new PartOnePhotographsComponent(PartOnePhotographsActivity.this);
+//            CommonHeaderComponent commonHeaderComponent = new CommonHeaderComponent(PartOnePhotographsActivity.this);
+//            container.addView(component);
+//            container.addView(commonHeaderComponent);
+//
+//
+//            final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
+//            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
+//            //answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+//
+//            commonHeaderComponent = findViewById(R.id.common_part_one_header_title);
+//            Intent intent = new Intent(PartOnePhotographsActivity.this,HomeActivity.class);
+//            //commonHeaderComponent.handleBackToHomepage(intent);
+//            return component;
+//        }
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {

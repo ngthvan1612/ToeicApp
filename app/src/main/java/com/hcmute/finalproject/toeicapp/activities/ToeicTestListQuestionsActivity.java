@@ -6,23 +6,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
-import com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
-import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +28,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private Integer partId;
     private ViewPagerAdapter adapter;
     private CommonTestFooterComponent commonTestFooterComponent = null;
-    private Integer totalCorrectAnswer=0;
+    private Integer correctAnswer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,28 +93,27 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             public void onNextMenuClicked() {
                 final Integer currentItemId = viewPager.getCurrentItem();
                 final String componentTag = "c-" + currentItemId;
-                ToeicPartComponent toeicPartComponent = viewPager.findViewWithTag(componentTag);
-                String answer = toeicPartComponent.getAnswer();
-                String selectedChoice = toeicPartComponent.getSelectedChoice();
-                Log.d("answer",answer);
-                Log.d("selectedChoice",selectedChoice);
 
-                toeicPartComponent.showExplain();
-//                handle score
-                String currentAnswer = toeicPartComponent.getSelectedChoice();
-                String correctAnswer = toeicPartComponent.getAnswer();
-                Log.d("currentAnswer",currentAnswer);
-                Log.d("correctAnswer",correctAnswer);
-//                handle next page
-                if(currentItemId+1== toeicQuestionGroupViews.size()) {
+                int numberOfCorrectAnswers = 0;
+                int totalQuestions = 0;
+
+                for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
+                    final String tag = "c-" + i;
+                    ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                    assert component != null;
+                    numberOfCorrectAnswers += component.getNumberCorrectAnswer();
+                    totalQuestions += component.getTotalQuestions();
+                }
+
+                if(currentItemId + 1 == toeicQuestionGroupViews.size()) {
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
-                    if(totalCorrectAnswer >= 4) {
-                        intent.putExtra("score",1);
-                        startActivity(intent);
+                    intent.putExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers);
+                    intent.putExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, totalQuestions);
+                    if(2 * numberOfCorrectAnswers >= totalQuestions) {
+                        intent.putExtra("score", ResultActivity.MODE_GOOD);
                     }
                     else {
-                        intent.putExtra("score",2);
-                        startActivity(intent);
+                        intent.putExtra("score",ResultActivity.MODE_BAD);
                     }
 
                 }
@@ -134,12 +128,11 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
     private Integer getPartIdFromIntent() {
         final Intent intent = getIntent();
-        return intent.getIntExtra("part-id", 0);
+        return intent.getIntExtra("partId", 0);
     }
 
     private void setCommonHeaderComponent() {
         Integer partId = getPartIdFromIntent();
-        Toast.makeText(this, partId + "", Toast.LENGTH_SHORT).show();
         if (partId == 1) {
             commonHeaderComponent.setTitle("Part 1 - Photographs");
         } else if (partId == 2) {
