@@ -87,7 +87,7 @@ public class PartOnePhotographsActivity extends GradientActivity {
 
             final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
             final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+            //answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
 
             commonHeaderComponent = findViewById(R.id.common_part_one_header_title);
             Intent intent = new Intent(PartOnePhotographsActivity.this,HomeActivity.class);

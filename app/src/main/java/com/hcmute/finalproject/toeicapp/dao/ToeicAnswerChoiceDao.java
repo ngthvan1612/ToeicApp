@@ -14,4 +14,7 @@ public interface ToeicAnswerChoiceDao extends ToeicDao<ToeicAnswerChoice>{
 
     @Query("SELECT * FROM ToeicAnswerChoice where id=:id")
     ToeicAnswerChoice getOne(Integer id);
+
+    @Query("SELECT * FROM ToeicAnswerChoice WHERE toeicQuestionId = :questionId")
+    List<ToeicAnswerChoice> getByQuestionId(Integer questionId);
 }
