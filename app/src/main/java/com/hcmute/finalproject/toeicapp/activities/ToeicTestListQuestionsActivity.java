@@ -1,6 +1,7 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -116,6 +117,8 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                         intent.putExtra("score",ResultActivity.MODE_BAD);
                     }
 
+                    //startActivity(intent);
+                    startActivityForResult(intent, 1234);
                 }
                 else {
                     viewPager.setCurrentItem(currentItemId+1,true);
@@ -124,7 +127,23 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1234) {
+            if (data.getStringExtra("select").equals("continue")) {
+                finish();
+            }
+            else {
+                for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
+                    final String tag = "c-" + i;
+                    ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                    assert component != null;
+                    component.showExplain();
+                }
+            }
+        }
+    }
 
     private Integer getPartIdFromIntent() {
         final Intent intent = getIntent();

@@ -2,8 +2,10 @@ package com.hcmute.finalproject.toeicapp.activities;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +51,24 @@ public class ResultActivity extends GradientActivity {
         txtResult = findViewById(R.id.activity_result_text_result);
 
         txtResult.setText("Result " + this.numberOfCorrectAnswers + "/" + this.totalQuestions);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("select", "continue");
+                setResult(1234, returnIntent);
+                finish();
+            }
+        });
+        btnShowAnswers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("select", "show-answer");
+                setResult(1234, returnIntent);
+                finish();
+            }
+        });
     }
 
     public int getViewMode() {

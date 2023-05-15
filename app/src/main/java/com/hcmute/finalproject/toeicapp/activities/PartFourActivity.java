@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartFourActivity extends GradientActivity {
-    private static final int NUMBER_OF_PAGES = 5;
+    private static final int NUMBER_OF_PAGES = 20;
     private ViewPager viewPager;
 
 

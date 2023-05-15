@@ -49,6 +49,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
     private ToeicAnswerChoiceDao toeicAnswerChoiceDao;
     private ToeicItemContentDao toeicItemContentDao;
     private ListQuestionAdapter listQuestionAdapter;
+    private boolean isExplainShowed = false;
     private List<AnswerSelectionComponent> answerSelectionComponentList = new ArrayList<>();
 
     public PartThreeComponent(Context context) {
@@ -132,7 +133,11 @@ public class PartThreeComponent extends ToeicPartComponentBase {
 
     @Override
     public void showExplain() {
+        for (AnswerSelectionComponent answerSelectionComponent : answerSelectionComponentList) {
+            answerSelectionComponent.setShowExplain(true);
+        }
 
+        isExplainShowed = true;
     }
 
     private File getAudioFile(Integer serverId) {
@@ -180,6 +185,8 @@ public class PartThreeComponent extends ToeicPartComponentBase {
                 assert question.getCorrectAnswer() != null && question.getCorrectAnswer().length() == 1;
                 component.setCorrectAnswer(question.getCorrectAnswer());
                 component.setQuestionTitle(question.getQuestionNumber() + ". " + question.getContent());
+
+                component.setShowExplain(isExplainShowed);
             }
         }
     }
