@@ -1,5 +1,6 @@
 package com.hcmute.finalproject.toeicapp.model.vocabulary;
 
+@Deprecated
 public class VocabularyTopic {
     private String topicName;
     private Integer numberOfVocabularies;

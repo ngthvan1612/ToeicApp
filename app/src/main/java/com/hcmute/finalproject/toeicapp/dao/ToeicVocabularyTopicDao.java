@@ -15,4 +15,7 @@ public interface ToeicVocabularyTopicDao extends ToeicDao<ToeicVocabularyTopic> 
 
     @Query("SELECT * FROM ToeicVocabularyTopic WHERE id = :id")
     ToeicVocabularyTopic getOne(Integer id);
+
+    @Query("SELECT * FROM ToeicVocabularyTopic WHERE name = :topicName")
+    ToeicVocabularyTopic getByTopicName(String topicName);
 }

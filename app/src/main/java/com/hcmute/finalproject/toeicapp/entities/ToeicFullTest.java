@@ -11,10 +11,10 @@ public class ToeicFullTest {
     private Integer id;
     private Integer serverId;
     private String fullName;
-
-//    constructor
+    private String slug;
+    //    constructor
     public ToeicFullTest() {}
-    public ToeicFullTest(Integer id, Integer serverId, String fullName, String slug) {
+    public ToeicFullTest(@NonNull Integer id, Integer serverId, String fullName, String slug) {
         this.serverId = id;
         this.fullName = fullName;
         this.slug = slug;
@@ -54,5 +54,5 @@ public class ToeicFullTest {
         this.slug = slug;
     }
 
-    private String slug;
+
 }

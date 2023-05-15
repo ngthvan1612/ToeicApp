@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/test_back_button"
+        android:id="@+id/menu_component_test_footer_previous"
         android:icon="@drawable/arrow_drop_left_line_1"
         android:title="Previous"
         />
     <item
-        android:id="@+id/test_heart_button"
+        android:id="@+id/menu_component_test_heart_button"
         android:icon="@drawable/fi_heart"
         android:title="Heart"
         />
     <item
-        android:id="@+id/test_translate_button"
+        android:id="@+id/menu_component_test_translate_button"
         android:icon="@drawable/translate"
         android:title="Translate"
         />
     <item
-        android:id="@+id/test_next_button"
+        android:id="@+id/menu_component_test_next_button"
         android:icon="@drawable/arrow_drop_right_line"
         android:title="Next"
         />

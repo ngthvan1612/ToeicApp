@@ -3,7 +3,6 @@ package com.hcmute.finalproject.toeicapp.entities;
 import androidx.room.*;
 
 import androidx.annotation.NonNull;
-
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = ToeicVocabularyTopic.class,
@@ -11,20 +10,6 @@ import androidx.annotation.NonNull;
                 childColumns = "topicId",
                 onDelete = ForeignKey.CASCADE,
                 onUpdate = ForeignKey.CASCADE
-        ),
-        @ForeignKey(
-                entity = ToeicStorage.class,
-                parentColumns = "id",
-                childColumns = "imageStorageId",
-                onUpdate = ForeignKey.CASCADE,
-                onDelete = ForeignKey.SET_NULL
-        ),
-        @ForeignKey(
-                entity = ToeicStorage.class,
-                parentColumns = "id",
-                childColumns = "audioStorageId",
-                onUpdate = ForeignKey.CASCADE,
-                onDelete = ForeignKey.SET_NULL
         )
 })
 public class ToeicVocabulary {
@@ -32,15 +17,23 @@ public class ToeicVocabulary {
         @NonNull
         private Integer id;
 
-        private String text;
+        private Integer serverId;
+
+        private String english;
+
+        private String vietnamese;
 
         private String pronunciation;
 
+        private String exampleEnglish;
+
+        private String exampleVietnamese;
+
         private Integer topicId;
 
-        private Integer imageStorageId;
+        private String imagePath;
 
-        private Integer audioStorageId;
+        private String audioPath;
 
         @NonNull
         public Integer getId() {
@@ -51,12 +44,28 @@ public class ToeicVocabulary {
                 this.id = id;
         }
 
-        public String getText() {
-                return text;
+        public Integer getServerId() {
+                return serverId;
         }
 
-        public void setText(String text) {
-                this.text = text;
+        public void setServerId(Integer serverId) {
+                this.serverId = serverId;
+        }
+
+        public String getEnglish() {
+                return english;
+        }
+
+        public void setEnglish(String english) {
+                this.english = english;
+        }
+
+        public String getVietnamese() {
+                return vietnamese;
+        }
+
+        public void setVietnamese(String vietnamese) {
+                this.vietnamese = vietnamese;
         }
 
         public String getPronunciation() {
@@ -67,6 +76,22 @@ public class ToeicVocabulary {
                 this.pronunciation = pronunciation;
         }
 
+        public String getExampleEnglish() {
+                return exampleEnglish;
+        }
+
+        public void setExampleEnglish(String exampleEnglish) {
+                this.exampleEnglish = exampleEnglish;
+        }
+
+        public String getExampleVietnamese() {
+                return exampleVietnamese;
+        }
+
+        public void setExampleVietnamese(String exampleVietnamese) {
+                this.exampleVietnamese = exampleVietnamese;
+        }
+
         public Integer getTopicId() {
                 return topicId;
         }
@@ -75,19 +100,19 @@ public class ToeicVocabulary {
                 this.topicId = topicId;
         }
 
-        public Integer getImageStorageId() {
-                return imageStorageId;
+        public String getImagePath() {
+                return imagePath;
         }
 
-        public void setImageStorageId(Integer imageStorageId) {
-                this.imageStorageId = imageStorageId;
+        public void setImagePath(String imagePath) {
+                this.imagePath = imagePath;
         }
 
-        public Integer getAudioStorageId() {
-                return audioStorageId;
+        public String getAudioPath() {
+                return audioPath;
         }
 
-        public void setAudioStorageId(Integer audioStorageId) {
-                this.audioStorageId = audioStorageId;
+        public void setAudioPath(String audioPath) {
+                this.audioPath = audioPath;
         }
 }

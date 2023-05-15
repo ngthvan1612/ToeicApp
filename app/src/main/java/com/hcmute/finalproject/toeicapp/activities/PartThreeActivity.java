@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.part_three.PartThreeComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.components.part.PartThreeComponent;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,32 +33,32 @@ public class PartThreeActivity extends GradientActivity {
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
 
     }
-    private List<ToeicAnswerChoice> getSamplePart3Choices() {
-        List<ToeicAnswerChoice> choices = new ArrayList<>();
+    private List<TestToeicAnswerChoice> getSamplePart3Choices() {
+        List<TestToeicAnswerChoice> choices = new ArrayList<>();
 
         // A.
-        ToeicAnswerChoice a = new ToeicAnswerChoice();
+        TestToeicAnswerChoice a = new TestToeicAnswerChoice();
         a.setContent("Product quality testing");
         a.setLabel("A");
         a.setExplain("Kiểm tra chất lượng sản phẩm");
         choices.add(a);
 
         // B
-        ToeicAnswerChoice b = new ToeicAnswerChoice();
+        TestToeicAnswerChoice b = new TestToeicAnswerChoice();
         b.setContent("Candidates for a job");
         b.setLabel("B");
         b.setExplain("Ứng cử viên cho 1 công việ");
         choices.add(b);
 
         // C.
-        ToeicAnswerChoice c = new ToeicAnswerChoice();
+        TestToeicAnswerChoice c = new TestToeicAnswerChoice();
         c.setContent("Contracts with vendors");
         c.setLabel("C");
         c.setExplain("Hợp đồng với khách hàng");
         choices.add(c);
 
         // D.
-        ToeicAnswerChoice d = new ToeicAnswerChoice();
+        TestToeicAnswerChoice d = new TestToeicAnswerChoice();
         d.setContent("Design modifications");
         d.setLabel("D");
         d.setExplain("Sửa đổi thiết kế");

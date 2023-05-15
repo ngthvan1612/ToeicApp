@@ -1,7 +1,5 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.hcmute.finalproject.toeicapp.R;

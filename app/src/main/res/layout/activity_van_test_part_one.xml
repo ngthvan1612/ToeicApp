@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".testing.van.activities.VanTestPartOne">
 
-    <com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent
+    <com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

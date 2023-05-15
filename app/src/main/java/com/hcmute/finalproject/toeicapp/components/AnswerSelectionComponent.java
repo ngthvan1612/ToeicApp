@@ -2,6 +2,7 @@ package com.hcmute.finalproject.toeicapp.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.entities.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,8 @@ public class AnswerSelectionComponent extends LinearLayout {
     private int lastSelectedPosition = -1;
     private List<ToeicAnswerChoice> toeicAnswerChoices;
     private boolean showExplain;
+    private boolean canSelect = true;
+    private String correctAnswer;
 
     private class AnswerSelectionItem {
         private String label;
@@ -66,6 +71,16 @@ public class AnswerSelectionComponent extends LinearLayout {
         public void setShowExplain(boolean showExplain) {
             this.showExplain = showExplain;
         }
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+        this.setShowExplain(this.isShowExplain());
+        this.adapter.notifyDataSetChanged();
     }
 
     private String getQuestionTitle() {
@@ -163,9 +178,17 @@ public class AnswerSelectionComponent extends LinearLayout {
         this.recyclerViewSelection.post(new Runnable() {
             @Override
             public void run() {
+                setShowExplain(true);
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public ToeicAnswerChoice getCurrentChoice() {
+        if (lastSelectedPosition < 0)
+            return null;
+
+        return toeicAnswerChoices.get(lastSelectedPosition);
     }
 
     private class AnswerSelectionRecyclerViewAdapter extends RecyclerView.Adapter<AnswerSelectionRecyclerViewAdapter.AnswerSelectionItemViewHolder> {
@@ -220,24 +243,49 @@ public class AnswerSelectionComponent extends LinearLayout {
             }
 
             private void initOnClick() {
-                this.setChildListener(this.itemView, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!(v instanceof RadioButton))
-                            radioButton.toggle();
-                        if (radioButton.isChecked()) {
-                            handleAnswerRadioButtonIsChecked(getAdapterPosition());
+                if (canSelect) {
+                    this.setChildListener(this.itemView, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!canSelect)
+                                return;
+
+                            if (!(v instanceof RadioButton))
+                                radioButton.toggle();
+                            if (radioButton.isChecked()) {
+                                handleAnswerRadioButtonIsChecked(getAdapterPosition());
+                            }
+                            canSelect = false;
+                            setChildListener(itemView, null);
+                            radioButton.setEnabled(false);
                         }
-                    }
-                });
+                    });
+                }
+                else {
+                    radioButton.setEnabled(false);
+                }
             }
 
             private void setData(AnswerSelectionItem answerSelectionItem, int position) {
                 this.radioButton.setChecked(position == lastSelectedPosition);
                 this.radioButton.setText(answerSelectionItem.getLabel() + ". " + answerSelectionItem.getChoice());
+                this.txtExplain.setTextColor(getResources().getColor(android.R.color.black));
+                this.radioButton.setTextColor(getResources().getColor(android.R.color.black));
+
                 if (answerSelectionItem.isShowExplain()) {
                     this.explainLayout.setVisibility(View.VISIBLE);
                     this.txtExplain.setText(answerSelectionItem.getExplain());
+                    if (getCurrentChoice() != null) {
+                        if (getCurrentChoice().getLabel().equals(answerSelectionItem.label)) {
+                            this.txtExplain.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                            this.radioButton.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        }
+                    }
+
+                    if (answerSelectionItem.label.equals(correctAnswer)) {
+                        this.txtExplain.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                        this.radioButton.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                    }
                 } else {
                     this.explainLayout.setVisibility(View.GONE);
                 }

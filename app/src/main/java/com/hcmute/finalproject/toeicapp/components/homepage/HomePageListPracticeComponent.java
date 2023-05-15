@@ -1,31 +1,15 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.ListGroupQuestionsActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartFiveActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartFourActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartOnePhotographsActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartSevenActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartSixActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartThreeActivity;
-import com.hcmute.finalproject.toeicapp.activities.PartTwoActivity;
 import com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent;
 
 public class HomePageListPracticeComponent extends LinearLayout {
@@ -61,7 +45,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartOnePhotographsActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 1);
                 intent.putExtra("partName", "Part 1 - Photographs");
                 context.startActivity(intent);
@@ -71,7 +55,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartTwoActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 2);
                 intent.putExtra("partName", "Part 2 - Q & R");
                 context.startActivity(intent);
@@ -81,7 +65,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartThreeActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 3);
                 intent.putExtra("partName", "Part 3 - Conversations");
                 context.startActivity(intent);
@@ -91,7 +75,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart4.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartFourActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 4);
                 intent.putExtra("partName", "Part 4 - Short Talks");
                 context.startActivity(intent);
@@ -101,7 +85,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart5.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartFiveActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 5);
                 intent.putExtra("partName", "Part 5 - Incomplete sentences");
                 context.startActivity(intent);
@@ -111,7 +95,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart6.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartSixActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 6);
                 intent.putExtra("partName", "Part 6 - Text Completion");
                 context.startActivity(intent);
@@ -121,7 +105,7 @@ public class HomePageListPracticeComponent extends LinearLayout {
         btnPart7.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PartSevenActivity.class);
+                Intent intent = new Intent(getContext(), ListGroupQuestionsActivity.class);
                 intent.putExtra("partId", 7);
                 intent.putExtra("partName", "Part 7 - Reading Comprehension");
                 context.startActivity(intent);

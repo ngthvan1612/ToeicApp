@@ -6,6 +6,8 @@ import android.content.ContextWrapper;
 import java.io.File;
 
 public class StorageConfiguration {
+    private static File vocabDirectory = null;
+    private static File testDirectory = null;
     private static File rootDirectory = null;
     private static final String ROOT_DIRECTORY = "toeic-app-root";
 
@@ -17,5 +19,29 @@ public class StorageConfiguration {
         }
 
         return rootDirectory;
+    }
+
+    public static File getVocabularyDataDirectory(Context context) {
+        if (vocabDirectory == null) {
+            final File root = getRootDirectory(context);
+            vocabDirectory = new File(root, "vocab-data");
+
+            if (!vocabDirectory.exists())
+                vocabDirectory.mkdir();
+        }
+
+        return vocabDirectory;
+    }
+
+    public static File getTestDataDirectory(Context context) {
+        if (testDirectory == null) {
+            final File root = getRootDirectory(context);
+            testDirectory = new File(root, "test-data");
+
+            if (!testDirectory.exists())
+                testDirectory.mkdir();
+        }
+
+        return testDirectory;
     }
 }

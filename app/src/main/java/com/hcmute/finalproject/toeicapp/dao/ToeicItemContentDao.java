@@ -14,4 +14,8 @@ public interface ToeicItemContentDao extends ToeicDao<ToeicItemContent> {
 
     @Query("SELECT * FROM ToeicItemContent WHERE id = :id")
     ToeicItemContent getOne(Integer id);
+
+    @Query("SELECT * FROM ToeicItemContent a WHERE a.toeicQuestionGroupEntityQuestionContentId = :groupId" +
+            " or a.toeicQuestionGroupEntityTranscriptId = :groupId")
+    List<ToeicItemContent> getItemContentByGroupId(Integer groupId);
 }

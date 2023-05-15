@@ -11,8 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
-import com.hcmute.finalproject.toeicapp.components.part_one.PartOnePhotographsComponent;
-import com.hcmute.finalproject.toeicapp.model.toeic.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent;
+import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,32 +31,32 @@ public class PartOnePhotographsActivity extends GradientActivity {
         viewPager.setOffscreenPageLimit(NUMBER_OF_PAGES);
         viewPager.setAdapter(new ViewPagerNavigationAdapter());
     }
-    private List<ToeicAnswerChoice> getSamplePart1Choices() {
-        List<ToeicAnswerChoice> choices = new ArrayList<>();
+    private List<TestToeicAnswerChoice> getSamplePart1Choices() {
+        List<TestToeicAnswerChoice> choices = new ArrayList<>();
 
         // A.
-        ToeicAnswerChoice a = new ToeicAnswerChoice();
+        TestToeicAnswerChoice a = new TestToeicAnswerChoice();
         a.setContent("");
         a.setLabel("A");
         a.setExplain("She's tying her shoelaces.");
         choices.add(a);
 
         // B
-        ToeicAnswerChoice b = new ToeicAnswerChoice();
+        TestToeicAnswerChoice b = new TestToeicAnswerChoice();
         b.setContent("");
         b.setLabel("B");
         b.setExplain("She's holding a cup.");
         choices.add(b);
 
         // C.
-        ToeicAnswerChoice c = new ToeicAnswerChoice();
+        TestToeicAnswerChoice c = new TestToeicAnswerChoice();
         c.setContent("");
         c.setLabel("C");
         c.setExplain("She's reading under an umbrella.");
         choices.add(c);
 
         // D.
-        ToeicAnswerChoice d = new ToeicAnswerChoice();
+        TestToeicAnswerChoice d = new TestToeicAnswerChoice();
         d.setContent("");
         d.setLabel("D");
         d.setExplain("She's jogging through a park.");
@@ -86,8 +86,8 @@ public class PartOnePhotographsActivity extends GradientActivity {
 
 
             final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_one_photographs_answer_selection);
-            final List<ToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
+            //answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
 
             commonHeaderComponent = findViewById(R.id.common_part_one_header_title);
             Intent intent = new Intent(PartOnePhotographsActivity.this,HomeActivity.class);
