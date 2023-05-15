@@ -7,6 +7,17 @@
     tools:context=".activities.ToeicTestListQuestionsActivity"
     android:id="@+id/activity_toeic_test_list_questions_layout">
 
+    <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+        android:id="@+id/activity_toeic_test_list_questions_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp">
+
+    </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/activity_toeic_test_list_questions_view_pager"

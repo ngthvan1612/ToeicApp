@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToeicTestListQuestionsActivity extends GradientActivity {
+    CommonHeaderComponent commonHeaderComponent;
     private List<ToeicGroupItemViewModel> toeicQuestionGroupViews = new ArrayList<>();
     private ViewPager viewPager;
     private Integer partId;
@@ -33,6 +35,9 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toeic_test_list_questions);
+
+        commonHeaderComponent = findViewById(R.id.activity_toeic_test_list_questions_header_title);
+        this.setCommonHeaderComponent();
 
         this.viewPager = findViewById(R.id.activity_toeic_test_list_questions_view_pager);
         this.adapter = new ViewPagerAdapter();
@@ -69,6 +74,26 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         return intent.getIntExtra("part-id", 0);
     }
 
+    private void setCommonHeaderComponent() {
+        Integer partId = getPartIdFromIntent();
+        Toast.makeText(this, partId + "", Toast.LENGTH_SHORT).show();
+        if (partId == 1) {
+            commonHeaderComponent.setTitle("Part 1 - Photographs");
+        } else if (partId == 2) {
+            commonHeaderComponent.setTitle("Part 2 - Q & R");
+        } else if (partId == 3) {
+            commonHeaderComponent.setTitle("Part 3 - Conversations");
+        } else if (partId == 4) {
+            commonHeaderComponent.setTitle("Part 4 - Short Talks");
+        } else if (partId == 5) {
+            commonHeaderComponent.setTitle("Part 5 - Incomplete sentences");
+        } else if (partId == 6) {
+            commonHeaderComponent.setTitle("Part 6 - Text completion");
+        } else if (partId == 7) {
+            commonHeaderComponent.setTitle("Part 7 - Reading comprehension");
+        }
+    }
+
     public List<ToeicGroupItemViewModel> loadToeicQuestionGroupsFromIntent() {
         final Intent intent = getIntent();
         final String json = intent.getStringExtra("question-data");
@@ -99,6 +124,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
             container.addView(component);
             component.setTag("c-" + position);
+
             return component;
         }
 

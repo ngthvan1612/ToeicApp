@@ -28,8 +28,6 @@ public class PartThreeComponent extends ToeicPartComponentBase {
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_part_three, this);
-        commonHeaderComponent=view.findViewById(R.id.common_part_three_header_title);
-        commonHeaderComponent.setTitle("Part three - Conversations");
     }
 
     @Override

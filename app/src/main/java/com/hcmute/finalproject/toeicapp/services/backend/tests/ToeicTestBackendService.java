@@ -37,6 +37,7 @@ import com.hcmute.finalproject.toeicapp.services.sharedpreference.SharedPreferen
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -287,7 +288,6 @@ public class ToeicTestBackendService {
                         listener.onUpdateProgress(percent);
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
                     @Override
                     public void onSuccess(@NonNull byte[] bytes) {
                         final File testStorageRootDir = StorageConfiguration.getTestDataDirectory(context);
@@ -301,8 +301,13 @@ public class ToeicTestBackendService {
                             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                                 try {
                                     Integer id = Integer.parseInt(zipEntry.getName().split("\\.")[0]);
-                                    byte[] data = zipInputStream.readAllBytes();
-                                    dict.put(id, data);
+                                    ByteArrayOutputStream output = new ByteArrayOutputStream();
+                                    byte[] buffer = new byte[1024];
+                                    int n = 0;
+                                    while ((n = zipInputStream.read(buffer, 0, 1024)) != -1) {
+                                        output.write(buffer, 0, n);
+                                    }
+                                    dict.put(id, output.toByteArray());
                                 }
                                 catch (RuntimeException | IOException e) {
                                     listener.onException(new Exception("WRONG DATA FORMAT"));
