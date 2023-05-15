@@ -125,6 +125,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.loadAudioFile(audioFile);
         audioPlayerComponent.setCurrentVolume(1.0f);
 
+        this.answerSelectionComponent.setQuestionTitle("Question "+ toeicQuestion.getQuestionNumber().toString());
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
         this.answerSelectionComponent.setToeicQuestion(toeicQuestion);

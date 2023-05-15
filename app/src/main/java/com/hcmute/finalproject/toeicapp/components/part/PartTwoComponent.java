@@ -43,8 +43,9 @@ public class PartTwoComponent extends ToeicPartComponentBase {
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_part_two, this);
-
         this.answerSelectionComponent = view.findViewById(R.id.component_part_two_answer);
+        super.addAnswerSelectionComponent(this.answerSelectionComponent);
+
     }
 
     @Override
@@ -58,8 +59,11 @@ public class PartTwoComponent extends ToeicPartComponentBase {
         ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
 
+        this.answerSelectionComponent.setQuestionTitle("Question "+ toeicQuestion.getQuestionNumber().toString());
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
+        this.answerSelectionComponent.setToeicQuestion(toeicQuestion);
+
     }
 
     @Override
