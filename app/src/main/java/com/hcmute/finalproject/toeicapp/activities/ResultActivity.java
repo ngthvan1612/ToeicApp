@@ -2,6 +2,7 @@ package com.hcmute.finalproject.toeicapp.activities;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,9 +12,16 @@ import com.hcmute.finalproject.toeicapp.R;
 public class ResultActivity extends GradientActivity {
     public final static int MODE_GOOD = 1;
     public final static int MODE_BAD = 2;
+
+    public final static String INTENT_NUMBER_OF_CORRECT_ANSWERS = "num-of-questions";
+    public final static String INTENT_TOTAL_QUESTIONS = "total-questions";
+
+    private int numberOfCorrectAnswers;
+    private int totalQuestions;
+
     private int viewMode;
     ImageView imageRender;
-    TextView textRender;
+    TextView textRender, txtResult;
     AppCompatButton btnShowAnswers, btnContinue;
 
     @Override
@@ -21,9 +29,15 @@ public class ResultActivity extends GradientActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        this.initView();
         Bundle bundle = getIntent().getExtras();
         viewMode = bundle.getInt("score");
+
+        Intent intent = getIntent();
+        this.numberOfCorrectAnswers = intent.getIntExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, 0);
+        this.totalQuestions = intent.getIntExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, 0);
+
+        this.initView();
+
         setViewMode(viewMode);
     }
 
@@ -32,6 +46,9 @@ public class ResultActivity extends GradientActivity {
         textRender = (TextView) findViewById(R.id.activity_result_text);
         btnShowAnswers = (AppCompatButton) findViewById(R.id.activity_result_button_show_answers);
         btnContinue = (AppCompatButton) findViewById(R.id.activity_result_button_continue);
+        txtResult = findViewById(R.id.activity_result_text_result);
+
+        txtResult.setText("Result " + this.numberOfCorrectAnswers + "/" + this.totalQuestions);
     }
 
     public int getViewMode() {

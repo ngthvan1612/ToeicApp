@@ -34,7 +34,9 @@ import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PartThreeComponent extends ToeicPartComponentBase {
     private AudioPlayerComponent audioPlayerComponent;
@@ -47,6 +49,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
     private ToeicAnswerChoiceDao toeicAnswerChoiceDao;
     private ToeicItemContentDao toeicItemContentDao;
     private ListQuestionAdapter listQuestionAdapter;
+    private List<AnswerSelectionComponent> answerSelectionComponentList = new ArrayList<>();
 
     public PartThreeComponent(Context context) {
         this(context, null);
@@ -150,6 +153,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
             ));
             LayoutParams layoutParams = (LayoutParams) answerSelectionComponent.getLayoutParams();
             layoutParams.setMargins(0, 0, 0, 20);
+            answerSelectionComponentList.add(answerSelectionComponent);
             return new ListQuestionItemHodler(answerSelectionComponent);
         }
 
@@ -173,6 +177,8 @@ public class PartThreeComponent extends ToeicPartComponentBase {
                 final List<ToeicAnswerChoice> choices = toeicAnswerChoiceDao.getByQuestionId(question.getId());
                 AnswerSelectionComponent component = (AnswerSelectionComponent)this.itemView;
                 component.setToeicAnswerChoices(choices);
+                assert question.getCorrectAnswer() != null && question.getCorrectAnswer().length() == 1;
+                component.setCorrectAnswer(question.getCorrectAnswer());
                 component.setQuestionTitle(question.getQuestionNumber() + ". " + question.getContent());
             }
         }
@@ -185,6 +191,26 @@ public class PartThreeComponent extends ToeicPartComponentBase {
 
     @Override
     public String getSelectedChoice() {
-        return null;
+        return "";
+    }
+
+    @Override
+    public Integer getNumberCorrectAnswer() {
+        assert this.questions.size() >= answerSelectionComponentList.size();
+        int counter = 0;
+        for (AnswerSelectionComponent component : answerSelectionComponentList) {
+            final ToeicAnswerChoice currentChoice = component.getCurrentChoice();
+            if (currentChoice != null) {
+                if (currentChoice.getLabel().equals(component.getCorrectAnswer())) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
+
+    @Override
+    public Integer getTotalQuestions() {
+        return this.questions.size();
     }
 }
