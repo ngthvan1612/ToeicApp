@@ -82,7 +82,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
         this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
-        super.addAnswerSelectionComponent(this.answerSelectionComponent);
+
 
         if (this.isInEditMode()) {
             return;
