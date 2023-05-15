@@ -2,12 +2,12 @@ package com.hcmute.finalproject.toeicapp.services.learn.model;
 
 import java.io.Serializable;
 
-public class GradeToeicPartResult implements Serializable {
+public class GradeToeicResult implements Serializable {
     private Integer numberOfCorrectQuestions;
     private Integer totalQuestions;
     private GradeToeicRate rate;
 
-    public GradeToeicPartResult() {
+    public GradeToeicResult() {
 
     }
 
