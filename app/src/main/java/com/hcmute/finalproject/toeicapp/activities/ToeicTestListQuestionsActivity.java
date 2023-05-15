@@ -18,6 +18,8 @@ import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
+import com.hcmute.finalproject.toeicapp.services.learn.ToeicTestGradeService;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +31,16 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private Integer partId;
     private ViewPagerAdapter adapter;
     private CommonTestFooterComponent commonTestFooterComponent = null;
-    private Integer correctAnswer = 0;
+    private ToeicTestGradeService toeicTestGradeService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toeic_test_list_questions);
 
+        this.toeicTestGradeService = new ToeicTestGradeService();
         this.commonTestFooterComponent = findViewById(R.id.activity_toeic_test_list_questions_footer);
-        commonHeaderComponent = findViewById(R.id.activity_toeic_test_list_questions_header_title);
+        this.commonHeaderComponent = findViewById(R.id.activity_toeic_test_list_questions_header_title);
         this.setCommonHeaderComponent();
 
         this.viewPager = findViewById(R.id.activity_toeic_test_list_questions_view_pager);
@@ -95,30 +98,22 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                 final Integer currentItemId = viewPager.getCurrentItem();
 
                 if(currentItemId + 1 == toeicQuestionGroupViews.size()) {
-                    int numberOfCorrectAnswers = 0;
-                    int totalQuestions = 0;
+                    List<GradeToeicResult> listResultForEachQuestionGroups = new ArrayList<>();
 
                     for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
                         final String tag = "c-" + i;
-                        ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                        final ToeicPartComponent component = viewPager.findViewWithTag(tag);
                         assert component != null;
-                        numberOfCorrectAnswers += component.getNumberCorrectAnswer();
-                        totalQuestions += component.getTotalQuestions();
+                        final GradeToeicResult result = component.calculateScore();
+                        listResultForEachQuestionGroups.add(result);
                     }
+
+                    GradeToeicResult gradeToeicResult = toeicTestGradeService.mergeResult(listResultForEachQuestionGroups);
 
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
-                    intent.putExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers);
-                    intent.putExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, totalQuestions);
-                    if(2 * numberOfCorrectAnswers >= totalQuestions) {
-                        intent.putExtra("score", ResultActivity.MODE_GOOD);
-                        startActivity(intent);
-                    }
-                    else {
-                        intent.putExtra("score",ResultActivity.MODE_BAD);
-                        startActivity(intent);
-                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("result", gradeToeicResult);
 
-                    //startActivity(intent);
                     startActivityForResult(intent, 1234);
                 }
                 else {

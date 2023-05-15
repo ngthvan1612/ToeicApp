@@ -10,13 +10,11 @@ import androidx.annotation.Nullable;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.services.learn.ToeicTestGradeService;
-import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicPartResult;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicPayload;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ToeicPartComponentBase extends LinearLayout implements ToeicPartComponent {
@@ -49,7 +47,7 @@ public abstract class ToeicPartComponentBase extends LinearLayout implements Toe
     }
 
     @Override
-    public GradeToeicPartResult calculateScore() {
+    public GradeToeicResult calculateScore() {
         return this.toeicTestGradeService.gradePart(
                 this.answerSelectionComponents
                         .stream()
