@@ -71,7 +71,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
     private Integer getPartIdFromIntent() {
         final Intent intent = getIntent();
-        return intent.getIntExtra("part-id", 0);
+        return intent.getIntExtra("partId", 0);
     }
 
     private void setCommonHeaderComponent() {
