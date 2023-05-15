@@ -93,20 +93,19 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             @Override
             public void onNextMenuClicked() {
                 final Integer currentItemId = viewPager.getCurrentItem();
-                final String componentTag = "c-" + currentItemId;
-
-                int numberOfCorrectAnswers = 0;
-                int totalQuestions = 0;
-
-                for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
-                    final String tag = "c-" + i;
-                    ToeicPartComponent component = viewPager.findViewWithTag(tag);
-                    assert component != null;
-                    numberOfCorrectAnswers += component.getNumberCorrectAnswer();
-                    totalQuestions += component.getTotalQuestions();
-                }
 
                 if(currentItemId + 1 == toeicQuestionGroupViews.size()) {
+                    int numberOfCorrectAnswers = 0;
+                    int totalQuestions = 0;
+
+                    for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
+                        final String tag = "c-" + i;
+                        ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                        assert component != null;
+                        numberOfCorrectAnswers += component.getNumberCorrectAnswer();
+                        totalQuestions += component.getTotalQuestions();
+                    }
+
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
                     intent.putExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers);
                     intent.putExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, totalQuestions);
