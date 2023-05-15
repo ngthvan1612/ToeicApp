@@ -12,7 +12,7 @@ import com.hcmute.finalproject.toeicapp.services.base.Service;
 @Service
 public class DialogSyncService {
     private static class SemaphoreCounter {
-        private Integer counter;
+        private Integer counter = 0;
 
         public synchronized Integer getCounter() {
             return counter;
