@@ -56,11 +56,6 @@ public class VocabularyDetailsActivity extends AppCompatActivity {
         this.txtPronounce.setText(word.getPronounce());
         this.txtEnglishExample.setText(word.getExampleEnglish());
         this.txtVietnameseExample.setText(word.getExampleVietnamese());
-        String temp = "a";
-        for (int i = 0; i<=10; i++ ){
-            temp = temp + temp;
-        }
-//        this.txtVietnameseExample.setText(temp);
 
         if (word.getImageFilename() != null) {
             File imgFile = toeicVocabularyBackendService.getImageFileByPath(word.getImageFilename());
@@ -75,7 +70,6 @@ public class VocabularyDetailsActivity extends AppCompatActivity {
                     audioPlayerBackground = AudioPlayerBackgroundFactory.createInstance(AudioPlayerBackgroundFactory.AudioMediaPlayerLibrary.GOOGLE_EXO_PLAYER, VocabularyDetailsActivity.this);
                     File audioFile = toeicVocabularyBackendService.getAudioFileByPath(word.getAudioFileName());
                     audioPlayerBackground.prepareAudioFile(audioFile);
-//                    audioPlayerBackground.start(true);
                     audioPlayerBackground.setOnAudioPlayerRunningEvent(new AudioPlayerBackground.OnAudioPlayerRunningEvent() {
                         @Override
                         public void afterStarted() {
