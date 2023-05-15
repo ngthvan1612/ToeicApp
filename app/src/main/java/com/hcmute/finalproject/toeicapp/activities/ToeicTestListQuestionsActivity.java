@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent;
 import com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
@@ -28,20 +29,24 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private ViewPager viewPager;
     private Integer partId;
     private ViewPagerAdapter adapter;
+    private CommonTestFooterComponent commonTestFooterComponent = null;
+    private Integer correctAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toeic_test_list_questions);
 
+        this.commonTestFooterComponent = findViewById(R.id.activity_toeic_test_list_questions_footer);
         this.viewPager = findViewById(R.id.activity_toeic_test_list_questions_view_pager);
         this.adapter = new ViewPagerAdapter();
         this.viewPager.setAdapter(adapter);
 
+
         toeicQuestionGroupViews.addAll(this.loadToeicQuestionGroupsFromIntent());
         this.partId = this.getPartIdFromIntent();
 
-        this.viewPager.setOffscreenPageLimit(0);
+        this.viewPager.setOffscreenPageLimit(toeicQuestionGroupViews.size());
         this.adapter.notifyDataSetChanged();
 
         this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -58,6 +63,48 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        this.commonTestFooterComponent.setOnMenuClickListener(new CommonTestFooterComponent.OnMenuClickListener() {
+            @Override
+            public void onPreviousMenuClicked() {
+                final Integer currentItemId = viewPager.getCurrentItem();
+                final String componentTag = "c-" + currentItemId;
+                viewPager.setCurrentItem(currentItemId-1,true);
+            }
+
+            @Override
+            public void onDictionaryMenuClicked() {
+
+            }
+
+            @Override
+            public void onExplainMenuClicked() {
+                final Integer currentItemId = viewPager.getCurrentItem();
+                final String componentTag = "c-" + currentItemId;
+                ToeicPartComponent toeicPartComponent = viewPager.findViewWithTag(componentTag);
+                toeicPartComponent.showExplain();
+
+            }
+
+            @Override
+            public void onNextMenuClicked() {
+                final Integer currentItemId = viewPager.getCurrentItem();
+                final String componentTag = "c-" + currentItemId;
+                if(currentItemId+1== toeicQuestionGroupViews.size()) {
+                    Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
+                    if(correctAnswer>=4) {
+                        intent.putExtra("score",1);
+                    }
+                    else {
+                        intent.putExtra("score",2);
+                    }
+                    startActivity(intent);
+                }
+                else {
+                    viewPager.setCurrentItem(currentItemId+1,true);
+                }
             }
         });
     }

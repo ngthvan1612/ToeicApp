@@ -85,7 +85,7 @@ public class PartSevenActivity extends GradientActivity {
             container.addView(component);
             final AnswerSelectionComponent answerSelectionComponent = container.findViewById(R.id.component_part_five_answer_selection);
             final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
-            answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+            //answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
             return component;
         }
 
