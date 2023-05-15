@@ -33,7 +33,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private Integer partId;
     private ViewPagerAdapter adapter;
     private CommonTestFooterComponent commonTestFooterComponent = null;
-    private Integer correctAnswer;
+    private Integer totalCorrectAnswer=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,25 +99,29 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                 final Integer currentItemId = viewPager.getCurrentItem();
                 final String componentTag = "c-" + currentItemId;
                 ToeicPartComponent toeicPartComponent = viewPager.findViewWithTag(componentTag);
+                String answer = toeicPartComponent.getAnswer();
+                String selectedChoice = toeicPartComponent.getSelectedChoice();
+                Log.d("answer",answer);
+                Log.d("selectedChoice",selectedChoice);
 
+                toeicPartComponent.showExplain();
 //                handle score
-                if(toeicPartComponent.getAnswer()==null) {
-                    Log.d("correctAnswer","ko co gi het");
-                }
-                else {
-                    Log.d("correctAnswer",toeicPartComponent.getAnswer().toString());
-
-                }
+                String currentAnswer = toeicPartComponent.getSelectedChoice();
+                String correctAnswer = toeicPartComponent.getAnswer();
+                Log.d("currentAnswer",currentAnswer);
+                Log.d("correctAnswer",correctAnswer);
 //                handle next page
                 if(currentItemId+1== toeicQuestionGroupViews.size()) {
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
-                    if(correctAnswer>=4) {
+                    if(totalCorrectAnswer >= 4) {
                         intent.putExtra("score",1);
+                        startActivity(intent);
                     }
                     else {
                         intent.putExtra("score",2);
+                        startActivity(intent);
                     }
-                    startActivity(intent);
+
                 }
                 else {
                     viewPager.setCurrentItem(currentItemId+1,true);

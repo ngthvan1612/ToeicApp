@@ -46,13 +46,4 @@ public class PartSixComponent extends ToeicPartComponentBase {
 
     }
 
-    @Override
-    public String getAnswer() {
-        return null;
-    }
-
-    @Override
-    public String getSelectedChoice() {
-        return null;
-    }
 }

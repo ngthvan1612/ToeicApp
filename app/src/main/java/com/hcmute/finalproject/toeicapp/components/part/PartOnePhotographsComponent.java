@@ -37,12 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartOnePhotographsComponent extends ToeicPartComponentBase {
+    private String answer = null;
+    private String selectedChoice = null;;
     private ImageView imageViewMainImage;
     private AudioPlayerComponent audioPlayerComponent;
     public AnswerSelectionComponent answerSelectionComponent;
     private CommonHeaderComponent commonHeaderComponent;
     private ToeicAnswerChoice toeicAnswerChoice;
-
 
     public PartOnePhotographsComponent(Context context) {
         this(context, null);
@@ -79,6 +80,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
         this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
+
 
         if (this.isInEditMode()) {
             return;
@@ -122,7 +124,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.setCurrentVolume(1.0f);
 
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
-        Log.d("dong126",toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
     }
 
@@ -131,13 +132,4 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
     }
 
-    @Override
-    public String getAnswer() {
-        return this.answerSelectionComponent.getCorrectAnswer();
-    }
-
-    @Override
-    public String getSelectedChoice() {
-        return  this.toeicAnswerChoice.getLabel();
-    }
 }
