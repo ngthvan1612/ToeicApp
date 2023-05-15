@@ -69,11 +69,11 @@ public class AudioPlayerComponent extends LinearLayout {
         isPlaying = playing;
         if (playing) {
             this.audioPlayerBackground.start(true);
-            this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause);
+            this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_pause_black);
         }
         else {
             this.audioPlayerBackground.pause();
-            this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play);
+            this.imageViewBtnStartPause.setImageResource(R.drawable.component_audio_player_icon_play_black);
         }
     }
 
