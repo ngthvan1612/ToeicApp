@@ -126,6 +126,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
+        this.answerSelectionComponent.setToeicQuestion(toeicQuestion);
     }
 
     @Override
