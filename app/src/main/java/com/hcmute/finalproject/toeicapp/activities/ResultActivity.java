@@ -22,7 +22,8 @@ public class ResultActivity extends GradientActivity {
         setContentView(R.layout.activity_result);
 
         this.initView();
-        viewMode = 2;
+        Bundle bundle = getIntent().getExtras();
+        viewMode = bundle.getInt("score");
         setViewMode(viewMode);
     }
 
@@ -38,6 +39,7 @@ public class ResultActivity extends GradientActivity {
     }
 
     public void setViewMode(int viewMode) {
+
         this.viewMode = viewMode;
         if (viewMode == MODE_GOOD) {
             imageRender.setImageResource(R.drawable.activity_result_image_happy);

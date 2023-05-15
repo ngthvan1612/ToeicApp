@@ -15,6 +15,6 @@ public interface ToeicQuestionDao extends ToeicDao<ToeicQuestion> {
     @Query("SELECT * FROM ToeicQuestion WHERE id = :id")
     ToeicQuestion getOne(Integer id);
 
-    @Query("SELECT * FROM ToeicQuestion WHERE id = :questionGroupId")
+    @Query("SELECT * FROM ToeicQuestion WHERE toeicQuestionGroupId = :questionGroupId")
     List<ToeicQuestion> getToeicQuestionByQuestionGroppId(Integer questionGroupId);
 }

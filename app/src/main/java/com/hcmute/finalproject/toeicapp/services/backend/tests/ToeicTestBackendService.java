@@ -108,7 +108,7 @@ public class ToeicTestBackendService {
                     for (AndroidToeicQuestion questionBackend : questionGroupBackend.getQuestions()) {
                         ToeicQuestion questionEntity = new ToeicQuestion();
                         questionEntity.setContent(questionBackend.getContent());
-                        questionEntity.setCorrectAnswer(questionBackend.getContent());
+                        questionEntity.setCorrectAnswer(questionBackend.getCorrectAnswer());
                         questionEntity.setServerId(questionBackend.getServerId());
                         questionEntity.setToeicQuestionGroupId(newGroupId);
                         questionEntity.setQuestionNumber(questionBackend.getQuestionNumber());
