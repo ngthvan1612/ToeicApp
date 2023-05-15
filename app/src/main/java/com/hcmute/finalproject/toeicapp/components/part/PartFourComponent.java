@@ -173,16 +173,6 @@ public class PartFourComponent extends ToeicPartComponentBase{
     }
 
     @Override
-    public String getAnswer() {
-        return null;
-    }
-
-    @Override
-    public String getSelectedChoice() {
-        return null;
-    }
-
-    @Override
     public Integer getNumberCorrectAnswer() {
         assert this.questions.size() >= answerSelectionComponentList.size();
         int counter = 0;
