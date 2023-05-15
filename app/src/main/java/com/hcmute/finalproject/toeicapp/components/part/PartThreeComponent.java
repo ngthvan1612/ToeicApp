@@ -40,7 +40,7 @@ import java.util.Set;
 
 public class PartThreeComponent extends ToeicPartComponentBase {
     private AudioPlayerComponent audioPlayerComponent;
-    private List<ToeicQuestion> questions, listQuestions;
+    private List<ToeicQuestion> questions;
 
     private RecyclerView recyclerView;
 
@@ -104,13 +104,6 @@ public class PartThreeComponent extends ToeicPartComponentBase {
         });
     }
 
-    private void loadListQuestion() {
-        this.listQuestions.addAll(questions);
-        for (ToeicQuestion question : questions) {
-            Log.d("listquestions", question.getContent());
-
-        }
-    }
 
     @Override
     public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
@@ -126,8 +119,6 @@ public class PartThreeComponent extends ToeicPartComponentBase {
         audioPlayerComponent.loadAudioFile(audioFile);
         audioPlayerComponent.setCurrentVolume(1.0f);
 
-//        this.answerSelectionComponent1.setCorrectAnswer(question.getCorrectAnswer());
-//        this.answerSelectionComponent1.setToeicAnswerChoices(choices);
         this.listQuestionAdapter.notifyDataSetChanged();
     }
 
@@ -146,7 +137,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
         return new File(root, fileName);
     }
 
-    public class ListQuestionAdapter extends RecyclerView.Adapter<ListQuestionAdapter.ListQuestionItemHodler> {
+    private class ListQuestionAdapter extends RecyclerView.Adapter<ListQuestionAdapter.ListQuestionItemHodler> {
 
         @NonNull
         @Override
