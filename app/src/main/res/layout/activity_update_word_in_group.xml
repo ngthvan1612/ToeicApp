@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+        android:id="@+id/activity_update_word_in_group_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp">
+
+    </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
+
+    <TextView
+        android:id="@+id/activity_update_word_in_group_retangle"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@+id/activity_update_word_in_group_header_title"
+        android:layout_marginTop="19dp"
+        android:background="#B1DFFF"/>
+    <EditText
+        android:id="@+id/activity_add_new_word_txtWord"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/activity_update_word_in_group_retangle"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="57dp"
+        android:background="#F4F4F4"
+        android:hint="abide by"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textColorHint="#A9B0B5"
+        android:paddingLeft="11dp"/>
+
+    <EditText
+        android:id="@+id/activity_add_new_word_txtMeaning"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_below="@id/activity_add_new_word_txtWord"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="17dp"
+        android:background="#F4F4F4"
+        android:hint="Enter meaning..."
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:gravity="top"
+        android:textColorHint="#A9B0B5"
+        android:paddingLeft="11dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activity_add_new_word_btnNext"
+        android:layout_width="129dp"
+        android:layout_height="47dp"
+        android:layout_below="@+id/activity_add_new_word_txtMeaning"
+        android:layout_marginLeft="250dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/activity_add_new_word_button_rounded_background_blue"
+        android:layout_marginTop="28dp"
+        android:text="Update"
+        android:textColor="#008EF1"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>
