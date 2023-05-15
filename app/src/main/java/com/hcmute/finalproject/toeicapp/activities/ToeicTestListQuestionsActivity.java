@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -97,6 +98,17 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             public void onNextMenuClicked() {
                 final Integer currentItemId = viewPager.getCurrentItem();
                 final String componentTag = "c-" + currentItemId;
+                ToeicPartComponent toeicPartComponent = viewPager.findViewWithTag(componentTag);
+
+//                handle score
+                if(toeicPartComponent.getAnswer()==null) {
+                    Log.d("correctAnswer","ko co gi het");
+                }
+                else {
+                    Log.d("correctAnswer",toeicPartComponent.getAnswer().toString());
+
+                }
+//                handle next page
                 if(currentItemId+1== toeicQuestionGroupViews.size()) {
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
                     if(correctAnswer>=4) {
