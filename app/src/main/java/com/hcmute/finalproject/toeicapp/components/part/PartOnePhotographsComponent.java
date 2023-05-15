@@ -18,6 +18,7 @@ import com.hcmute.finalproject.toeicapp.activities.ToeicTestListQuestionsActivit
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
+import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicItemContentDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicQuestionDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
@@ -112,7 +113,9 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
         ToeicAppDatabase toeicAppDatabase = ToeicAppDatabase.getInstance(getContext());
         ToeicQuestionDao toeicQuestionDao = toeicAppDatabase.getToeicQuestionDao();
+        ToeicAnswerChoiceDao toeicAnswerChoiceDao = toeicAppDatabase.getToeicAnswerChoiceDao();
         ToeicQuestion toeicQuestion =  toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId()).get(0);
+        List<ToeicAnswerChoice> choices = toeicAnswerChoiceDao.getByQuestionId(toeicQuestion.getId());
 
         ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
@@ -125,34 +128,9 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.loadAudioFile(audioFile);
         audioPlayerComponent.setCurrentVolume(1.0f);
 
-        ToeicAnswerChoice a = new ToeicAnswerChoice();
-        ToeicAnswerChoice b = new ToeicAnswerChoice();
-        ToeicAnswerChoice c = new ToeicAnswerChoice();
-        ToeicAnswerChoice d = new ToeicAnswerChoice();
-        a.setLabel("A");
-        b.setLabel("B");
-        c.setLabel("C");
-        d.setLabel("D");
-
-        a.setExplain("explain a");
-        b.setExplain("");
-        c.setExplain("");
-        d.setExplain("");
-
-        a.setContent("");
-        b.setContent("");
-        c.setContent("");
-        d.setContent("");
-
-        List<ToeicAnswerChoice> toeicAnswerChoices = new ArrayList<>();
-        toeicAnswerChoices.add(a);
-        toeicAnswerChoices.add(b);
-        toeicAnswerChoices.add(c);
-        toeicAnswerChoices.add(d);
-
-        this.answerSelectionComponent.setToeicAnswerChoices(toeicAnswerChoices);
+        this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
+        this.answerSelectionComponent.setToeicAnswerChoices(choices);
     }
-
 
     @Override
     public void showExplain() {
