@@ -77,9 +77,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
 
-        commonHeaderComponent=view.findViewById(R.id.common_part_one_header_title);
-        commonHeaderComponent.setTitle("Part one - Photographs");
-
         if (this.isInEditMode()) {
             return;
         }
