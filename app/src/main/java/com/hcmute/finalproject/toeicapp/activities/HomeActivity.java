@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
+import com.hcmute.finalproject.toeicapp.components.favoritevocab.HomePageFavoriteVocabComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
@@ -170,7 +171,14 @@ public class HomeActivity extends GradientActivity {
                 component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
 
                 return component;
-            } else if (position == 4) {
+            } else if (position == 3) {
+                HomePageFavoriteVocabComponent component = new HomePageFavoriteVocabComponent(HomeActivity.this);
+                container.addView(component);
+                component.setTag(getLayoutTagByPosition(position));
+
+                return component;
+            }
+            else if (position == 4) {
                 HomePageUserProfileComponent component = new HomePageUserProfileComponent(HomeActivity.this);
                 container.addView(component);
                 component.setTag(getLayoutTagByPosition(4));
