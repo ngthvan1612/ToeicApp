@@ -116,8 +116,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
         ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
-//
-//        Log.d("toeicItemContentList", String.valueOf(toeicItemContentList.size()));
+
         ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a->a.getContentType().equals("AUDIO")).findAny().get();
         ToeicItemContent itemContentImage = toeicItemContentList.stream().filter(a->a.getContentType().equals("IMAGE")).findFirst().get();
         Bitmap bitmap = this.getImageBitmap(itemContentImage.getServerId());
@@ -157,6 +156,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
     @Override
     public void showExplain() {
-        this.answerSelectionComponent.setShowExplain(true);
+        this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
     }
 }
