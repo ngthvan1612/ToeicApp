@@ -125,10 +125,10 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.loadAudioFile(audioFile);
         audioPlayerComponent.setCurrentVolume(1.0f);
 
-        TestToeicAnswerChoice a = new TestToeicAnswerChoice();
-        TestToeicAnswerChoice b = new TestToeicAnswerChoice();
-        TestToeicAnswerChoice c = new TestToeicAnswerChoice();
-        TestToeicAnswerChoice d = new TestToeicAnswerChoice();
+        ToeicAnswerChoice a = new ToeicAnswerChoice();
+        ToeicAnswerChoice b = new ToeicAnswerChoice();
+        ToeicAnswerChoice c = new ToeicAnswerChoice();
+        ToeicAnswerChoice d = new ToeicAnswerChoice();
         a.setLabel("A");
         b.setLabel("B");
         c.setLabel("C");
@@ -144,7 +144,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         c.setContent("");
         d.setContent("");
 
-        List<TestToeicAnswerChoice> toeicAnswerChoices = new ArrayList<>();
+        List<ToeicAnswerChoice> toeicAnswerChoices = new ArrayList<>();
         toeicAnswerChoices.add(a);
         toeicAnswerChoices.add(b);
         toeicAnswerChoices.add(c);
