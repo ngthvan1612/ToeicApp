@@ -71,6 +71,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(1);
         this.initComponent(context, attrs, defStyleAttr);
     }
 

@@ -23,11 +23,14 @@ public abstract class ToeicPartComponentBase extends LinearLayout implements Toe
     private ToeicTestGradeService toeicTestGradeService;
     private int partNumber;
 
-    public ToeicPartComponentBase(Context context, int partNumber) {
+    public ToeicPartComponentBase(Context context) {
         this(context, null);
-        this.partNumber = partNumber;
         this.toeicTestGradeService = new ToeicTestGradeService();
         this.answerSelectionComponents = new ArrayList<>();
+    }
+
+    protected void setPartNumber(Integer partNumber) {
+        this.partNumber = partNumber;
     }
 
     public ToeicPartComponentBase(Context context, @Nullable AttributeSet attrs) {

@@ -23,6 +23,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
 
     public PartSevenComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(7);
         this.initComponent(context, attrs, defStyleAttr);
 
     }
