@@ -132,7 +132,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
     @Override
     public void showExplain() {
-        this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
+        this.answerSelectionComponent.setShowExplain(true);
     }
 
     @Override
