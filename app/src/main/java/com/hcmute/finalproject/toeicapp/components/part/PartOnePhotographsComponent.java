@@ -39,9 +39,9 @@ import java.util.List;
 public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private ImageView imageViewMainImage;
     private AudioPlayerComponent audioPlayerComponent;
-    private AnswerSelectionComponent answerSelectionComponent;
+    public AnswerSelectionComponent answerSelectionComponent;
     private CommonHeaderComponent commonHeaderComponent;
-
+    private ToeicAnswerChoice toeicAnswerChoice;
 
     public PartOnePhotographsComponent(Context context) {
         this(context, null);
@@ -54,20 +54,24 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private File getImageFile(Integer serverId) {
         String fileName = serverId + ".bin";
         File root = StorageConfiguration.getTestDataDirectory(this.getContext());
-        return new File(root,fileName);
+        return new File(root, fileName);
     }
+
     private File getAudioFile(Integer serverId) {
         String fileName = serverId + ".bin";
         File root = StorageConfiguration.getTestDataDirectory(this.getContext());
-        return new File(root,fileName);
+        return new File(root, fileName);
     }
+
     private Bitmap getImageBitmap(Integer serverId) {
         File imageFile = this.getImageFile(serverId);
         Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         return result;
     }
+
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(1);
         this.initComponent(context, attrs, defStyleAttr);
     }
 
@@ -77,6 +81,8 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.imageViewMainImage = view.findViewById(R.id.component_part_one_photographs_img);
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
+        this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
+        super.addAnswerSelectionComponent(this.answerSelectionComponent);
 
         if (this.isInEditMode()) {
             return;
@@ -100,25 +106,19 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         });
     }
 
-    private void getData() {
-
-    }
-
-
-
     @Override
     public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
         ToeicAppDatabase toeicAppDatabase = ToeicAppDatabase.getInstance(getContext());
         ToeicQuestionDao toeicQuestionDao = toeicAppDatabase.getToeicQuestionDao();
         ToeicAnswerChoiceDao toeicAnswerChoiceDao = toeicAppDatabase.getToeicAnswerChoiceDao();
-        ToeicQuestion toeicQuestion =  toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId()).get(0);
+        ToeicQuestion toeicQuestion = toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId()).get(0);
         List<ToeicAnswerChoice> choices = toeicAnswerChoiceDao.getByQuestionId(toeicQuestion.getId());
 
         ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
 
-        ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a->a.getContentType().equals("AUDIO")).findAny().get();
-        ToeicItemContent itemContentImage = toeicItemContentList.stream().filter(a->a.getContentType().equals("IMAGE")).findFirst().get();
+        ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a -> a.getContentType().equals("AUDIO")).findAny().get();
+        ToeicItemContent itemContentImage = toeicItemContentList.stream().filter(a -> a.getContentType().equals("IMAGE")).findFirst().get();
         Bitmap bitmap = this.getImageBitmap(itemContentImage.getServerId());
         File audioFile = this.getAudioFile(itemContentAudio.getServerId());
         imageViewMainImage.setImageBitmap(bitmap);
@@ -127,10 +127,27 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
+        this.answerSelectionComponent.setToeicQuestion(toeicQuestion);
     }
 
     @Override
     public void showExplain() {
-        this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
+        this.answerSelectionComponent.setShowExplain(true);
+    }
+
+    @Override
+    public Integer getNumberCorrectAnswer() {
+        final ToeicAnswerChoice currentChoice = this.answerSelectionComponent.getCurrentChoice();
+        if (currentChoice != null) {
+            if (currentChoice.getLabel().equals(this.answerSelectionComponent.getCorrectAnswer())) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer getTotalQuestions() {
+        return 1;
     }
 }

@@ -23,6 +23,7 @@ public class PartFiveComponent extends ToeicPartComponentBase {
 
     public PartFiveComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(5);
         this.initComponent(context, attrs, defStyleAttr);
 
     }
@@ -41,4 +42,5 @@ public class PartFiveComponent extends ToeicPartComponentBase {
     public void showExplain() {
 
     }
+
 }
