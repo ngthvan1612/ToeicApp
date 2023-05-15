@@ -123,7 +123,6 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
     private void setCommonHeaderComponent() {
         Integer partId = getPartIdFromIntent();
-        Toast.makeText(this, partId + "", Toast.LENGTH_SHORT).show();
         if (partId == 1) {
             commonHeaderComponent.setTitle("Part 1 - Photographs");
         } else if (partId == 2) {
