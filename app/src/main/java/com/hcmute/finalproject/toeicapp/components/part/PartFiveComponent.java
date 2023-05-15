@@ -41,4 +41,5 @@ public class PartFiveComponent extends ToeicPartComponentBase {
     public void showExplain() {
 
     }
+
 }

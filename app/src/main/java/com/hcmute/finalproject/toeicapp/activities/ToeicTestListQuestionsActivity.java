@@ -1,6 +1,7 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -8,20 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
-import com.hcmute.finalproject.toeicapp.components.part.PartOnePhotographsComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
-import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private Integer partId;
     private ViewPagerAdapter adapter;
     private CommonTestFooterComponent commonTestFooterComponent = null;
-    private Integer correctAnswer;
+    private Integer correctAnswer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +94,33 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             public void onNextMenuClicked() {
                 final Integer currentItemId = viewPager.getCurrentItem();
                 final String componentTag = "c-" + currentItemId;
-                if(currentItemId+1== toeicQuestionGroupViews.size()) {
+
+                int numberOfCorrectAnswers = 0;
+                int totalQuestions = 0;
+
+                for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
+                    final String tag = "c-" + i;
+                    ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                    assert component != null;
+                    numberOfCorrectAnswers += component.getNumberCorrectAnswer();
+                    totalQuestions += component.getTotalQuestions();
+                }
+
+                if(currentItemId + 1 == toeicQuestionGroupViews.size()) {
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
-                    if(correctAnswer>=4) {
-                        intent.putExtra("score",1);
+                    intent.putExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers);
+                    intent.putExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, totalQuestions);
+                    if(2 * numberOfCorrectAnswers >= totalQuestions) {
+                        intent.putExtra("score", ResultActivity.MODE_GOOD);
+                        startActivity(intent);
                     }
                     else {
-                        intent.putExtra("score",2);
+                        intent.putExtra("score",ResultActivity.MODE_BAD);
+                        startActivity(intent);
                     }
-                    startActivity(intent);
+
+                    //startActivity(intent);
+                    startActivityForResult(intent, 1234);
                 }
                 else {
                     viewPager.setCurrentItem(currentItemId+1,true);
@@ -114,16 +129,31 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
         });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1234) {
+            if (data.getStringExtra("select").equals("continue")) {
+                finish();
+            }
+            else {
+                for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
+                    final String tag = "c-" + i;
+                    ToeicPartComponent component = viewPager.findViewWithTag(tag);
+                    assert component != null;
+                    component.showExplain();
+                }
+            }
+        }
+    }
 
     private Integer getPartIdFromIntent() {
         final Intent intent = getIntent();
-        return intent.getIntExtra("part-id", 0);
+        return intent.getIntExtra("partId", 0);
     }
 
     private void setCommonHeaderComponent() {
         Integer partId = getPartIdFromIntent();
-        Toast.makeText(this, partId + "", Toast.LENGTH_SHORT).show();
         if (partId == 1) {
             commonHeaderComponent.setTitle("Part 1 - Photographs");
         } else if (partId == 2) {

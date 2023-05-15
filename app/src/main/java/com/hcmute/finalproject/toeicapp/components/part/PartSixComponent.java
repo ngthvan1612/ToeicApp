@@ -45,4 +45,5 @@ public class PartSixComponent extends ToeicPartComponentBase {
     public void showExplain() {
 
     }
+
 }

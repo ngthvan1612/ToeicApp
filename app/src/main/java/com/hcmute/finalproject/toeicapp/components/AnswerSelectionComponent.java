@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.entities.ToeicAnswerChoice;
+import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class AnswerSelectionComponent extends LinearLayout {
     private RecyclerView recyclerViewSelection;
     private AnswerSelectionRecyclerViewAdapter adapter;
     private int lastSelectedPosition = -1;
+    private ToeicQuestion toeicQuestion;
     private List<ToeicAnswerChoice> toeicAnswerChoices;
     private boolean showExplain;
     private boolean canSelect = true;
@@ -115,6 +117,14 @@ public class AnswerSelectionComponent extends LinearLayout {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public ToeicQuestion getToeicQuestion() {
+        return toeicQuestion;
+    }
+
+    public void setToeicQuestion(ToeicQuestion toeicQuestion) {
+        this.toeicQuestion = toeicQuestion;
     }
 
     public boolean isShowExplain() {

@@ -12,51 +12,16 @@
         android:id="@+id/common_part_three_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:weightSum="12"
         android:orientation="vertical">
 
-        <ScrollView
-            android:id="@+id/common_part_three_scrollview"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/component_part_three_recyclerview"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:layout_marginTop="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-                    android:layout_width="match_parent"
-                    android:layout_height="225dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp">
-
-                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
-
-                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-                    android:layout_width="match_parent"
-                    android:layout_height="225dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp">
-
-                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
-
-                <com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent
-
-                    android:layout_width="match_parent"
-                    android:layout_height="225dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp">
-
-                </com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent>
-            </LinearLayout>
-        </ScrollView>
+            android:layout_weight="11"/>
     <com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent
         android:id="@+id/component_part_three_audio"
         android:layout_width="match_parent"
@@ -66,14 +31,6 @@
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:layout_marginRight="10dp" />
-    <com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent
-        android:id="@+id/component_part_three_common_test_footer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintVertical_bias="0.988"
-        tools:ignore="MissingConstraints" />
 
     </LinearLayout>
 </RelativeLayout>
