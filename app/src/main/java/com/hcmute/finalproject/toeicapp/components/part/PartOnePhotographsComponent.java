@@ -39,8 +39,9 @@ import java.util.List;
 public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private ImageView imageViewMainImage;
     private AudioPlayerComponent audioPlayerComponent;
-    private AnswerSelectionComponent answerSelectionComponent;
+    public AnswerSelectionComponent answerSelectionComponent;
     private CommonHeaderComponent commonHeaderComponent;
+    private ToeicAnswerChoice toeicAnswerChoice;
 
 
     public PartOnePhotographsComponent(Context context) {
@@ -77,6 +78,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.imageViewMainImage = view.findViewById(R.id.component_part_one_photographs_img);
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
+        this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
 
         if (this.isInEditMode()) {
             return;
@@ -100,12 +102,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         });
     }
 
-    private void getData() {
-
-    }
-
-
-
     @Override
     public void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup) {
         ToeicAppDatabase toeicAppDatabase = ToeicAppDatabase.getInstance(getContext());
@@ -126,11 +122,22 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.setCurrentVolume(1.0f);
 
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
+        Log.d("dong126",toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
     }
 
     @Override
     public void showExplain() {
         this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
+    }
+
+    @Override
+    public String getAnswer() {
+        return this.answerSelectionComponent.getCorrectAnswer();
+    }
+
+    @Override
+    public String getSelectedChoice() {
+        return  this.toeicAnswerChoice.getLabel();
     }
 }
