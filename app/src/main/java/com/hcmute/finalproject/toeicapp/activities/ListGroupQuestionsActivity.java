@@ -26,6 +26,7 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.model.toeic.ToeicPartItemView;
 import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicQuestionGroup;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
+import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,18 +169,12 @@ public class ListGroupQuestionsActivity extends GradientActivity {
             }
             else {
                 btnDownload.setOnClickListener(v -> {
-                    ProgressDialog dialog = new ProgressDialog(ListGroupQuestionsActivity.this);
-                    dialog.setCancelable(false);
-                    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    dialog.setTitle("Đang tải về");
-                    dialog.setMax(100);
-
                     toeicTestBackendService.downloadPartStorageData(
                             toeicPartItemView.getServerId(),
                             new ToeicTestBackendService.OnBackupToeicListener() {
                                 @Override
                                 public void prepare() {
-                                    dialog.show();
+                                    DialogSyncService.showDialog(ListGroupQuestionsActivity.this);
                                 }
 
                                 @Override
@@ -190,19 +185,21 @@ public class ListGroupQuestionsActivity extends GradientActivity {
                                     toeicPartDao.update(toeicPart);
 
                                     loadLocalDatabase();
-                                    dialog.dismiss();
+
+                                    DialogSyncService.dismissDialog();
                                 }
 
                                 @Override
                                 public void onUpdateProgress(int progress) {
-                                    dialog.setProgress(progress);
+                                    // TODO: update progress
                                 }
 
                                 @Override
                                 public void onException(Exception exception) {
                                     Toast.makeText(ListGroupQuestionsActivity.this, "Loi r nha " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                                     Log.d("DOWNLOAD_ERR", exception.getMessage());
-                                    dialog.dismiss();
+
+                                    DialogSyncService.dismissDialog();
                                 }
                             }
                     );
