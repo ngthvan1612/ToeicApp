@@ -26,6 +26,9 @@
             android:name=".activities.LoginActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.StatisticActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.VocabularyDetailsActivity"
             android:exported="true" />
         <activity
