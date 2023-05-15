@@ -1,5 +1,6 @@
 package com.hcmute.finalproject.toeicapp.components.homepage;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
 import com.hcmute.finalproject.toeicapp.model.vocabulary.VocabularyTopicStatistic;
 import com.hcmute.finalproject.toeicapp.services.backend.vocabs.ToeicVocabularyBackendService;
+import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 import com.hcmute.finalproject.toeicapp.services.storage.StorageConfiguration;
 
 import java.io.File;
@@ -103,32 +105,27 @@ public class HomePageListVocabularyComponent extends LinearLayout {
     }
 
     public void checkListVocabTestsIsUpdated() {
-        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
-        progressDialog.setTitle("Đang tải từ vựng");
-        progressDialog.setCancelable(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMax(100);
 
         this.toeicVocabularyBackendService.checkToeicTestDatabaseIsUpdated(new ToeicVocabularyBackendService.OnBackupToeicListener() {
             @Override
             public void prepare() {
-                progressDialog.show();
+                DialogSyncService.showDialog((Activity) getContext());
             }
 
             @Override
             public void onSuccess() {
-                progressDialog.dismiss();
                 loadListVocabsTest();
+                DialogSyncService.dismissDialog();
             }
 
             @Override
             public void onUpdateMessage(String message) {
-                progressDialog.setMessage(message);
+
             }
 
             @Override
             public void onUpdateProgress(Integer progress) {
-                progressDialog.setProgress(progress);
+                // TODO: update progress
             }
 
             @Override
