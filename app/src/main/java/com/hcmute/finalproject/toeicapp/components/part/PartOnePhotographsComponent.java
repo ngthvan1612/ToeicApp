@@ -43,7 +43,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private CommonHeaderComponent commonHeaderComponent;
     private ToeicAnswerChoice toeicAnswerChoice;
 
-
     public PartOnePhotographsComponent(Context context) {
         this(context, null);
     }
@@ -55,18 +54,21 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     private File getImageFile(Integer serverId) {
         String fileName = serverId + ".bin";
         File root = StorageConfiguration.getTestDataDirectory(this.getContext());
-        return new File(root,fileName);
+        return new File(root, fileName);
     }
+
     private File getAudioFile(Integer serverId) {
         String fileName = serverId + ".bin";
         File root = StorageConfiguration.getTestDataDirectory(this.getContext());
-        return new File(root,fileName);
+        return new File(root, fileName);
     }
+
     private Bitmap getImageBitmap(Integer serverId) {
         File imageFile = this.getImageFile(serverId);
         Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         return result;
     }
+
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.initComponent(context, attrs, defStyleAttr);
@@ -79,6 +81,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
         this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
+
 
         if (this.isInEditMode()) {
             return;
@@ -107,14 +110,14 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         ToeicAppDatabase toeicAppDatabase = ToeicAppDatabase.getInstance(getContext());
         ToeicQuestionDao toeicQuestionDao = toeicAppDatabase.getToeicQuestionDao();
         ToeicAnswerChoiceDao toeicAnswerChoiceDao = toeicAppDatabase.getToeicAnswerChoiceDao();
-        ToeicQuestion toeicQuestion =  toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId()).get(0);
+        ToeicQuestion toeicQuestion = toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId()).get(0);
         List<ToeicAnswerChoice> choices = toeicAnswerChoiceDao.getByQuestionId(toeicQuestion.getId());
 
         ToeicItemContentDao toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
 
-        ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a->a.getContentType().equals("AUDIO")).findAny().get();
-        ToeicItemContent itemContentImage = toeicItemContentList.stream().filter(a->a.getContentType().equals("IMAGE")).findFirst().get();
+        ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a -> a.getContentType().equals("AUDIO")).findAny().get();
+        ToeicItemContent itemContentImage = toeicItemContentList.stream().filter(a -> a.getContentType().equals("IMAGE")).findFirst().get();
         Bitmap bitmap = this.getImageBitmap(itemContentImage.getServerId());
         File audioFile = this.getAudioFile(itemContentAudio.getServerId());
         imageViewMainImage.setImageBitmap(bitmap);
@@ -122,7 +125,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         audioPlayerComponent.setCurrentVolume(1.0f);
 
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
-        Log.d("dong126",toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
     }
 
@@ -132,12 +134,18 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     }
 
     @Override
-    public String getAnswer() {
-        return this.answerSelectionComponent.getCorrectAnswer();
+    public Integer getNumberCorrectAnswer() {
+        final ToeicAnswerChoice currentChoice = this.answerSelectionComponent.getCurrentChoice();
+        if (currentChoice != null) {
+            if (currentChoice.getLabel().equals(this.answerSelectionComponent.getCorrectAnswer())) {
+                return 1;
+            }
+        }
+        return 0;
     }
 
     @Override
-    public String getSelectedChoice() {
-        return  this.toeicAnswerChoice.getLabel();
+    public Integer getTotalQuestions() {
+        return 1;
     }
 }
