@@ -116,6 +116,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                         intent.putExtra("score",ResultActivity.MODE_BAD);
                     }
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     viewPager.setCurrentItem(currentItemId+1,true);
