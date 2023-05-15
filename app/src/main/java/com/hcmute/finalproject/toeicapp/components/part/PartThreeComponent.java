@@ -62,6 +62,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
 
     public PartThreeComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(3);
         this.initComponent(context, attrs, defStyleAttr);
 
     }

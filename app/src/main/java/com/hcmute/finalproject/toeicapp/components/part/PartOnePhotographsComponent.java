@@ -71,6 +71,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
     public PartOnePhotographsComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(1);
         this.initComponent(context, attrs, defStyleAttr);
     }
 
@@ -81,7 +82,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
         this.audioPlayerComponent = view.findViewById(R.id.component_part_one_photographs_audio);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_one_photographs_answer_selection);
         this.toeicAnswerChoice = answerSelectionComponent.getCurrentChoice();
-
+        super.addAnswerSelectionComponent(this.answerSelectionComponent);
 
         if (this.isInEditMode()) {
             return;
@@ -131,7 +132,7 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
 
     @Override
     public void showExplain() {
-        this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
+        this.answerSelectionComponent.setShowExplain(true);
     }
 
     @Override

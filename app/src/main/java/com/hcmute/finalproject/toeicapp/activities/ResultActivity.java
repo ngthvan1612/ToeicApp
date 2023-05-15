@@ -10,37 +10,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicRate;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 
 public class ResultActivity extends GradientActivity {
     public final static int MODE_GOOD = 1;
     public final static int MODE_BAD = 2;
-
-    public final static String INTENT_NUMBER_OF_CORRECT_ANSWERS = "num-of-questions";
-    public final static String INTENT_TOTAL_QUESTIONS = "total-questions";
-
-    private int numberOfCorrectAnswers;
-    private int totalQuestions;
-
     private int viewMode;
     ImageView imageRender;
     TextView textRender, txtResult;
     AppCompatButton btnShowAnswers, btnContinue;
+    private GradeToeicResult gradeToeicResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        Bundle bundle = getIntent().getExtras();
-        viewMode = bundle.getInt("score");
-
-        Intent intent = getIntent();
-        this.numberOfCorrectAnswers = intent.getIntExtra(ResultActivity.INTENT_NUMBER_OF_CORRECT_ANSWERS, 0);
-        this.totalQuestions = intent.getIntExtra(ResultActivity.INTENT_TOTAL_QUESTIONS, 0);
-
+        this.gradeToeicResult = this.getGradeToeicResultFromIntent();
         this.initView();
+    }
 
-        setViewMode(viewMode);
+    private GradeToeicResult getGradeToeicResultFromIntent() {
+        final Bundle bundle = getIntent().getExtras();
+        return (GradeToeicResult)bundle.get("result");
     }
 
     public void initView(){
@@ -50,7 +43,13 @@ public class ResultActivity extends GradientActivity {
         btnContinue = (AppCompatButton) findViewById(R.id.activity_result_button_continue);
         txtResult = findViewById(R.id.activity_result_text_result);
 
-        txtResult.setText("Result " + this.numberOfCorrectAnswers + "/" + this.totalQuestions);
+        txtResult.setText("Result " + this.gradeToeicResult.getNumberOfCorrectQuestions() + "/" + this.gradeToeicResult.getTotalQuestions());
+
+        if (this.gradeToeicResult.getRate() == GradeToeicRate.BAD)
+            setViewMode(MODE_BAD);
+        else
+            setViewMode(MODE_GOOD);
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +59,7 @@ public class ResultActivity extends GradientActivity {
                 finish();
             }
         });
+
         btnShowAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +76,6 @@ public class ResultActivity extends GradientActivity {
     }
 
     public void setViewMode(int viewMode) {
-
         this.viewMode = viewMode;
         if (viewMode == MODE_GOOD) {
             imageRender.setImageResource(R.drawable.activity_result_image_happy);

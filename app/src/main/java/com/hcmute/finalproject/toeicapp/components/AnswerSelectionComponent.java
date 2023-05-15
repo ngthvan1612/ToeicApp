@@ -134,6 +134,9 @@ public class AnswerSelectionComponent extends LinearLayout {
     public void setShowExplain(boolean showExplain) {
         this.showExplain = showExplain;
 
+        if (showExplain)
+            canSelect = false;
+
         for (AnswerSelectionItem item : listItems) {
             item.setShowExplain(showExplain);
         }

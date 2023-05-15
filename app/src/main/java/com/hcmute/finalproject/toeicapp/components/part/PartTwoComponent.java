@@ -37,6 +37,7 @@ public class PartTwoComponent extends ToeicPartComponentBase {
 
     public PartTwoComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setPartNumber(2);
         this.initComponent(context, attrs, defStyleAttr);
 
     }
