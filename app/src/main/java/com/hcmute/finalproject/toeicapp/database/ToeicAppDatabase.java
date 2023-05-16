@@ -56,7 +56,7 @@ public abstract class ToeicAppDatabase extends RoomDatabase {
     public abstract ToeicVocabularyTopicDao getToeicVocabularyTopicDao();
     public abstract FavoriteVocabGroupDao getFavoriteVocabGroupDao();
     public abstract FavoriteVocabWordDao getFavoriteVocabWordDao();
-    public static ToeicAppDatabase instance;
+    private static ToeicAppDatabase instance;
 
     public static ToeicAppDatabase getInstance(Context context) {
         if (instance == null) {
