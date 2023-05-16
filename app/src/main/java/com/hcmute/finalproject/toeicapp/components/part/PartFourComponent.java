@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.AnswerSelectionComponent;
+import com.hcmute.finalproject.toeicapp.components.QuestionSentenceComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
 import com.hcmute.finalproject.toeicapp.components.media.AudioPlayerComponent;
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
@@ -32,6 +33,10 @@ import java.util.List;
 
 
 public class PartFourComponent extends ToeicPartComponentBase{
+    private static final int TYPE_QUESTION_SELECTION = 2;
+    private static final int TYPE_QUESTION_TRANSCRIPT = 3;
+    private ToeicItemContent itemTranscript;
+    private List<RenderItem> renderItems = new ArrayList<>();
     private AudioPlayerComponent audioPlayerComponent;
     private List<ToeicQuestion> questions;
 
@@ -44,6 +49,7 @@ public class PartFourComponent extends ToeicPartComponentBase{
     private ListQuestionPartFourAdapter listQuestionAdapter;
     private boolean isExplainShowed = false;
     private List<AnswerSelectionComponent> answerSelectionComponentList = new ArrayList<>();
+    private QuestionSentenceComponent qSentenceComponent;
     public PartFourComponent(Context context) {
         this(context, null);
     }
@@ -103,11 +109,24 @@ public class PartFourComponent extends ToeicPartComponentBase{
         );
 
         List<ToeicItemContent> toeicItemContentList = toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId());
-
+        itemTranscript = toeicItemContentList.stream().filter(a ->a.getContentType().equals("HTML")).findAny().get();
         ToeicItemContent itemContentAudio = toeicItemContentList.stream().filter(a -> a.getContentType().equals("AUDIO")).findAny().get();
         File audioFile = this.getAudioFile(itemContentAudio.getServerId());
         audioPlayerComponent.loadAudioFile(audioFile);
         audioPlayerComponent.setCurrentVolume(1.0f);
+
+        if (itemTranscript != null) {
+            RenderItem renderItem = new RenderItem();
+            renderItem.setType(TYPE_QUESTION_TRANSCRIPT);
+            renderItem.setData(itemTranscript);
+            renderItems.add(renderItem);
+        }
+        for (ToeicQuestion question: questions) {
+            RenderItem renderItem = new RenderItem();
+            renderItem.setType(TYPE_QUESTION_SELECTION);
+            renderItem.setData(question);
+            renderItems.add(renderItem);
+        }
 
         this.listQuestionAdapter.notifyDataSetChanged();
     }
@@ -118,31 +137,71 @@ public class PartFourComponent extends ToeicPartComponentBase{
         return new File(root, fileName);
     }
 
-    private class ListQuestionPartFourAdapter extends RecyclerView.Adapter<PartFourComponent.ListQuestionPartFourAdapter.ListQuestionItemHodler> {
+    private class ListQuestionPartFourAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        @Override
+        public int getItemViewType(int position) {
+            return renderItems.get(position).getType();
+        }
 
         @NonNull
         @Override
-        public ListQuestionPartFourAdapter.ListQuestionItemHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            AnswerSelectionComponent answerSelectionComponent = new AnswerSelectionComponent(getContext());
-            answerSelectionComponent.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            LayoutParams layoutParams = (LayoutParams) answerSelectionComponent.getLayoutParams();
-            layoutParams.setMargins(0, 0, 0, 20);
-            answerSelectionComponentList.add(answerSelectionComponent);
-            addAnswerSelectionComponent(answerSelectionComponent);
-            return new ListQuestionPartFourAdapter.ListQuestionItemHodler(answerSelectionComponent);
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            if ((viewType == TYPE_QUESTION_TRANSCRIPT) && (isExplainShowed = true)) {
+                QuestionSentenceComponent questionSentenceComponent = new QuestionSentenceComponent(getContext());
+                questionSentenceComponent.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                questionSentenceComponent.setTitle(TYPE_QUESTION_TRANSCRIPT);
+                LayoutParams layoutParams = (LayoutParams) questionSentenceComponent.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 20);
+                qSentenceComponent = questionSentenceComponent;
+                return new TranscriptItemHolder(questionSentenceComponent);
+            } else {
+                AnswerSelectionComponent answerSelectionComponent = new AnswerSelectionComponent(getContext());
+                answerSelectionComponent.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                LayoutParams layoutParams = (LayoutParams) answerSelectionComponent.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 20);
+                answerSelectionComponentList.add(answerSelectionComponent);
+                addAnswerSelectionComponent(answerSelectionComponent);
+                return new ListQuestionItemHodler(answerSelectionComponent);
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull PartFourComponent.ListQuestionPartFourAdapter.ListQuestionItemHodler holder, int position) {
-            holder.setData(questions.get(position), position);
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            if (renderItems.get(position).getType() == TYPE_QUESTION_TRANSCRIPT) {
+                TranscriptItemHolder contentHolder = new TranscriptItemHolder(holder.itemView);
+                contentHolder.setTranscriptContent((ToeicItemContent) renderItems.get(position).getData(), position);
+            } else {
+                ListQuestionItemHodler itemHolder = new ListQuestionItemHodler(holder.itemView);
+                itemHolder.setData((ToeicQuestion) renderItems.get(position).getData(), position);
+            }
         }
 
         @Override
         public int getItemCount() {
-            return questions.size();
+            return renderItems.size();
+        }
+
+        public class TranscriptItemHolder extends RecyclerView.ViewHolder {
+
+            public TranscriptItemHolder(@NonNull View itemView) {
+                super(itemView);
+            }
+
+            public void setTranscriptContent(ToeicItemContent toeicItemContent, int position) {
+                QuestionSentenceComponent questionSentenceComponent1 = (QuestionSentenceComponent)this.itemView;
+                //TODO
+                if (toeicItemContent.getContent() != null) {
+                    questionSentenceComponent1.setQuestionDescription(toeicItemContent.getContent().replace("\n", ""));
+                    questionSentenceComponent1.setShowTranscript(isExplainShowed);
+                }
+            }
         }
 
         public class ListQuestionItemHodler extends RecyclerView.ViewHolder {
@@ -170,6 +229,7 @@ public class PartFourComponent extends ToeicPartComponentBase{
         for (AnswerSelectionComponent answerSelectionComponent : answerSelectionComponentList) {
             answerSelectionComponent.setShowExplain(true);
         }
+        qSentenceComponent.setShowTranscript(true);
 
         isExplainShowed = true;
     }
@@ -192,5 +252,28 @@ public class PartFourComponent extends ToeicPartComponentBase{
     @Override
     public Integer getTotalQuestions() {
         return this.questions.size();
+    }
+
+    private class RenderItem {
+        private int type;
+        private Object data;
+
+        public RenderItem() { }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public void setData(Object data) {
+            this.data = data;
+        }
     }
 }

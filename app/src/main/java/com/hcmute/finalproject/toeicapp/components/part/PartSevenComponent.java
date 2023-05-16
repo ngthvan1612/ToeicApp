@@ -77,6 +77,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         this.toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         this.questions = new ArrayList<>();
         this.itemContents = new ArrayList<>();
+        this.itemTranscripts = new ArrayList<>();
 
         this.adapter = new ListQuestionPartSevenAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,8 +92,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         );
         if (toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId()).size() > 0) {
             this.itemContents.addAll(
-                    //TODO
-                    this.toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId())
+                this.toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId())
             );
             for (ToeicItemContent itemContent: itemContents) {
                 RenderItem item = new RenderItem();
@@ -106,8 +106,6 @@ public class PartSevenComponent extends ToeicPartComponentBase {
                     this.toeicItemContentDao.getTranscriptByGroupId(toeicQuestionGroup.getId())
             );
         }
-
-        //TODO
 
         for (ToeicQuestion question: questions) {
             RenderItem item = new RenderItem();
