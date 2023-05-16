@@ -1,43 +1,83 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffffff">
+    android:minWidth="200dp"
+    android:background="@drawable/component_alert_dialog_background">
 
     <ImageView
+        android:id="@+id/component_alert_dialog_image_view"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/a"
-        android:gravity="center"
+        android:layout_height="60dp"
         android:background="#50D04E"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/circle_checked"
-        android:scaleType="fitCenter" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/component_alert_dialog_txt_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEXT"
-        android:id="@+id/text_dialog"
-        android:layout_below="@+id/a"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="18sp"
+        android:layout_below="@+id/component_alert_dialog_image_view"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="Test message"
         android:textColor="#ff000000"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal" />
+        android:textSize="18sp"
+        />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="OK"
-        android:id="@+id/btn_dialog"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_below="@+id/text_dialog"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/component_rounded_button_green"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffffff" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/component_alert_dialog_txt_message">
+
+        <LinearLayout
+            android:id="@+id/component_alert_dialog_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/component_alert_dialog_btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/component_alert_dialog_txt_message"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/component_rounded_button_green"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="OK"
+                android:textColor="#ffffffff" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/component_alert_dialog_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/component_alert_dialog_txt_message"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/component_rounded_button_gray"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Cancel"
+                android:textColor="#ffffffff" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

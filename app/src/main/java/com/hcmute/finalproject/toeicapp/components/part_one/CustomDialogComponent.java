@@ -21,10 +21,10 @@ public class CustomDialogComponent {
             dialog.setContentView(R.layout.component_success_alert_dialog);
         }
 
-        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        TextView text = (TextView) dialog.findViewById(R.id.component_alert_dialog_txt_message);
         text.setText(msg);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+        Button dialogButton = (Button) dialog.findViewById(R.id.component_alert_dialog_btn_ok);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

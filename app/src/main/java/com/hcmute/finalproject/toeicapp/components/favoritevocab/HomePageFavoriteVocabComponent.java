@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.dialog.ToeicAlertDialog;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabGroup;
@@ -92,7 +94,7 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
         this.adapter.notifyDataSetChanged();
     }
 
-    private static class GroupItemAdapter extends RecyclerView.Adapter {
+    private class GroupItemAdapter extends RecyclerView.Adapter {
 
         @NonNull
         @Override
@@ -115,15 +117,23 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
         private class GroupItemViewHolder extends RecyclerView.ViewHolder {
             private TextView txtGroupName;
+            private ImageView btnEdit;
 
             public GroupItemViewHolder(@NonNull View itemView) {
                 super(itemView);
-
+                this.btnEdit = itemView.findViewById(R.id.activity_home_page_favorite_vocab_group_item_btn_edit);
                 this.txtGroupName = itemView.findViewById(R.id.activity_home_page_favorite_vocab_group_item_txt);
             }
 
             public void setData(FavoriteVocabGroup group) {
                 this.txtGroupName.setText(group.getGroupName());
+                this.btnEdit.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToeicAlertDialog dialog = new ToeicAlertDialog(getContext());
+                        dialog.show();
+                    }
+                });
             }
         }
     }
