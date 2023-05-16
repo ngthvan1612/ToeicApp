@@ -42,6 +42,7 @@ public class PartFiveComponent extends ToeicPartComponentBase {
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_part_five, this);
         this.answerSelectionComponent = view.findViewById(R.id.component_part_five_answer_selection);
+        super.addAnswerSelectionComponent(this.answerSelectionComponent);
     }
 
     @Override
@@ -55,6 +56,7 @@ public class PartFiveComponent extends ToeicPartComponentBase {
         this.answerSelectionComponent.setQuestionTitle(toeicQuestion.getQuestionNumber()+". "+toeicQuestion.getContent());
         this.answerSelectionComponent.setCorrectAnswer(toeicQuestion.getCorrectAnswer());
         this.answerSelectionComponent.setToeicAnswerChoices(choices);
+        this.answerSelectionComponent.setToeicQuestion(toeicQuestion);
     }
 
     @Override
