@@ -15,7 +15,7 @@ public class BaseRetrofitClient {
     private final static OkHttpClient.Builder sHttpClient
             = new OkHttpClient.Builder();
 
-    protected static <S> S createService(Class<S> serviceClass, String baseUrl) {
+    public static <S> S createService(Class<S> serviceClass, String baseUrl) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create());
