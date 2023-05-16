@@ -147,7 +147,7 @@ public class PartFourComponent extends ToeicPartComponentBase{
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if ((viewType == TYPE_QUESTION_TRANSCRIPT) && (isExplainShowed = true)) {
+            if (TYPE_QUESTION_TRANSCRIPT == viewType) {
                 QuestionSentenceComponent questionSentenceComponent = new QuestionSentenceComponent(getContext());
                 questionSentenceComponent.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
