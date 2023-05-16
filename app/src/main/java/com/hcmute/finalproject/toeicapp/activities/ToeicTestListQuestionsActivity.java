@@ -163,6 +163,8 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             commonHeaderComponent.setTitle("Part 6 - Text completion");
         } else if (partId == 7) {
             commonHeaderComponent.setTitle("Part 7 - Reading comprehension");
+        } else if (partId == 8) {
+            commonHeaderComponent.setTitle(getIntent().getExtras().getString("title-name"));
         }
     }
 

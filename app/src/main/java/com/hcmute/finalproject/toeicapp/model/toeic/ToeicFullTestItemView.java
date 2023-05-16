@@ -8,11 +8,11 @@ public class ToeicFullTestItemView {
 
     public ToeicFullTestItemView() { }
 
-    public ToeicFullTestItemView(int id, int serverId, String fullName, boolean isDownloaded) {
+    public ToeicFullTestItemView(int id, int serverId, String fullName) {
         this.id = id;
         this.serverId = serverId;
         this.fullName = fullName;
-        this.isDownloaded = isDownloaded;
+        this.isDownloaded = false;
     }
 
     public int getId() {

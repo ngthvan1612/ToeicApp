@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.BackButtonRoundedComponent;
+import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicPartDao;
@@ -39,6 +40,7 @@ public class ListTestActivity extends AppCompatActivity {
     private BackButtonRoundedComponent btnBack;
     private ListView listViewTestName;
     private List<ToeicFullTestItemView> toeicFullTestItemViews;
+    private List<ToeicPart> toeicParts;
     private Integer partNumber;
     private String testName;
     private ToeicAppDatabase toeicAppDatabase;
@@ -136,30 +138,94 @@ public class ListTestActivity extends AppCompatActivity {
 
             ToeicPartDao toeicPartDao = toeicAppDatabase.getToeicPartDao();
             ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
-            List<ToeicPart> toeicParts = toeicPartDao.getToeicPartByToeicTestId(toeicFullTestItemView.getId());
+            if (partNumber == HomePageListPracticeComponent.FULL_TEST) {
+               toeicParts = toeicPartDao.getToeicPartByToeicTestId(toeicFullTestItemView.getId());
+            } else if (partNumber == HomePageListPracticeComponent.LISTENING_TEST) {
+                toeicParts = toeicPartDao.getToeicPartListeningByToeicTestId(toeicFullTestItemView.getId());
+            } else if (partNumber == HomePageListPracticeComponent.READING_TEST) {
+                toeicParts = toeicPartDao.getToeicPartReadingByToeicTestId(toeicFullTestItemView.getId());
+            }
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    List<ToeicGroupItemViewModel> viewModels = new ArrayList<>();
+            Boolean isFullTestDownloaded = true;
+            for (ToeicPart toeicPart : toeicParts) {
+                if (toeicPart.getDownloaded() == false) {
+                    isFullTestDownloaded = false;
+                    break;
+                }
+            }
 
-                    for (ToeicPart toeicPart: toeicParts) {
-                        //Log.d("partId", toeicPart.getId() + "");
-                        for (ToeicQuestionGroup group : toeicQuestionGroupDao.getGroupsByPartId(toeicPart.getId())) {
-                            ToeicGroupItemViewModel viewModel = new ToeicGroupItemViewModel();
-                            viewModel.setPartNumber(toeicPart.getPartNumber());
-                            viewModel.setGroup(group);
-                            viewModels.add(viewModel);
+            if (isFullTestDownloaded == false) {
+                btnDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(ListTestActivity.this, "click btn", Toast.LENGTH_SHORT).show();
+                        for (ToeicPart toeicPart : toeicParts) {
+                            if (toeicPart.getDownloaded() == false) {
+                                toeicTestBackendService.downloadPartStorageData(
+                                        toeicPart.getServerId(),
+                                        new ToeicTestBackendService.OnBackupToeicListener() {
+                                            @Override
+                                            public void prepare() {
+                                                DialogSyncService.showDialog(ListTestActivity.this);
+                                            }
+
+                                            @Override
+                                            public void onSuccess() {
+                                                final ToeicPartDao toeicPartDao = toeicAppDatabase.getToeicPartDao();
+                                                ToeicPart toeicPartTemp = toeicPartDao.getOne(toeicPart.getId());
+                                                toeicPartTemp.setDownloaded(true);
+                                                toeicPartDao.update(toeicPartTemp);
+
+                                                loadLocalDatabase();
+
+                                                DialogSyncService.dismissDialog();
+                                            }
+
+                                            @Override
+                                            public void onUpdateProgress(int progress) {
+                                                // TODO: update progress
+                                            }
+
+                                            @Override
+                                            public void onException(Exception exception) {
+                                                Toast.makeText(ListTestActivity.this, "Loi r nha " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d("DOWNLOAD_ERR", exception.getMessage());
+
+                                                DialogSyncService.dismissDialog();
+                                            }
+                                        }
+                                );
+                            }
                         }
                     }
+                });
 
-                    final Intent intent = new Intent(ListTestActivity.this, ToeicTestListQuestionsActivity.class);
-                    final Gson gson = new Gson();
-                    intent.putExtra("question-data", gson.toJson(viewModels));
+            } else {
+                btnDownload.setVisibility(View.GONE);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        List<ToeicGroupItemViewModel> viewModels = new ArrayList<>();
 
-                    startActivity(intent);
-                }
-            });
+                        for (ToeicPart toeicPart: toeicParts) {
+                            for (ToeicQuestionGroup group : toeicQuestionGroupDao.getGroupsByPartId(toeicPart.getId())) {
+                                ToeicGroupItemViewModel viewModel = new ToeicGroupItemViewModel();
+                                viewModel.setPartNumber(toeicPart.getPartNumber());
+                                viewModel.setGroup(group);
+                                viewModels.add(viewModel);
+                            }
+                        }
+
+                        final Intent intent = new Intent(ListTestActivity.this, ToeicTestListQuestionsActivity.class);
+                        final Gson gson = new Gson();
+                        intent.putExtra("question-data", gson.toJson(viewModels));
+                        intent.putExtra("title-name", toeicFullTestItemView.getFullName());
+
+                        startActivity(intent);
+                    }
+                });
+            }
+
 
             txtGroupName.setText(toeicFullTestItemView.getFullName());
 //            txtNumberOfQuestions.setText(toeicFullTestItemView.get() + " questions");
