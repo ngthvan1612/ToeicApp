@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.dto;
+package com.hcmute.finalproject.toeicapp.services.backend.tests.model;
 
 public class CheckSumString {
     private boolean isSuccess;
