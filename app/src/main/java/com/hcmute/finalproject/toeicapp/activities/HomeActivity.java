@@ -54,7 +54,7 @@ public class HomeActivity extends GradientActivity {
         }
 
         this.authenticationService.refreshRegisterUserWithServer(() -> {
-            if (this.favoriteVocabGroupDao.getAll().size() == 0 || 1 < 2)
+            if (this.favoriteVocabGroupDao.getAll().size() == 0)
                 this.favoriteVocabService.backupFavoriteVocabToServer();
             else
                 this.favoriteVocabService.restoreFavoriteVocabsToServer();
