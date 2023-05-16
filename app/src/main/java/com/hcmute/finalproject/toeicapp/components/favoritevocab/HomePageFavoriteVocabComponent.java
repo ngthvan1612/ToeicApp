@@ -83,7 +83,7 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
                 ToeicAlertDialog successDialog = new ToeicAlertDialog(getContext());
                 successDialog.setDialogMode(ToeicAlertDialog.MODE_SUCCESS);
-                successDialog.setMessage("Thêm thành công");
+                successDialog.setMessage("Added successfully");
                 successDialog.show();
 
                 txtGroupName.setText("");
@@ -134,12 +134,40 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
             public void setData(FavoriteVocabGroup group) {
                 this.txtGroupName.setText(group.getGroupName());
+                this.btnEdit.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertEditGroupComponentDialog dialog = new AlertEditGroupComponentDialog(getContext());
+                        dialog.setGroupName(group.getGroupName());
+                        dialog.setOnDialogButtonClickedListener(new ToeicAlertDialog.OnDialogButtonClickedListener() {
+                            @Override
+                            public void onOk() {
+                                group.setGroupName(dialog.getGroupName());
+                                favoriteVocabGroupDao.update(group);
+                                reloadListFavoriteGroups();
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+
+                                ToeicAlertDialog successDialog = new ToeicAlertDialog(getContext());
+                                successDialog.setDialogMode(ToeicAlertDialog.MODE_SUCCESS);
+                                successDialog.setMessage("Update group successfully");
+                                successDialog.show();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+                    }
+                });
                 this.btnDelete.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ToeicAlertDialog dialog = new ToeicAlertDialog(getContext());
                         dialog.setDialogMode(ToeicAlertDialog.MODE_QUESTION);
-                        dialog.setMessage("Chắc chưa á?");
+                        dialog.setMessage("Are you sure?");
                         dialog.setOnDialogButtonClickedListener(new ToeicAlertDialog.OnDialogButtonClickedListener() {
                             @Override
                             public void onOk() {
@@ -149,7 +177,7 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
                                 dialog.dismiss();
                                 ToeicAlertDialog successDialog = new ToeicAlertDialog(getContext());
                                 successDialog.setDialogMode(ToeicAlertDialog.MODE_SUCCESS);
-                                successDialog.setMessage("Xóa thành công");
+                                successDialog.setMessage("Deleted successfully");
                                 successDialog.show();
                             }
 
