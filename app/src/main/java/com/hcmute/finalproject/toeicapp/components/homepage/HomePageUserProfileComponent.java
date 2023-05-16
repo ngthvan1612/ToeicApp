@@ -17,7 +17,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.bumptech.glide.Glide;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.LoginActivity;
-import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
 
 public class HomePageUserProfileComponent extends LinearLayout {
     private ImageView imgUserPhoto;

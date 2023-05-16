@@ -19,7 +19,7 @@ import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileC
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
-import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.FavoriteVocabService;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
 import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
@@ -55,8 +55,9 @@ public class HomeActivity extends GradientActivity {
         }
 
         this.authenticationService.refreshRegisterUserWithServer(() -> {
-            if (this.favoriteVocabGroupDao.getAll().size() == 0)
+            if (this.favoriteVocabGroupDao.getAll().size() == 0) {
                 this.favoriteVocabService.backupFavoriteVocabToServer();
+            }
             else
                 this.favoriteVocabService.restoreFavoriteVocabsToServer();
         });

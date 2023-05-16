@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.services.authentication;
+package com.hcmute.finalproject.toeicapp.services.backend.authentication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.hcmute.finalproject.toeicapp.network.APIAuthentication;
-import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupRequest;
-import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupResponse;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupRequest;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupResponse;
 import com.hcmute.finalproject.toeicapp.services.base.Service;
 
 import retrofit2.Call;

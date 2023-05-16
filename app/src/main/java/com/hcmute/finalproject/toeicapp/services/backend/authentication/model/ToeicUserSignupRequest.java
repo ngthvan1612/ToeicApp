@@ -1,4 +1,4 @@
-package com.hcmute.finalproject.toeicapp.services.authentication.model;
+package com.hcmute.finalproject.toeicapp.services.backend.authentication.model;
 
 public class ToeicUserSignupRequest {
     private String fullName;

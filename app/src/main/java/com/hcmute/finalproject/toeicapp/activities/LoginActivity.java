@@ -13,7 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOGIN_GOOGLE = 1720;

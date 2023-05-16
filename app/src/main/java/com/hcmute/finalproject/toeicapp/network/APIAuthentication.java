@@ -2,14 +2,11 @@ package com.hcmute.finalproject.toeicapp.network;
 
 import androidx.annotation.NonNull;
 
-import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupRequest;
-import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupResponse;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicTestsResponse;
-import com.hcmute.finalproject.toeicapp.services.backend.tests.model.CheckSumStringResponse;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupRequest;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface APIAuthentication {
