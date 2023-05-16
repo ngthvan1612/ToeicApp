@@ -2,6 +2,7 @@ package com.hcmute.finalproject.toeicapp.services.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -43,6 +44,7 @@ public class DialogSyncService {
             loadingDialogComponentInstance = new LoadingDialogComponent(activity);
             loadingDialogComponentInstance.startLoadingDialog(dialogInstance, "Đang đồng bộ");
         }
+        Log.d("DIALOG_SERVICE", "create from " + activity);
         semaphoreCounterInstance.increaseCounter(1);
     }
 
@@ -53,5 +55,6 @@ public class DialogSyncService {
             loadingDialogComponentInstance = null;
             dialogInstance = null;
         }
+        Log.d("DIALOG_SERVICE", "dispose");
     }
 }

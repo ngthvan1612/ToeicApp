@@ -2,6 +2,7 @@ package com.hcmute.finalproject.toeicapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -73,6 +74,7 @@ public class HomeActivity extends GradientActivity {
         this.toeicTestBackendService.checkToeicTestDatabaseIsUpdated(new ToeicTestBackendService.OnBackupToeicListener() {
             @Override
             public void prepare() {
+                Log.d("DIALOG_SERVICE", " check update");
                 DialogSyncService.showDialog(HomeActivity.this);
             }
 

@@ -202,8 +202,6 @@ public class ToeicTestBackendService {
     public void checkToeicTestDatabaseIsUpdated(
             @NonNull OnBackupToeicListener listener
     ) {
-        listener.prepare();
-
         APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
