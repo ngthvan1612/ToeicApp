@@ -42,7 +42,7 @@ public class QuestionSentenceComponent extends LinearLayout {
 
     public void setTitle(int typeTitle) {
         if (typeTitle == TYPE_QUESTION_CONTENT) {
-            txtQuestionDescription.setText("Qustion");
+            txtQuestionDescription.setText("Question");
         } else if (typeTitle == TYPE_QUESTION_TRANSCRIPT) {
             txtQuestionDescription.setText("Transcript");
         }

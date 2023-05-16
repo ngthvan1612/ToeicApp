@@ -2,6 +2,7 @@ package com.hcmute.finalproject.toeicapp.components.part;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -45,6 +46,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
     private ToeicAnswerChoiceDao toeicAnswerChoiceDao;
     private ToeicItemContentDao toeicItemContentDao;
     private ToeicQuestionGroupDao toeicQuestionGroupDao;
+    private List<QuestionSentenceComponent> qSentenceComponents;
     private ListQuestionPartSevenAdapter adapter;
     private boolean isExplainShowed = false;
     private List<AnswerSelectionComponent> answerSelectionComponentList = new ArrayList<>();
@@ -78,6 +80,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         this.questions = new ArrayList<>();
         this.itemContents = new ArrayList<>();
         this.itemTranscripts = new ArrayList<>();
+        this.qSentenceComponents = new ArrayList<>();
 
         this.adapter = new ListQuestionPartSevenAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,11 +93,14 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         this.questions.addAll(
                 this.toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId())
         );
+        Log.d("itemContent", "questionGroupId: " + toeicQuestionGroup.getId() + "");
+
         if (toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId()).size() > 0) {
             this.itemContents.addAll(
                 this.toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId())
             );
             for (ToeicItemContent itemContent: itemContents) {
+                Log.d("itemContent", "content: " + itemContent.getId() + "");
                 RenderItem item = new RenderItem();
                 item.setType(TYPE_QUESTION_CONTENT);
                 item.setData(itemContent);
@@ -105,6 +111,13 @@ public class PartSevenComponent extends ToeicPartComponentBase {
             this.itemTranscripts.addAll(
                     this.toeicItemContentDao.getTranscriptByGroupId(toeicQuestionGroup.getId())
             );
+            for (ToeicItemContent itemContent: itemTranscripts) {
+                Log.d("itemContent", "transcript: " + itemContent.getId() + "");
+                RenderItem item = new RenderItem();
+                item.setType(TYPE_QUESTION_TRANSCRIPT);
+                item.setData(itemContent);
+                renderItems.add(item);
+            }
         }
 
         for (ToeicQuestion question: questions) {
@@ -121,6 +134,10 @@ public class PartSevenComponent extends ToeicPartComponentBase {
     public void showExplain() {
         for (AnswerSelectionComponent answerSelectionComponent : answerSelectionComponentList) {
             answerSelectionComponent.setShowExplain(true);
+        }
+
+        for (QuestionSentenceComponent questionSentenceComponent: qSentenceComponents) {
+            questionSentenceComponent.setShowTranscript(true);
         }
 
         isExplainShowed = true;
@@ -142,7 +159,19 @@ public class PartSevenComponent extends ToeicPartComponentBase {
                 ));
                 LayoutParams layoutParams = (LayoutParams) questionSentenceComponent1.getLayoutParams();
                 layoutParams.setMargins(0, 0, 0, 20);
+                questionSentenceComponent1.setTitle(TYPE_QUESTION_CONTENT);
                 return new QuestionContentHolder(questionSentenceComponent1);
+            } else if (viewType == TYPE_QUESTION_TRANSCRIPT) {
+                QuestionSentenceComponent questionSentenceComponent1 = new QuestionSentenceComponent(getContext());
+                questionSentenceComponent1.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                LayoutParams layoutParams = (LayoutParams) questionSentenceComponent1.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 20);
+                questionSentenceComponent1.setTitle(TYPE_QUESTION_TRANSCRIPT);
+                qSentenceComponents.add(questionSentenceComponent1);
+                return new TranscriptHolder(questionSentenceComponent1);
             } else {
                 AnswerSelectionComponent answerSelectionComponent = new AnswerSelectionComponent(getContext());
                 answerSelectionComponent.setLayoutParams(new LinearLayout.LayoutParams(
@@ -162,6 +191,9 @@ public class PartSevenComponent extends ToeicPartComponentBase {
             if (renderItems.get(position).getType() == TYPE_QUESTION_CONTENT) {
                 QuestionContentHolder contentHolder = new QuestionContentHolder(holder.itemView);
                 contentHolder.setItemContent((ToeicItemContent) renderItems.get(position).getData(), position);
+            } else if (renderItems.get(position).getType() == TYPE_QUESTION_TRANSCRIPT) {
+                TranscriptHolder transcriptHolder = new TranscriptHolder(holder.itemView);
+                transcriptHolder.setItemTranscript((ToeicItemContent) renderItems.get(position).getData(), position);
             } else {
                 ListQuestionPartSevenItemHolder itemHolder = new ListQuestionPartSevenItemHolder(holder.itemView);
                 itemHolder.setData((ToeicQuestion) renderItems.get(position).getData(), position);
@@ -184,6 +216,22 @@ public class PartSevenComponent extends ToeicPartComponentBase {
                 //TODO
                 if (itemContent.getContent() != null) {
                     questionSentenceComponent1.setQuestionDescription(itemContent.getContent().replace("\n", ""));
+
+                }
+            }
+        }
+
+        private class TranscriptHolder extends RecyclerView.ViewHolder {
+
+            public TranscriptHolder(@NonNull View itemView) {
+                super(itemView);
+            }
+            public void setItemTranscript(ToeicItemContent itemContent, int position) {
+                QuestionSentenceComponent questionSentenceComponent1 = (QuestionSentenceComponent)this.itemView;
+                //TODO
+                if (itemContent.getContent() != null) {
+                    questionSentenceComponent1.setQuestionDescription(itemContent.getContent().replace("\n", ""));
+                    questionSentenceComponent1.setShowTranscript(isExplainShowed);
                 }
             }
         }
