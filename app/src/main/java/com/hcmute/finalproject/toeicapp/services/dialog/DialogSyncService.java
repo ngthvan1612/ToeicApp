@@ -28,7 +28,7 @@ public class DialogSyncService {
         }
 
         public synchronized void decreaseCounter(Integer value) {
-            this.counter -= value;
+            this.counter = Math.max(this.counter - value, 0);
         }
     }
 
@@ -39,22 +39,24 @@ public class DialogSyncService {
     public synchronized static void showDialog(
             @NonNull Activity activity
     ) {
-        if (semaphoreCounterInstance.getCounter() == 0) {
+        semaphoreCounterInstance.increaseCounter(1);
+        if (semaphoreCounterInstance.getCounter() == 1) {
             dialogInstance = new Dialog(activity, android.R.style.Theme_Light);
             loadingDialogComponentInstance = new LoadingDialogComponent(activity);
-            loadingDialogComponentInstance.startLoadingDialog(dialogInstance, "Đang đồng bộ");
+            loadingDialogComponentInstance.startLoadingDialog(dialogInstance, "Đang tải");
         }
         Log.d("DIALOG_SERVICE", "create from " + activity);
-        semaphoreCounterInstance.increaseCounter(1);
+
     }
 
     public synchronized static void dismissDialog() {
-        semaphoreCounterInstance.decreaseCounter(1);
-        if (semaphoreCounterInstance.getCounter() == 0) {
+
+        if (semaphoreCounterInstance.getCounter() == 1) {
             loadingDialogComponentInstance.dismissDialog(dialogInstance);
             loadingDialogComponentInstance = null;
             dialogInstance = null;
         }
         Log.d("DIALOG_SERVICE", "dispose");
+        semaphoreCounterInstance.decreaseCounter(1);
     }
 }
