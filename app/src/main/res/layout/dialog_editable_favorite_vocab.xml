@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="200dp"
+    android:background="@drawable/component_alert_dialog_background"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageView
+        android:id="@+id/dialog_create_favorite_vocab_img_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#50D04E"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/circle_checked"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_below="@id/dialog_create_favorite_vocab_img_header"
+        android:id="@+id/dialog_create_favorite_vocab_layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <EditText
+            android:id="@+id/component_home_page_favorite_vocab_txt_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="#F4F4F4"
+            android:hint="Enter word"
+            android:minWidth="200dp"
+            android:padding="5dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/component_home_page_favorite_vocab_txt_meaning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#F4F4F4"
+            android:hint="Enter meaning ..."
+            android:minWidth="200dp"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:lines="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/component_home_page_favorite_vocab_txt_word" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_create_favorite_vocab_layout_input">
+
+        <LinearLayout
+            android:id="@+id/component_alert_dialog_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dialog_create_favorite_vocab_btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="#50D04E"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="OK"
+                android:textColor="#ffffffff" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dialog_create_favorite_vocab_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/component_rounded_button_gray"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Cancel"
+                android:textColor="#ffffffff" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

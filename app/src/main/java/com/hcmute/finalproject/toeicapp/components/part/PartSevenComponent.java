@@ -77,6 +77,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         this.toeicItemContentDao = toeicAppDatabase.getToeicItemContentDao();
         this.questions = new ArrayList<>();
         this.itemContents = new ArrayList<>();
+        this.itemTranscripts = new ArrayList<>();
 
         this.adapter = new ListQuestionPartSevenAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

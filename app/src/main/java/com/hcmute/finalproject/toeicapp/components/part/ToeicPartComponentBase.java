@@ -69,7 +69,8 @@ public abstract class ToeicPartComponentBase extends LinearLayout implements Toe
 
                             return payload;
                         })
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                this.getTotalQuestions()
         );
     }
 }

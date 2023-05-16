@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
         android:id="@+id/activity_view_word_in_group_header_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp">
-    </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
+        android:layout_marginTop="25dp"></com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
 
     <TextView
         android:id="@+id/activity_view_word_in_group_retangle"
@@ -16,25 +16,32 @@
         android:layout_height="8dp"
         android:layout_below="@+id/activity_view_word_in_group_header_title"
         android:layout_marginTop="19dp"
-        android:background="#B1DFFF"/>
+        android:background="#B1DFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_view_word_in_group_rcView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_view_word_in_group_retangle"
         android:layout_marginTop="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/activity_view_word_in_group_retangle" />
+        android:paddingBottom="20dp" />
 
-    <ImageButton
-        android:id="@+id/activity_view_word_in_group_btn_add_word"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="29dp"
         android:layout_marginBottom="35dp"
-        android:background="@drawable/activity_add_word_to_group_plus_circle" />
+        android:padding="-10dp"
+        android:background="@drawable/activity_view_word_in_group_btn_add_drawable">
+
+        <ImageButton
+            android:id="@+id/activity_view_word_in_group_btn_add_word"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/activity_add_word_to_group_plus_circle" />
+    </LinearLayout>
 </RelativeLayout>
