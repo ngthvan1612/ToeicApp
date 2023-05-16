@@ -17,21 +17,19 @@
         android:layout_below="@+id/activity_view_word_in_group_header_title"
         android:layout_marginTop="19dp"
         android:background="#B1DFFF"/>
-    <ScrollView
-        android:layout_below="@+id/activity_view_word_in_group_retangle"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_view_word_in_group_rcView"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="29dp"
-        android:layout_marginRight="29dp"
-        android:id="@+id/activity_view_word_in_group_scView">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activity_view_word_in_group_rcView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_view_word_in_group_retangle" />
 
     <ImageButton
+        android:id="@+id/activity_view_word_in_group_btn_add_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
