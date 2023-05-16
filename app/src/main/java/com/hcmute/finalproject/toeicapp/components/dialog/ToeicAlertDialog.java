@@ -29,14 +29,15 @@ public class ToeicAlertDialog extends Dialog {
     private ImageView imgHeader;
     private TextView txtMessage;
 
+    private String message;
+
     public ToeicAlertDialog(@NonNull Context context) {
         super(context);
     }
 
     private int dialogMode = MODE_ERROR;
 
-    public void setDialogMode(int dialogMode) {
-        this.dialogMode = dialogMode;
+    private void handleChangeDialogMode() {
         switch (this.dialogMode) {
             case MODE_ERROR:
                 this.btnOK.setVisibility(View.VISIBLE);
@@ -59,6 +60,12 @@ public class ToeicAlertDialog extends Dialog {
         }
     }
 
+    public void setDialogMode(int dialogMode) {
+        this.dialogMode = dialogMode;
+        if (this.btnOK != null)
+            this.handleChangeDialogMode();
+    }
+
     public void setOnDialogButtonClickedListener(OnDialogButtonClickedListener onDialogButtonClickedListener) {
         this.onDialogButtonClickedListener = onDialogButtonClickedListener;
     }
@@ -71,12 +78,19 @@ public class ToeicAlertDialog extends Dialog {
         return this.dialogMode;
     }
 
+    private void handleChangeMessage() {
+        if (this.txtMessage != null) {
+            this.txtMessage.setText(this.message);
+        }
+    }
+
     public void setMessage(String message) {
-        this.txtMessage.setText(message);
+        this.message = message;
+        this.handleChangeMessage();
     }
 
     public String getMessage(String message) {
-        return this.txtMessage.getText().toString();
+        return this.message;
     }
 
     @Override
@@ -108,6 +122,23 @@ public class ToeicAlertDialog extends Dialog {
                 }
             }
         });
+
+        this.handleChangeDialogMode();
+        this.handleChangeMessage();
+
+        if (this.onDialogButtonClickedListener == null) {
+            this.setOnDialogButtonClickedListener(new OnDialogButtonClickedListener() {
+                @Override
+                public void onOk() {
+                    dismiss();
+                }
+
+                @Override
+                public void onCancel() {
+                    dismiss();
+                }
+            });
+        }
     }
 
     public interface OnDialogButtonClickedListener {

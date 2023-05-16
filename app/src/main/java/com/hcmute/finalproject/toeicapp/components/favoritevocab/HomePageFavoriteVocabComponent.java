@@ -68,7 +68,10 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
                 final TextView txtGroupName = view.findViewById(R.id.component_home_page_favorite_vocab_txt_new_group);
                 final String newGroupName = txtGroupName.getText().toString().trim();
                 if (newGroupName.length() == 0) {
-                    Toast.makeText(context, "Group name cannot be empty", Toast.LENGTH_SHORT).show();
+                    ToeicAlertDialog errorDialog = new ToeicAlertDialog(getContext());
+                    errorDialog.setMessage("Group name cannot be empty");
+                    errorDialog.setDialogMode(ToeicAlertDialog.MODE_ERROR);
+                    errorDialog.show();
                     return;
                 }
 
@@ -78,7 +81,10 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
                 reloadListFavoriteGroups();
 
-                Toast.makeText(context, "Add new group successfully", Toast.LENGTH_SHORT).show();
+                ToeicAlertDialog successDialog = new ToeicAlertDialog(getContext());
+                successDialog.setDialogMode(ToeicAlertDialog.MODE_SUCCESS);
+                successDialog.setMessage("Thêm thành công");
+                successDialog.show();
 
                 txtGroupName.setText("");
             }
@@ -117,20 +123,41 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
         private class GroupItemViewHolder extends RecyclerView.ViewHolder {
             private TextView txtGroupName;
-            private ImageView btnEdit;
+            private ImageView btnEdit, btnDelete;
 
             public GroupItemViewHolder(@NonNull View itemView) {
                 super(itemView);
+                this.btnDelete = itemView.findViewById(R.id.activity_home_page_favorite_vocab_group_item_btn_delete);
                 this.btnEdit = itemView.findViewById(R.id.activity_home_page_favorite_vocab_group_item_btn_edit);
                 this.txtGroupName = itemView.findViewById(R.id.activity_home_page_favorite_vocab_group_item_txt);
             }
 
             public void setData(FavoriteVocabGroup group) {
                 this.txtGroupName.setText(group.getGroupName());
-                this.btnEdit.setOnClickListener(new OnClickListener() {
+                this.btnDelete.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ToeicAlertDialog dialog = new ToeicAlertDialog(getContext());
+                        dialog.setDialogMode(ToeicAlertDialog.MODE_QUESTION);
+                        dialog.setMessage("Chắc chưa á?");
+                        dialog.setOnDialogButtonClickedListener(new ToeicAlertDialog.OnDialogButtonClickedListener() {
+                            @Override
+                            public void onOk() {
+                                favoriteVocabGroupDao.delete(group);
+                                reloadListFavoriteGroups();
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                                ToeicAlertDialog successDialog = new ToeicAlertDialog(getContext());
+                                successDialog.setDialogMode(ToeicAlertDialog.MODE_SUCCESS);
+                                successDialog.setMessage("Xóa thành công");
+                                successDialog.show();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                     }
                 });
