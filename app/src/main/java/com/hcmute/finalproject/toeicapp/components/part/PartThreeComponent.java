@@ -177,8 +177,10 @@ public class PartThreeComponent extends ToeicPartComponentBase {
                 component.setToeicAnswerChoices(choices);
                 assert question.getCorrectAnswer() != null && question.getCorrectAnswer().length() == 1;
                 component.setCorrectAnswer(question.getCorrectAnswer());
+                component.setToeicQuestion(question);
                 component.setQuestionTitle(question.getQuestionNumber() + ". " + question.getContent());
                 component.setToeicQuestion(question);
+
                 component.setShowExplain(isExplainShowed);
             }
         }
