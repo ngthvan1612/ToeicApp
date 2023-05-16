@@ -232,12 +232,14 @@ public class AnswerSelectionComponent extends LinearLayout {
 
         private class AnswerSelectionItemViewHolder extends RecyclerView.ViewHolder {
             private final RadioButton radioButton;
+            private final TextView txtForRadioButton;
             private final RelativeLayout explainLayout;
             private final TextView txtExplain;
 
             public AnswerSelectionItemViewHolder(@NonNull View itemView) {
                 super(itemView);
 
+                this.txtForRadioButton = itemView.findViewById(R.id.component_answer_selection_item_txt_radio_button);
                 this.radioButton = itemView.findViewById(R.id.component_answer_selection_item_radio_button);
                 this.explainLayout = itemView.findViewById(R.id.component_answer_selection_item_explain_layout);
                 this.txtExplain = itemView.findViewById(R.id.component_answer_selection_item_explain_text);
@@ -281,9 +283,9 @@ public class AnswerSelectionComponent extends LinearLayout {
 
             private void setData(AnswerSelectionItem answerSelectionItem, int position) {
                 this.radioButton.setChecked(position == lastSelectedPosition);
-                this.radioButton.setText(answerSelectionItem.getLabel() + ". " + answerSelectionItem.getChoice());
+                this.txtForRadioButton.setText(answerSelectionItem.getLabel() + ". " + answerSelectionItem.getChoice());
                 this.txtExplain.setTextColor(getResources().getColor(android.R.color.black));
-                this.radioButton.setTextColor(getResources().getColor(android.R.color.black));
+                this.txtForRadioButton.setTextColor(getResources().getColor(android.R.color.black));
 
                 if (answerSelectionItem.isShowExplain()) {
                     this.explainLayout.setVisibility(View.VISIBLE);
@@ -291,13 +293,13 @@ public class AnswerSelectionComponent extends LinearLayout {
                     if (getCurrentChoice() != null) {
                         if (getCurrentChoice().getLabel().equals(answerSelectionItem.label)) {
                             this.txtExplain.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                            this.radioButton.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                            this.txtForRadioButton.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
                         }
                     }
 
                     if (answerSelectionItem.label.equals(correctAnswer)) {
                         this.txtExplain.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-                        this.radioButton.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                        this.txtForRadioButton.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
                     }
                 } else {
                     this.explainLayout.setVisibility(View.GONE);
