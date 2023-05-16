@@ -212,11 +212,13 @@ public class ToeicTestBackendService {
 
                 String newChecksum = checkSumStringResponse.getData();
 
+                Log.d("CHECKSUM_TOEIC", newChecksum + " -> " + currentCheckSum);
+
                 if (!currentCheckSum.equals(newChecksum)) {
                     getNewToeicDatabaseFromServer(new OnBackupToeicListener() {
                         @Override
                         public void prepare() {
-                            // Nothing
+                            listener.prepare();
                         }
 
                         @Override
