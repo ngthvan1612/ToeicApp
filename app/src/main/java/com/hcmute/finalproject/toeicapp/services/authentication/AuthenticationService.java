@@ -60,7 +60,7 @@ public class AuthenticationService {
     ) {
         ToeicUserSignupRequest request = new ToeicUserSignupRequest();
         request.setGmail(this.getUserEmail());
-        request.setGmail(this.getUserDisplayName());
+        request.setFullName(this.getUserDisplayName());
 
         APIAuthentication
                 .getInstance()
