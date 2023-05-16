@@ -1,7 +1,8 @@
-package com.hcmute.finalproject.toeicapp.network;
+package com.hcmute.finalproject.toeicapp.services.backend.authentication;
 
 import androidx.annotation.NonNull;
 
+import com.hcmute.finalproject.toeicapp.network.BaseRetrofitClient;
 import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupRequest;
 import com.hcmute.finalproject.toeicapp.services.backend.authentication.model.ToeicUserSignupResponse;
 
