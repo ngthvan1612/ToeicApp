@@ -100,7 +100,7 @@ public class ViewWordInGroupActivity extends AppCompatActivity {
     }
 
     private void reloadListWords() {
-        final List<FavoriteVocabWord> words = this.favoriteVocabWordDao.getAll();
+        final List<FavoriteVocabWord> words = this.favoriteVocabWordDao.getByGroupId(this.groupId);
         this.favoriteVocabWordList.clear();
         this.favoriteVocabWordList.addAll(words);
         this.adapter.notifyDataSetChanged();
