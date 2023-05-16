@@ -13,6 +13,9 @@ public interface FavoriteVocabWordDao extends ToeicDao<FavoriteVocabWord> {
     @Query("SELECT * FROM FavoriteVocabWord")
     List<FavoriteVocabWord> getAll();
 
+    @Query("SELECT * FROM FavoriteVocabWord WHERE groupId = :groupId")
+    List<FavoriteVocabWord> getByGroupId(Integer groupId);
+
     @Query("SELECT * FROM FavoriteVocabWord where id = :id")
     FavoriteVocabWord getOne(Integer id);
 }

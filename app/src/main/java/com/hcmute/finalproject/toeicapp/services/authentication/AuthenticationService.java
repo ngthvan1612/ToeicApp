@@ -3,6 +3,7 @@ package com.hcmute.finalproject.toeicapp.services.authentication;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -10,7 +11,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.hcmute.finalproject.toeicapp.network.APIAuthentication;
+import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupRequest;
+import com.hcmute.finalproject.toeicapp.services.authentication.model.ToeicUserSignupResponse;
 import com.hcmute.finalproject.toeicapp.services.base.Service;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Service
 public class AuthenticationService {
@@ -47,6 +55,31 @@ public class AuthenticationService {
         });
     }
 
+    public void refreshRegisterUserWithServer(
+            @NonNull OnRefreshUserListener listener
+    ) {
+        ToeicUserSignupRequest request = new ToeicUserSignupRequest();
+        request.setGmail(this.getUserEmail());
+        request.setGmail(this.getUserDisplayName());
+
+        APIAuthentication
+                .getInstance()
+                .refreshRegisterUser(request)
+                .enqueue(new Callback<ToeicUserSignupResponse>() {
+                    @Override
+                    public void onResponse(Call<ToeicUserSignupResponse> call, Response<ToeicUserSignupResponse> response) {
+                        Log.d("REGISTER_USER", "ok " + response.body().getMessage());
+                        listener.onSuccess();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ToeicUserSignupResponse> call, Throwable t) {
+                        Log.d("REGISTER_USER", "fail");
+                        Log.d("REGISTER_USER", Log.getStackTraceString(t));
+                    }
+                });
+    }
+
     public Intent getGoogleLoginIntentActivity() {
         return this.googleSignInClient.getSignInIntent();
     }
@@ -70,5 +103,9 @@ public class AuthenticationService {
     public interface OnAccountLogoutAsyncEvent {
         void onSuccess();
         void onFailure(String message);
+    }
+
+    public interface OnRefreshUserListener {
+        void onSuccess();
     }
 }
