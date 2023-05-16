@@ -23,4 +23,12 @@ public interface ToeicPartDao extends ToeicDao<ToeicPart> {
 
     @Query("SELECT * FROM ToeicPart WHERE ToeicPart.toeicFullTestId = :testId")
     List<ToeicPart> getToeicPartByToeicTestId(Integer testId);
+
+    @Query("SELECT * FROM ToeicPart WHERE ToeicPart.toeicFullTestId = :testId" +
+    " and (ToeicPart.id = 1 or ToeicPart.id = 2 or ToeicPart.id = 3 or Toeicpart.id = 4)")
+    List<ToeicPart> getToeicPartListeningByToeicTestId(Integer testId);
+
+    @Query("SELECT * FROM ToeicPart WHERE ToeicPart.toeicFullTestId = :testId" +
+            " and (ToeicPart.id = 5 or ToeicPart.id = 6 or ToeicPart.id = 7)")
+    List<ToeicPart> getToeicPartReadingByToeicTestId(Integer testId);
 }

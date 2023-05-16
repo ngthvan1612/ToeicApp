@@ -31,10 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartSevenComponent extends ToeicPartComponentBase {
-    private static final int TYPE_QUESTION_HTML = 1;
+    private static final int TYPE_QUESTION_CONTENT = 1;
     private static final int TYPE_QUESTION_SELECTION = 2;
+    private static final int TYPE_QUESTION_TRANSCRIPT = 3;
     private List<RenderItem> renderItems = new ArrayList<>();
     private List<ToeicItemContent> itemContents;
+    private List<ToeicItemContent> itemTranscripts;
     private List<ToeicQuestion> questions;
 
     private RecyclerView recyclerView;
@@ -87,16 +89,25 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         this.questions.addAll(
                 this.toeicQuestionDao.getToeicQuestionByQuestionGroppId(toeicQuestionGroup.getId())
         );
-        this.itemContents.addAll(
-                //TODO
-                this.toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId())
-        );
-        for (ToeicItemContent itemContent: itemContents) {
-            RenderItem item = new RenderItem();
-            item.setType(TYPE_QUESTION_HTML);
-            item.setData(itemContent);
-            renderItems.add(item);
+        if (toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId()).size() > 0) {
+            this.itemContents.addAll(
+                    //TODO
+                    this.toeicItemContentDao.getContentByGroupId(toeicQuestionGroup.getId())
+            );
+            for (ToeicItemContent itemContent: itemContents) {
+                RenderItem item = new RenderItem();
+                item.setType(TYPE_QUESTION_CONTENT);
+                item.setData(itemContent);
+                renderItems.add(item);
+            }
         }
+        if (toeicItemContentDao.getTranscriptByGroupId(toeicQuestionGroup.getId()).size() > 0) {
+            this.itemTranscripts.addAll(
+                    this.toeicItemContentDao.getTranscriptByGroupId(toeicQuestionGroup.getId())
+            );
+        }
+
+        //TODO
 
         for (ToeicQuestion question: questions) {
             RenderItem item = new RenderItem();
@@ -125,7 +136,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if (viewType == TYPE_QUESTION_HTML) {
+            if (viewType == TYPE_QUESTION_CONTENT) {
                 QuestionSentenceComponent questionSentenceComponent1 = new QuestionSentenceComponent(getContext());
                 questionSentenceComponent1.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -150,7 +161,7 @@ public class PartSevenComponent extends ToeicPartComponentBase {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if (renderItems.get(position).getType() == TYPE_QUESTION_HTML) {
+            if (renderItems.get(position).getType() == TYPE_QUESTION_CONTENT) {
                 QuestionContentHolder contentHolder = new QuestionContentHolder(holder.itemView);
                 contentHolder.setItemContent((ToeicItemContent) renderItems.get(position).getData(), position);
             } else {
