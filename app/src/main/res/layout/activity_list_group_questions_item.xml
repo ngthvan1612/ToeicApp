@@ -12,7 +12,7 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:background="@drawable/component_home_button_rounded_background_bright_blue"
+            android:background="@drawable/component_home_button_rounded_background_blue"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6 questions"
-                    android:textColor="#1F0C91"
+                    android:textColor="#ffffff"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Photographs 01"
-                    android:textColor="@color/black"
+                    android:textColor="#ffffff"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
@@ -56,11 +56,11 @@
 
             <ImageView
                 android:id="@+id/activity_list_group_questions_btn_download"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center|left"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/download"
+                android:src="@drawable/download_white"
                 tools:layout_weight="1" />
         </LinearLayout>
 
