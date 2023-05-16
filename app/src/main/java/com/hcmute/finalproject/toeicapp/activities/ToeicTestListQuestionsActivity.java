@@ -19,6 +19,7 @@ import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
+import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 import com.hcmute.finalproject.toeicapp.services.learn.ToeicTestGradeService;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 
@@ -220,6 +221,10 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
             container.addView(component);
             component.setTag("c-" + position);
+
+            if (position == toeicQuestionGroupViews.size() - 1) {
+                DialogSyncService.dismissDialog();
+            }
 
             return component;
         }
