@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.components.dialog.ToeicAlertDialog;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
@@ -120,6 +121,26 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                 else {
                     viewPager.setCurrentItem(currentItemId+1,true);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        ToeicAlertDialog warningDialog = new ToeicAlertDialog(this);
+        warningDialog.setDialogMode(ToeicAlertDialog.MODE_QUESTION);
+        warningDialog.setMessage("Bạn có chắc chắn muốn thoát?\nMọi kết quả của bài kiểm tra này sẽ bị hủy bỏ!");
+        warningDialog.show();
+        warningDialog.setOnDialogButtonClickedListener(new ToeicAlertDialog.OnDialogButtonClickedListener() {
+            @Override
+            public void onOk() {
+                warningDialog.dismiss();
+                ToeicTestListQuestionsActivity.super.onBackPressed();
+            }
+
+            @Override
+            public void onCancel() {
+                warningDialog.dismiss();
             }
         });
     }
