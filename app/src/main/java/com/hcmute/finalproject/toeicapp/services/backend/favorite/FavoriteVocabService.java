@@ -10,7 +10,6 @@ import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabWordDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabGroup;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabWord;
-import com.hcmute.finalproject.toeicapp.network.APIFavoriteVocab;
 import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteGroup;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteRequest;
