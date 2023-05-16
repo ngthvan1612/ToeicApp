@@ -13,6 +13,7 @@ import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicPart;
 
 import java.util.List;
 
+@Deprecated
 public class PartOneTestListComponent extends LinearLayout {
     private RecyclerView rvTestList;
     private List<TestToeicPart> toeicPartList;
