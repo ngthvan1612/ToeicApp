@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hcmute.finalproject.toeicapp.R;
 
+@Deprecated
 public class CustomDialogComponent {
     public void showDialog(Activity activity, String type, String msg){
         final Dialog dialog = new Dialog(activity);

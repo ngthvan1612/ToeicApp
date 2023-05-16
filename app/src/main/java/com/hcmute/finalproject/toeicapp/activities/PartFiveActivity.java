@@ -14,6 +14,7 @@ import com.hcmute.finalproject.toeicapp.model.toeic.TestToeicAnswerChoice;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class PartFiveActivity extends GradientActivity {
     private static final int NUMBER_OF_PAGES = 5;
     private ViewPager viewPager;

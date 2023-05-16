@@ -14,10 +14,12 @@ import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.components.common.CommonTestFooterComponent;
 import com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent;
+import com.hcmute.finalproject.toeicapp.components.dialog.ToeicAlertDialog;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicGroupItemViewModel;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponent;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
+import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 import com.hcmute.finalproject.toeicapp.services.learn.ToeicTestGradeService;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 
@@ -125,6 +127,26 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        ToeicAlertDialog warningDialog = new ToeicAlertDialog(this);
+        warningDialog.setDialogMode(ToeicAlertDialog.MODE_QUESTION);
+        warningDialog.setMessage("Bạn có chắc chắn muốn thoát?\nMọi kết quả của bài kiểm tra này sẽ bị hủy bỏ!");
+        warningDialog.show();
+        warningDialog.setOnDialogButtonClickedListener(new ToeicAlertDialog.OnDialogButtonClickedListener() {
+            @Override
+            public void onOk() {
+                warningDialog.dismiss();
+                ToeicTestListQuestionsActivity.super.onBackPressed();
+            }
+
+            @Override
+            public void onCancel() {
+                warningDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1234) {
@@ -199,6 +221,10 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
             container.addView(component);
             component.setTag("c-" + position);
+
+            if (position == toeicQuestionGroupViews.size() - 1) {
+                DialogSyncService.dismissDialog();
+            }
 
             return component;
         }

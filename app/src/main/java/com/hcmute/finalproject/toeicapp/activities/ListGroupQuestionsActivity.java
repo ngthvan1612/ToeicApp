@@ -160,6 +160,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
                     Integer partId = bundle.getInt("partId");
                     intent.putExtra("partId", partId);
                     intent.putExtra("question-data", gson.toJson(groupViews));
+                    DialogSyncService.showDialog(ListGroupQuestionsActivity.this);
                     startActivity(intent);
                 };
 
@@ -174,6 +175,7 @@ public class ListGroupQuestionsActivity extends GradientActivity {
                             new ToeicTestBackendService.OnBackupToeicListener() {
                                 @Override
                                 public void prepare() {
+                                    Log.d("DIALOG_SERVICE", "run ahihi download");
                                     DialogSyncService.showDialog(ListGroupQuestionsActivity.this);
                                 }
 
