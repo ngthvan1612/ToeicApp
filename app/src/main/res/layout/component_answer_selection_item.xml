@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/component_answer_selection_item_txt_radio_button"
             android:textIsSelectable="true"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="19sp"
             android:textColor="@color/black"
@@ -67,6 +67,7 @@
             android:layout_toEndOf="@id/component_answer_selection_item_explain_image"
             android:textColor="#1F0C91"
             android:gravity="center_vertical"
+            android:textIsSelectable="true"
             android:text="DEF"/>
     </RelativeLayout>
 </LinearLayout>

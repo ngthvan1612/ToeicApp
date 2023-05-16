@@ -128,7 +128,8 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1234) {
-            if (data.getStringExtra("select").equals("continue")) {
+            final String resultStatus = data.getStringExtra("select");
+            if ("continue".equals(resultStatus)) {
                 finish();
             }
             else {

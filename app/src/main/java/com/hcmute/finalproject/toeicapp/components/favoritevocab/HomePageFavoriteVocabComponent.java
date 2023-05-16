@@ -143,6 +143,7 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
                     public void onClick(View v) {
                         Intent intent = new Intent(getContext(), ViewWordInGroupActivity.class);
                         intent.putExtra("groupName", group.getGroupName());
+                        intent.putExtra("groupId", group.getId());
                         ((Activity)getContext()).startActivity(intent);
                     }
                 });

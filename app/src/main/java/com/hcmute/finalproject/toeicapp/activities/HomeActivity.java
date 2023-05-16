@@ -1,10 +1,8 @@
 package com.hcmute.finalproject.toeicapp.activities;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,16 +12,17 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
-import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
 import com.hcmute.finalproject.toeicapp.components.favoritevocab.HomePageFavoriteVocabComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
-import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
+import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
+import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.FavoriteVocabService;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.ToeicTestBackendService;
 import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
-import com.hcmute.finalproject.toeicapp.testing.huong.activities.HuongTestActivity;
 
 
 public class HomeActivity extends GradientActivity {
@@ -33,20 +32,35 @@ public class HomeActivity extends GradientActivity {
     private MainBottomNavigationComponent mainBottomNavigationComponent;
     private ToeicTestBackendService toeicTestBackendService;
     private AuthenticationService authenticationService;
+    private FavoriteVocabService favoriteVocabService;
+    private FavoriteVocabGroupDao favoriteVocabGroupDao;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         this.authenticationService = new AuthenticationService(this);
         this.toeicTestBackendService = new ToeicTestBackendService(this);
+        this.favoriteVocabService = new FavoriteVocabService(this);
+        this.favoriteVocabGroupDao = ToeicAppDatabase
+                .getInstance(this)
+                .getFavoriteVocabGroupDao();
 
         if (!this.authenticationService.isAuthenticated()) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }
+
+        this.authenticationService.refreshRegisterUserWithServer(() -> {
+            if (this.favoriteVocabGroupDao.getAll().size() == 0) {
+                this.favoriteVocabService.backupFavoriteVocabToServer();
+            }
+            else
+                this.favoriteVocabService.restoreFavoriteVocabsToServer();
+        });
 
         viewPager = findViewById(R.id.activity_home_view_pager);
         mainBottomNavigationComponent = findViewById(R.id.activity_home_bottom_navigation_view);
@@ -61,6 +75,7 @@ public class HomeActivity extends GradientActivity {
         this.toeicTestBackendService.checkToeicTestDatabaseIsUpdated(new ToeicTestBackendService.OnBackupToeicListener() {
             @Override
             public void prepare() {
+                Log.d("DIALOG_SERVICE", " check update");
                 DialogSyncService.showDialog(HomeActivity.this);
             }
 

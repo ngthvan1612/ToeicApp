@@ -16,12 +16,13 @@ public class ToeicTestGradeService {
     }
 
     public GradeToeicResult gradePart(
-            @NonNull List<GradeToeicPayload> payload
+            @NonNull List<GradeToeicPayload> payload,
+            @NonNull Integer totalQuestions
     ) {
         GradeToeicResult result = new GradeToeicResult();
         int correct = 0;
 
-        result.setTotalQuestions(payload.size());
+        result.setTotalQuestions(totalQuestions);
 
         for (GradeToeicPayload gradeToeicPayload : payload) {
             if (gradeToeicPayload.getUserAnswer().equals(gradeToeicPayload.getCorrectAnswer())) {

@@ -165,7 +165,7 @@ public class DownloadFileService {
             ToeicStorage item = new ToeicStorage();
             item.setFileName(fileName);
 
-            ToeicStorageDao storageDao = ToeicAppDatabase.instance.getToeicStorageDao();
+            ToeicStorageDao storageDao = ToeicAppDatabase.getInstance(this.context).getToeicStorageDao();
             List<Long> ids = storageDao.insert(item);
 
             item.setId(Math.toIntExact(ids.get(0)));

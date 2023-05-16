@@ -1,5 +1,6 @@
-package com.hcmute.finalproject.toeicapp.network;
+package com.hcmute.finalproject.toeicapp.services.backend.tests;
 
+import com.hcmute.finalproject.toeicapp.network.BaseRetrofitClient;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidToeicTestsResponse;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.CheckSumStringResponse;
 

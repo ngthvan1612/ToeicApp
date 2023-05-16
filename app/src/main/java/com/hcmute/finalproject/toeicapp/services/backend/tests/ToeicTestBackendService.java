@@ -1,12 +1,9 @@
 package com.hcmute.finalproject.toeicapp.services.backend.tests;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
@@ -21,7 +18,6 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicItemContent;
 import com.hcmute.finalproject.toeicapp.entities.ToeicPart;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestion;
 import com.hcmute.finalproject.toeicapp.entities.ToeicQuestionGroup;
-import com.hcmute.finalproject.toeicapp.network.APIToeicTest;
 import com.hcmute.finalproject.toeicapp.network.downloadfile.DownloadFileWithProgressService;
 import com.hcmute.finalproject.toeicapp.network.downloadfile.OnDownloadListener;
 import com.hcmute.finalproject.toeicapp.services.backend.tests.model.AndroidAnswerChoice;
@@ -41,7 +37,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -202,8 +197,6 @@ public class ToeicTestBackendService {
     public void checkToeicTestDatabaseIsUpdated(
             @NonNull OnBackupToeicListener listener
     ) {
-        listener.prepare();
-
         APIToeicTest.getInstance().getTestDataCheckSumString().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<CheckSumStringResponse> call, Response<CheckSumStringResponse> response) {
