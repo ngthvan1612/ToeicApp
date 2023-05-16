@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.components.favoritevocab;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.activities.ViewWordInGroupActivity;
 import com.hcmute.finalproject.toeicapp.components.dialog.ToeicAlertDialog;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabGroup;
+import com.hcmute.finalproject.toeicapp.testing.duy.activities.DuyTestAddNewWordActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +138,14 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
 
             public void setData(FavoriteVocabGroup group) {
                 this.txtGroupName.setText(group.getGroupName());
+                itemView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), ViewWordInGroupActivity.class);
+                        intent.putExtra("groupName", group.getGroupName());
+                        ((Activity)getContext()).startActivity(intent);
+                    }
+                });
                 this.btnEdit.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
