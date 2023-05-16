@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent
+        android:id="@+id/activity_view_word_in_group_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp">
+    </com.hcmute.finalproject.toeicapp.components.common.CommonHeaderComponent>
+
+    <TextView
+        android:id="@+id/activity_view_word_in_group_retangle"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@+id/activity_view_word_in_group_header_title"
+        android:layout_marginTop="19dp"
+        android:background="#B1DFFF"/>
+    <ScrollView
+        android:layout_below="@+id/activity_view_word_in_group_retangle"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:id="@+id/activity_view_word_in_group_scView">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_view_word_in_group_rcView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ScrollView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/activity_add_word_to_group_plus_circle" />
+</RelativeLayout>

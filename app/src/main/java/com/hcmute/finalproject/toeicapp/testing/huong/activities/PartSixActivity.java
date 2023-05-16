@@ -89,17 +89,12 @@ public class PartSixActivity extends GradientActivity {
             PartSixComponent component = new PartSixComponent(PartSixActivity.this);
             container.addView(component);
 
-            final AnswerSelectionComponent answerSelectionComponent1 = container.findViewById(R.id.component_part_six_answer_selection_1);
-            final AnswerSelectionComponent answerSelectionComponent2 = container.findViewById(R.id.component_part_six_answer_selection_2);
-            final AnswerSelectionComponent answerSelectionComponent3 = container.findViewById(R.id.component_part_six_answer_selection_3);
+
 //            final List<TestToeicAnswerChoice> toeicAnswerChoices = getSamplePart1Choices();
 //            answerSelectionComponent1.setToeicAnswerChoices(toeicAnswerChoices);
 //            answerSelectionComponent2.setToeicAnswerChoices(toeicAnswerChoices);
 //            answerSelectionComponent3.setToeicAnswerChoices(toeicAnswerChoices);
 
-            questionSentenceComponent = container.findViewById(R.id.component_part_six_question_sentence);
-            questionSentenceComponent.setQuestionDescription
-                    ("<h2>hello</h2>");
 
             return component;
         }

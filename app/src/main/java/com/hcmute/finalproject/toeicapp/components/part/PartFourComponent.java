@@ -56,7 +56,6 @@ public class PartFourComponent extends ToeicPartComponentBase{
         super(context, attrs, defStyleAttr);
         this.setPartNumber(4);
         this.initComponent(context, attrs, defStyleAttr);
-
     }
     private void initComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         View view = inflate(context, R.layout.component_part_four, this);
@@ -132,6 +131,7 @@ public class PartFourComponent extends ToeicPartComponentBase{
             LayoutParams layoutParams = (LayoutParams) answerSelectionComponent.getLayoutParams();
             layoutParams.setMargins(0, 0, 0, 20);
             answerSelectionComponentList.add(answerSelectionComponent);
+            addAnswerSelectionComponent(answerSelectionComponent);
             return new ListQuestionPartFourAdapter.ListQuestionItemHodler(answerSelectionComponent);
         }
 
@@ -157,6 +157,7 @@ public class PartFourComponent extends ToeicPartComponentBase{
                 component.setToeicAnswerChoices(choices);
                 assert question.getCorrectAnswer() != null && question.getCorrectAnswer().length() == 1;
                 component.setCorrectAnswer(question.getCorrectAnswer());
+                component.setToeicQuestion(question);
                 component.setQuestionTitle(question.getQuestionNumber() + ". " + question.getContent());
 
                 component.setShowExplain(isExplainShowed);

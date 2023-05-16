@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ListTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".testing.van.activities.VanTestRecyclerActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.LearnVocabularyResultActivity"
             android:exported="false" />
         <activity
@@ -87,6 +93,9 @@
             android:exported="true" />
         <activity
             android:name=".testing.van.activities.VanTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".testing.duy.activities.DuyTestAddNewWordActivity"
             android:exported="true" />
         <activity
             android:name=".activities.TestActivity"

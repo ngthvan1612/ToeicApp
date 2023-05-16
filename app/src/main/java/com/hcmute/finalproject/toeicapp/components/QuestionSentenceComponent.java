@@ -3,6 +3,7 @@ package com.hcmute.finalproject.toeicapp.components;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +37,12 @@ public class QuestionSentenceComponent extends LinearLayout {
     public void setQuestionDescription(String data) {
         webViewQuestionSentenceDescription = findViewById(R.id.component_question_sentence_description_webview);
         //webViewQuestionSentenceDescription.loadUrl(url);
-        webViewQuestionSentenceDescription.loadData(data, "text/html", "UTF-8");
+        webViewQuestionSentenceDescription.loadData(data, "text/html; charset=utf-8", "UTF-8");
+
+        WebSettings settings = webViewQuestionSentenceDescription.getSettings();
+
+
+        settings.setDomStorageEnabled(false);
     }
 
 }

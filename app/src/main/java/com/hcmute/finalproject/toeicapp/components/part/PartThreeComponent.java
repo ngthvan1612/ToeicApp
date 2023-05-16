@@ -151,6 +151,7 @@ public class PartThreeComponent extends ToeicPartComponentBase {
             LayoutParams layoutParams = (LayoutParams) answerSelectionComponent.getLayoutParams();
             layoutParams.setMargins(0, 0, 0, 20);
             answerSelectionComponentList.add(answerSelectionComponent);
+            addAnswerSelectionComponent(answerSelectionComponent);
             return new ListQuestionItemHodler(answerSelectionComponent);
         }
 
@@ -176,7 +177,9 @@ public class PartThreeComponent extends ToeicPartComponentBase {
                 component.setToeicAnswerChoices(choices);
                 assert question.getCorrectAnswer() != null && question.getCorrectAnswer().length() == 1;
                 component.setCorrectAnswer(question.getCorrectAnswer());
+                component.setToeicQuestion(question);
                 component.setQuestionTitle(question.getQuestionNumber() + ". " + question.getContent());
+                component.setToeicQuestion(question);
 
                 component.setShowExplain(isExplainShowed);
             }

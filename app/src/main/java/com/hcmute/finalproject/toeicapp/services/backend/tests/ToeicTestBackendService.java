@@ -90,6 +90,7 @@ public class ToeicTestBackendService {
         for (AndroidToeicFullTest testBackend : tests) {
             ToeicFullTest testEntity = new ToeicFullTest();
             testEntity.setServerId(testBackend.getServerId());
+            testEntity.setFullName(testBackend.getFullName());
             final Integer newTestId = Math.toIntExact(testDao.insert(testEntity).get(0));
 
             for (AndroidToeicPart partBackend : testBackend.getParts()) {
@@ -211,11 +212,13 @@ public class ToeicTestBackendService {
 
                 String newChecksum = checkSumStringResponse.getData();
 
+                Log.d("CHECKSUM_TOEIC", newChecksum + " -> " + currentCheckSum);
+
                 if (!currentCheckSum.equals(newChecksum)) {
                     getNewToeicDatabaseFromServer(new OnBackupToeicListener() {
                         @Override
                         public void prepare() {
-                            // Nothing
+                            listener.prepare();
                         }
 
                         @Override
