@@ -9,8 +9,13 @@ import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabWordDao;
 import com.hcmute.finalproject.toeicapp.database.ToeicAppDatabase;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabGroup;
+import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabWord;
 import com.hcmute.finalproject.toeicapp.network.APIFavoriteVocab;
 import com.hcmute.finalproject.toeicapp.services.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteGroup;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteRequest;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteResponse;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteVocab;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.RestoreFavoriteGroup;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.RestoreFavoriteRequest;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.RestoreFavoriteResponse;
@@ -79,6 +84,7 @@ public class FavoriteVocabService {
 
     public void restoreFavoriteVocabsToServer() {
         final RestoreFavoriteRequest request = this.buildRestoreRequest();
+
         APIFavoriteVocab
                 .getInstance()
                 .restoreFavoriteDatabase(request)
@@ -95,7 +101,46 @@ public class FavoriteVocabService {
                 });
     }
 
-    public void backupFavoriteVocabToServer() {
+    private void backupFavoriteVocabFromResponse(BackupFavoriteResponse response) {
+        for (FavoriteVocabGroup group : this.favoriteVocabGroupDao.getAll()) {
+            this.favoriteVocabGroupDao.delete(group);
+        }
 
+        final List<BackupFavoriteGroup> groups = response.getData().getGroups();
+        for (BackupFavoriteGroup group : groups) {
+            FavoriteVocabGroup groupEntity = new FavoriteVocabGroup();
+            groupEntity.setGroupName(group.getGroupName());
+            groupEntity.setId(Math.toIntExact(this.favoriteVocabGroupDao.insert(groupEntity).get(0)));
+
+            final List<BackupFavoriteVocab> vocabs = group.getFavoriteVocabs();
+            for (BackupFavoriteVocab vocab : vocabs) {
+                FavoriteVocabWord vocabEntity = new FavoriteVocabWord();
+                vocabEntity.setGroupId(groupEntity.getId());
+                vocabEntity.setWord(vocab.getWord());
+                vocabEntity.setMeaning(vocab.getMeaning());
+                this.favoriteVocabWordDao.insert(vocabEntity);
+            }
+        }
+    }
+
+    public void backupFavoriteVocabToServer() {
+        BackupFavoriteRequest request = new BackupFavoriteRequest();
+        request.setGmail(this.authenticationService.getUserEmail());
+
+        APIFavoriteVocab
+                .getInstance()
+                .backupFavoriteDatabase(request)
+                .enqueue(new Callback<BackupFavoriteResponse>() {
+                    @Override
+                    public void onResponse(Call<BackupFavoriteResponse> call, Response<BackupFavoriteResponse> response) {
+                        backupFavoriteVocabFromResponse(response.body());
+                        Log.d("BACKUP_FAVORITE", "ok " + response.body().getMessage());
+                    }
+
+                    @Override
+                    public void onFailure(Call<BackupFavoriteResponse> call, Throwable t) {
+                        Log.d("BACKUP_FAVORITE", "fail " + Log.getStackTraceString(t));
+                    }
+                });
     }
 }

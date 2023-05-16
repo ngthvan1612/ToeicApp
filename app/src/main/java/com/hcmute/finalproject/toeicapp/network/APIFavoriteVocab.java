@@ -2,6 +2,8 @@ package com.hcmute.finalproject.toeicapp.network;
 
 import androidx.annotation.NonNull;
 
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteRequest;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.BackupFavoriteResponse;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.RestoreFavoriteRequest;
 import com.hcmute.finalproject.toeicapp.services.backend.favorite.model.RestoreFavoriteResponse;
 
@@ -22,8 +24,8 @@ public interface APIFavoriteVocab {
             @NonNull @Body RestoreFavoriteRequest request
     );
 
-    @POST("")
-    Call<ResponseBody> backupFavoriteDatabase(
-
+    @POST("/api/android/favorite-vocab/backup")
+    Call<BackupFavoriteResponse> backupFavoriteDatabase(
+            @NonNull @Body BackupFavoriteRequest request
     );
 }
