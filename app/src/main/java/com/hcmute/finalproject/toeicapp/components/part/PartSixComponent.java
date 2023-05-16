@@ -90,7 +90,7 @@ public class PartSixComponent extends ToeicPartComponentBase {
         );
         this.itemContents.addAll(
                 //TODO
-                this.toeicItemContentDao.getItemContentByGroupId(149)
+                this.toeicItemContentDao.getItemContentByGroupId(toeicQuestionGroup.getId())
         );
         for (ToeicItemContent itemContent: itemContents) {
             RenderItem item = new RenderItem();
@@ -195,26 +195,9 @@ public class PartSixComponent extends ToeicPartComponentBase {
             public void setItemContent(ToeicItemContent itemContent, int position) {
                 //TODO
                 QuestionSentenceComponent questionSentenceComponent1 = (QuestionSentenceComponent)this.itemView;
-//                if (itemContent.getContent() != null) {
-//                    questionSentenceComponent1.setQuestionDescription(itemContent.getContent());
-//                }
-//                questionSentenceComponent1.setQuestionDescription("<div class=\"context-content context-transcript \">\n" +
-//                        " <p><a data-toggle=\"collapse\" href=\"#transcript-99e3fdc8-64ad-4522-b408-166f41abf32f\" aria-expanded=\"false\"> Hiện Transcript <span class=\"fas fa-caret-down ml-1\"></span> </a></p>\n" +
-//                        " <div class=\"collapse\" id=\"transcript-99e3fdc8-64ad-4522-b408-166f41abf32f\">\n" +
-//                        "  <div>\n" +
-//                        "   <p>Hi, Charlie. The driver who usually delivers our merchandise to the J.M. Cuisine store is out today. Do you think you could make his four o'clock delivery for him this afternoon?</p>\n" +
-//                        "   <p>Alright, but I've never made any deliveries to that store before, so I'll need some directions. How do I get there from our warehouse?</p>\n" +
-//                        "   <p>I suggest taking Route Five and getting off at the Sixth Street exit. Once you're there, don't forget to have the store manager sign the delivery confirmation form.</p>\n" +
-//                        "  </div>\n" +
-//                        "  <div>\n" +
-//                        "   <p>Xin chào, Charlie. Người lái xe thường giao hàng của chúng tôi đến cửa hàng Ẩm thực J.M. đang ra ngoài hôm nay. Bạn có nghĩ rằng bạn có thể giao hàng lúc bốn giờ thay cho anh ấy chiều nay không?</p>\n" +
-//                        "   <p>Được rồi, nhưng trước đây tôi chưa bao giờ thực hiện bất kỳ việc giao hàng nào đến cửa hàng đó, vì vậy tôi sẽ cần được chỉ đường. Làm thế nào để tôi đến đó từ kho của chúng ta?</p>\n" +
-//                        "   <p>Tôi đề nghị bạn đi Tuyến 5 và xuống ở lối ra Đường thứ Sáu. Khi bạn ở đó, đừng quên để người quản lý cửa hàng ký tên vào mẫu xác nhận giao hàng nhé.</p>\n" +
-//                        "  </div>\n" +
-//                        " </div>\n" +
-//                        "</div>");
-                questionSentenceComponent1.setQuestionDescription("<a href=\"https://google.com\">Click here</a>");
-
+                if (itemContent.getContent() != null) {
+                    questionSentenceComponent1.setQuestionDescription(itemContent.getContent());
+                }
             }
         }
 

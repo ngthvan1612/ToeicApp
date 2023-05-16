@@ -252,6 +252,7 @@
                     android:weightSum="2">
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_listening"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="0dp"
@@ -262,6 +263,7 @@
                         app:toeic_title="Listening" />
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_reading"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -280,6 +282,7 @@
                     android:weightSum="2">
 
                     <com.hcmute.finalproject.toeicapp.components.HomeButtonRoundedComponent
+                        android:id="@+id/component_home_page_list_practice_btn_full_test"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
