@@ -10,13 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.HomeActivity;
 
 public class CommonHeaderComponent extends LinearLayout {
+    private SubmitButtonRoundedComponent submitBtn;
     private TextView txtTitle;
     private BackButtonRoundedComponent btnBack;
+    public SubmitButtonRoundedComponent.OnClickListener onClickListener;
+
     public CommonHeaderComponent(Context context) {
         this(context, null);
     }
@@ -37,12 +41,20 @@ public class CommonHeaderComponent extends LinearLayout {
         View view = inflate(context, R.layout.component_common_header, this);
         this.txtTitle = view.findViewById(R.id.component_common_header_title);
         btnBack = findViewById(R.id.component_common_header_back_button);
+        submitBtn = findViewById(R.id.component_submit_button_rounded_btn);
         btnBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((Activity)context).onBackPressed();
             }
         });
+        submitBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.OnClick();
+            }
+        });
+
     }
     public void setTitle(String title) {
         this.txtTitle.setText(title);
@@ -51,4 +63,5 @@ public class CommonHeaderComponent extends LinearLayout {
     public String getTitle() {
         return this.txtTitle.getText().toString();
     }
+
 }
