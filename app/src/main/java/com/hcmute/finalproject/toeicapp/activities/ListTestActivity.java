@@ -40,7 +40,7 @@ public class ListTestActivity extends AppCompatActivity {
     private BackButtonRoundedComponent btnBack;
     private ListView listViewTestName;
     private List<ToeicFullTestItemView> toeicFullTestItemViews;
-    private List<ToeicPart> toeicParts;
+    //private List<ToeicPart> toeicParts;
     private Integer partNumber;
     private String testName;
     private ToeicAppDatabase toeicAppDatabase;
@@ -128,6 +128,8 @@ public class ListTestActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+            final List<ToeicPart> toeicParts = new ArrayList<>();
+
             final LayoutInflater inflater = LayoutInflater.from(ListTestActivity.this);
             view = inflater.inflate(R.layout.activity_list_group_questions_item, viewGroup,false);
 
@@ -139,11 +141,11 @@ public class ListTestActivity extends AppCompatActivity {
             ToeicPartDao toeicPartDao = toeicAppDatabase.getToeicPartDao();
             ToeicQuestionGroupDao toeicQuestionGroupDao = toeicAppDatabase.getToeicQuestionGroupDao();
             if (partNumber == HomePageListPracticeComponent.FULL_TEST) {
-               toeicParts = toeicPartDao.getToeicPartByToeicTestId(toeicFullTestItemView.getId());
+               toeicParts.addAll(toeicPartDao.getToeicPartByToeicTestId(toeicFullTestItemView.getId()));
             } else if (partNumber == HomePageListPracticeComponent.LISTENING_TEST) {
-                toeicParts = toeicPartDao.getToeicPartListeningByToeicTestId(toeicFullTestItemView.getId());
+                toeicParts.addAll(toeicPartDao.getToeicPartListeningByToeicTestId(toeicFullTestItemView.getId()));
             } else if (partNumber == HomePageListPracticeComponent.READING_TEST) {
-                toeicParts = toeicPartDao.getToeicPartReadingByToeicTestId(toeicFullTestItemView.getId());
+                toeicParts.addAll(toeicPartDao.getToeicPartReadingByToeicTestId(toeicFullTestItemView.getId()));
             }
 
             Boolean isFullTestDownloaded = true;
@@ -158,14 +160,16 @@ public class ListTestActivity extends AppCompatActivity {
                 btnDownload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(ListTestActivity.this, "click btn", Toast.LENGTH_SHORT).show();
                         for (ToeicPart toeicPart : toeicParts) {
+                            Log.d("fulltest" , toeicPart.getId() + "");
+
                             if (toeicPart.getDownloaded() == false) {
                                 toeicTestBackendService.downloadPartStorageData(
                                         toeicPart.getServerId(),
                                         new ToeicTestBackendService.OnBackupToeicListener() {
                                             @Override
                                             public void prepare() {
+                                                Log.d("haha", "okkkkkk");
                                                 DialogSyncService.showDialog(ListTestActivity.this);
                                             }
 
