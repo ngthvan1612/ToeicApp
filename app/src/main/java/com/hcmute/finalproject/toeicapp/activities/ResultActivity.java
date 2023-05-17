@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicRate;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
+import com.hcmute.finalproject.toeicapp.services.statistic.StatisticService;
 
 public class ResultActivity extends GradientActivity {
     public final static int MODE_GOOD = 1;
@@ -21,6 +22,8 @@ public class ResultActivity extends GradientActivity {
     TextView textRender, txtResult;
     AppCompatButton btnShowAnswers, btnContinue;
     private GradeToeicResult gradeToeicResult;
+    private StatisticService statisticService;
+    private String testType, testName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +31,14 @@ public class ResultActivity extends GradientActivity {
         setContentView(R.layout.activity_result);
 
         this.gradeToeicResult = this.getGradeToeicResultFromIntent();
+        this.statisticService = new StatisticService(this);
         this.initView();
     }
 
     private GradeToeicResult getGradeToeicResultFromIntent() {
         final Bundle bundle = getIntent().getExtras();
+        this.testType = bundle.getString("testType");
+        this.testName = bundle.getString("testName");
         return (GradeToeicResult)bundle.get("result");
     }
 
@@ -69,6 +75,12 @@ public class ResultActivity extends GradientActivity {
                 finish();
             }
         });
+
+        this.statisticService.collectResult(
+                this.testType,
+                this.testName,
+                gradeToeicResult
+        );
     }
 
     public int getViewMode() {

@@ -3,12 +3,21 @@ package com.hcmute.finalproject.toeicapp.services.learn.model;
 import java.io.Serializable;
 
 public class GradeToeicResult implements Serializable {
+    private Integer numberOfSkipQuestions;
     private Integer numberOfCorrectQuestions;
     private Integer totalQuestions;
     private GradeToeicRate rate;
 
     public GradeToeicResult() {
 
+    }
+
+    public Integer getNumberOfSkipQuestions() {
+        return numberOfSkipQuestions;
+    }
+
+    public void setNumberOfSkipQuestions(Integer numberOfSkipQuestions) {
+        this.numberOfSkipQuestions = numberOfSkipQuestions;
     }
 
     public Integer getNumberOfCorrectQuestions() {

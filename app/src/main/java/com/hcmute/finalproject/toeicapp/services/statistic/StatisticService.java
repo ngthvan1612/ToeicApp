@@ -36,15 +36,15 @@ public class StatisticService {
         int minutes = calendar.get(Calendar.MINUTE);
         int seconds = calendar.get(Calendar.SECOND);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
 
         Statistic statistic = new Statistic();
         statistic.setCorrect(result.getNumberOfCorrectQuestions());
-        statistic.setWrong(result.getTotalQuestions() - result.getNumberOfCorrectQuestions());
+        statistic.setWrong(result.getTotalQuestions() - result.getNumberOfCorrectQuestions() - result.getNumberOfSkipQuestions());
         statistic.setType(testMethod);
         statistic.setName(testName);
-        statistic.setNoSelected(0);
+        statistic.setNoSelected(result.getNumberOfSkipQuestions());
         statistic.setHours(hour24hrs + ":" + minutes);
         statistic.setDate(day + "/" + month + "/" + year);
 

@@ -47,4 +47,8 @@ public class CommonHeaderComponent extends LinearLayout {
     public void setTitle(String title) {
         this.txtTitle.setText(title);
     }
+
+    public String getTitle() {
+        return this.txtTitle.getText().toString();
+    }
 }

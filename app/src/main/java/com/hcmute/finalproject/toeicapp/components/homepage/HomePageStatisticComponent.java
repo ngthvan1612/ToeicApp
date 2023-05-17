@@ -109,7 +109,7 @@ public class HomePageStatisticComponent extends LinearLayout {
                 this.txtTestName.setText(data.getName());
                 this.txtCorrect.setText(data.getCorrect() + "");
                 this.txtWrong.setText(data.getWrong() + "");
-                this.txtNoSelected.setText(data.getNoSelected());
+                this.txtNoSelected.setText(data.getNoSelected() + "");
             }
         }
         @NonNull

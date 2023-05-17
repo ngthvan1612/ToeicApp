@@ -156,6 +156,10 @@ public class HomeActivity extends GradientActivity {
                     //List Practice
                     HomePageListPracticeComponent component = (HomePageListPracticeComponent) view;
                 }
+                else if (position == 2) {
+                    HomePageStatisticComponent component = (HomePageStatisticComponent)view;
+                    component.reloadListStatistic();
+                }
             }
 
             @Override

@@ -34,6 +34,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
     private ViewPagerAdapter adapter;
     private CommonTestFooterComponent commonTestFooterComponent = null;
     private ToeicTestGradeService toeicTestGradeService;
+    private boolean isExplainMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
             public void onNextMenuClicked() {
                 final Integer currentItemId = viewPager.getCurrentItem();
 
-                if(currentItemId + 1 == toeicQuestionGroupViews.size()) {
+                if(currentItemId + 1 == toeicQuestionGroupViews.size() &&  !isExplainMode) {
                     List<GradeToeicResult> listResultForEachQuestionGroups = new ArrayList<>();
 
                     for (int i = 0; i < toeicQuestionGroupViews.size(); ++i) {
@@ -114,6 +115,8 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
                     Bundle bundle = new Bundle();
+                    bundle.putString("testType", "Toeic test");
+                    bundle.putString("testName", commonHeaderComponent.getTitle());
                     bundle.putSerializable("result", gradeToeicResult);
                     intent.putExtras(bundle);
 
@@ -161,6 +164,7 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
                     assert component != null;
                     component.showExplain();
                 }
+                this.isExplainMode = true;
             }
         }
     }
