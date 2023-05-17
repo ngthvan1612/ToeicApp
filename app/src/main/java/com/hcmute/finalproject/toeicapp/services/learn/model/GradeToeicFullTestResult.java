@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.services.learn.model;
 
-public class GradeToeicFullTestResult {
+import java.io.Serializable;
+
+public class GradeToeicFullTestResult implements Serializable {
     private Integer totalScoreMin;
     private Integer totalScoreMax;
 

@@ -170,10 +170,12 @@ public class ToeicTestGradeService {
     ) {
         GradeToeicResult result = new GradeToeicResult();
         int correct = 0, skip = 0;
+        result.setPayloads(new ArrayList<>());
 
         result.setTotalQuestions(totalQuestions);
 
         for (GradeToeicPayload gradeToeicPayload : payload) {
+            result.getPayloads().add(gradeToeicPayload);
             if (gradeToeicPayload.getUserAnswer() == null || gradeToeicPayload.getUserAnswer().equals("")) {
                 skip++;
                 continue;
@@ -198,6 +200,7 @@ public class ToeicTestGradeService {
             @NonNull List<GradeToeicResult> results
     ) {
         GradeToeicResult merged = new GradeToeicResult();
+        merged.setPayloads(new ArrayList<>());
 
         int totalQuestions = 0;
         int skipQuestions = 0;
@@ -207,6 +210,7 @@ public class ToeicTestGradeService {
             totalQuestions += result.getTotalQuestions();
             correctQuestions += result.getNumberOfCorrectQuestions();
             skipQuestions += result.getNumberOfSkipQuestions();
+            merged.getPayloads().addAll(result.getPayloads());
         }
 
         merged.setTotalQuestions(totalQuestions);

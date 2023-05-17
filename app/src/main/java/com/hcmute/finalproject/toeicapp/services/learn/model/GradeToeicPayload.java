@@ -1,6 +1,8 @@
 package com.hcmute.finalproject.toeicapp.services.learn.model;
 
-public class GradeToeicPayload {
+import java.io.Serializable;
+
+public class GradeToeicPayload implements Serializable {
     private Integer partNumber;
     private Integer questionNumber;
     private String correctAnswer;

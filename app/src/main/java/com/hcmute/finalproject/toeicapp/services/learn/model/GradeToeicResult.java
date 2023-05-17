@@ -1,15 +1,25 @@
 package com.hcmute.finalproject.toeicapp.services.learn.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GradeToeicResult implements Serializable {
     private Integer numberOfSkipQuestions;
     private Integer numberOfCorrectQuestions;
     private Integer totalQuestions;
     private GradeToeicRate rate;
+    private List<GradeToeicPayload> payloads;
 
     public GradeToeicResult() {
 
+    }
+
+    public List<GradeToeicPayload> getPayloads() {
+        return payloads;
+    }
+
+    public void setPayloads(List<GradeToeicPayload> payloads) {
+        this.payloads = payloads;
     }
 
     public Integer getNumberOfSkipQuestions() {

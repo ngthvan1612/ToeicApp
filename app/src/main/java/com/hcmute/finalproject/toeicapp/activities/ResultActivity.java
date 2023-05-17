@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicRate;
@@ -24,6 +25,8 @@ public class ResultActivity extends GradientActivity {
     private GradeToeicResult gradeToeicResult;
     private StatisticService statisticService;
     private String testType, testName;
+    private boolean isFullTest = false;
+    private Integer scoreMin, scoreMax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,12 @@ public class ResultActivity extends GradientActivity {
 
     private GradeToeicResult getGradeToeicResultFromIntent() {
         final Bundle bundle = getIntent().getExtras();
+        final Integer partId = bundle.getInt("partId");
+        if (partId == 0) {
+            isFullTest = true;
+            scoreMin = getIntent().getIntExtra("min-score", 0);
+            scoreMax = getIntent().getIntExtra("max-score", 0);
+        }
         this.testType = bundle.getString("testType");
         this.testName = bundle.getString("testName");
         return (GradeToeicResult)bundle.get("result");
@@ -49,7 +58,12 @@ public class ResultActivity extends GradientActivity {
         btnContinue = (AppCompatButton) findViewById(R.id.activity_result_button_continue);
         txtResult = findViewById(R.id.activity_result_text_result);
 
-        txtResult.setText("Result " + this.gradeToeicResult.getNumberOfCorrectQuestions() + "/" + this.gradeToeicResult.getTotalQuestions());
+        if (!isFullTest) {
+            txtResult.setText("Result " + this.gradeToeicResult.getNumberOfCorrectQuestions() + "/" + this.gradeToeicResult.getTotalQuestions());
+        }
+        else {
+            txtResult.setText("Result " + scoreMin + " - " + scoreMax);
+        }
 
         if (this.gradeToeicResult.getRate() == GradeToeicRate.BAD)
             setViewMode(MODE_BAD);

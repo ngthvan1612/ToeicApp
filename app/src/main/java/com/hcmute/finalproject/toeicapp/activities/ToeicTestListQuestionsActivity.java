@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hcmute.finalproject.toeicapp.R;
@@ -21,6 +22,8 @@ import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentBase;
 import com.hcmute.finalproject.toeicapp.components.part.ToeicPartComponentFactory;
 import com.hcmute.finalproject.toeicapp.services.dialog.DialogSyncService;
 import com.hcmute.finalproject.toeicapp.services.learn.ToeicTestGradeService;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicFullTestResult;
+import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicPayload;
 import com.hcmute.finalproject.toeicapp.services.learn.model.GradeToeicResult;
 
 import java.util.ArrayList;
@@ -115,15 +118,25 @@ public class ToeicTestListQuestionsActivity extends GradientActivity {
 
                     Intent intent = new Intent(ToeicTestListQuestionsActivity.this, ResultActivity.class);
                     Bundle bundle = new Bundle();
+                    bundle.putInt("partId", partId);
                     bundle.putString("testType", "Toeic test");
                     bundle.putString("testName", commonHeaderComponent.getTitle());
                     bundle.putSerializable("result", gradeToeicResult);
                     intent.putExtras(bundle);
 
+                    if (partId == 0) {
+                        final List<GradeToeicPayload> payloads = gradeToeicResult.getPayloads();
+                        GradeToeicFullTestResult fullTestResult = toeicTestGradeService.gradeTest(payloads);
+                        //bundle.putInt("min-score", fullTestResult.getTotalScoreMin());
+                        //bundle.putInt("max-score", fullTestResult.getTotalScoreMax());
+                        intent.putExtra("min-score", fullTestResult.getTotalScoreMin());
+                        intent.putExtra("max-score", fullTestResult.getTotalScoreMax());
+                    }
+
                     startActivityForResult(intent, 1234);
                 }
                 else {
-                    viewPager.setCurrentItem(currentItemId+1,true);
+                    viewPager.setCurrentItem(currentItemId + 1,true);
                 }
             }
         });
