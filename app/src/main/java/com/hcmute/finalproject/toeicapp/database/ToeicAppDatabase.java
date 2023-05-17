@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabWordDao;
+import com.hcmute.finalproject.toeicapp.dao.StatisticDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicAnswerChoiceDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicFullTestDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicItemContentDao;
@@ -19,6 +20,7 @@ import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyDao;
 import com.hcmute.finalproject.toeicapp.dao.ToeicVocabularyTopicDao;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabGroup;
 import com.hcmute.finalproject.toeicapp.entities.FavoriteVocabWord;
+import com.hcmute.finalproject.toeicapp.entities.Statistic;
 import com.hcmute.finalproject.toeicapp.entities.ToeicAnswerChoice;
 import com.hcmute.finalproject.toeicapp.entities.ToeicFullTest;
 import com.hcmute.finalproject.toeicapp.entities.ToeicItemContent;
@@ -40,7 +42,8 @@ import com.hcmute.finalproject.toeicapp.entities.ToeicVocabularyTopic;
         ToeicVocabulary.class,
         ToeicVocabularyTopic.class,
         FavoriteVocabGroup.class,
-        FavoriteVocabWord.class
+        FavoriteVocabWord.class,
+        Statistic.class
 }, version = 1)
 public abstract class ToeicAppDatabase extends RoomDatabase {
     private final static String DATABASE_FILE_NAME = "toeic-db.sqlite3";
@@ -56,6 +59,7 @@ public abstract class ToeicAppDatabase extends RoomDatabase {
     public abstract ToeicVocabularyTopicDao getToeicVocabularyTopicDao();
     public abstract FavoriteVocabGroupDao getFavoriteVocabGroupDao();
     public abstract FavoriteVocabWordDao getFavoriteVocabWordDao();
+    public abstract StatisticDao getStatisticDao();
     private static ToeicAppDatabase instance;
 
     public static ToeicAppDatabase getInstance(Context context) {

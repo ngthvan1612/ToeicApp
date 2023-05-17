@@ -16,6 +16,7 @@ import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
 import com.hcmute.finalproject.toeicapp.components.favoritevocab.HomePageFavoriteVocabComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
+import com.hcmute.finalproject.toeicapp.components.homepage.HomePageStatisticComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageUserProfileComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.MainBottomNavigationComponent;
 import com.hcmute.finalproject.toeicapp.dao.FavoriteVocabGroupDao;
@@ -208,7 +209,14 @@ public class HomeActivity extends GradientActivity {
                 component.setOnClickBackButton(() -> viewPager.setCurrentItem(0, true));
 
                 return component;
-            } else if (position == 3) {
+            }
+            else if (position == 2) {
+                HomePageStatisticComponent component = new HomePageStatisticComponent(HomeActivity.this);
+                container.addView(component);
+                component.setTag(getLayoutTagByPosition(position));
+                return component;
+            }
+            else if (position == 3) {
                 HomePageFavoriteVocabComponent component = new HomePageFavoriteVocabComponent(HomeActivity.this);
                 container.addView(component);
                 component.setTag(getLayoutTagByPosition(position));

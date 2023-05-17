@@ -25,7 +25,7 @@ public class StatisticActivity extends GradientActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
-        rvStatistic = findViewById(R.id.rv_statistics);
+        rvStatistic = findViewById(R.id.activity_statistic_recycler_view);
         statisticList = new ArrayList<>();
         statisticList.add("statistic 1");
         statisticList.add("statistic 2");
