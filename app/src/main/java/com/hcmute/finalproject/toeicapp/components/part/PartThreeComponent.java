@@ -250,21 +250,6 @@ public class PartThreeComponent extends ToeicPartComponentBase {
     }
 
     @Override
-    public Integer getNumberCorrectAnswer() {
-        assert this.questions.size() >= answerSelectionComponentList.size();
-        int counter = 0;
-        for (AnswerSelectionComponent component : answerSelectionComponentList) {
-            final ToeicAnswerChoice currentChoice = component.getCurrentChoice();
-            if (currentChoice != null) {
-                if (currentChoice.getLabel().equals(component.getCorrectAnswer())) {
-                    counter++;
-                }
-            }
-        }
-        return counter;
-    }
-
-    @Override
     public Integer getTotalQuestions() {
         return this.questions.size();
     }

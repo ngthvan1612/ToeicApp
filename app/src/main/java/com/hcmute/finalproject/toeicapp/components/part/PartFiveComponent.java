@@ -63,16 +63,6 @@ public class PartFiveComponent extends ToeicPartComponentBase {
     public void showExplain() {
         this.answerSelectionComponent.setShowExplain(!this.answerSelectionComponent.isShowExplain());
     }
-    @Override
-    public Integer getNumberCorrectAnswer() {
-        final ToeicAnswerChoice currentChoice = this.answerSelectionComponent.getCurrentChoice();
-        if (currentChoice != null) {
-            if (currentChoice.getLabel().equals(this.answerSelectionComponent.getCorrectAnswer())) {
-                return 1;
-            }
-        }
-        return 0;
-    }
 
     @Override
     public Integer getTotalQuestions() {

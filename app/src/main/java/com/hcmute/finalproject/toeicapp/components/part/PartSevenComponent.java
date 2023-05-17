@@ -143,6 +143,11 @@ public class PartSevenComponent extends ToeicPartComponentBase {
         isExplainShowed = true;
     }
 
+    @Override
+    public Integer getTotalQuestions() {
+        return this.questions.size();
+    }
+
     private class ListQuestionPartSevenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public int getItemViewType(int position) {

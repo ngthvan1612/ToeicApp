@@ -137,17 +137,6 @@ public class PartOnePhotographsComponent extends ToeicPartComponentBase {
     }
 
     @Override
-    public Integer getNumberCorrectAnswer() {
-        final ToeicAnswerChoice currentChoice = this.answerSelectionComponent.getCurrentChoice();
-        if (currentChoice != null) {
-            if (currentChoice.getLabel().equals(this.answerSelectionComponent.getCorrectAnswer())) {
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    @Override
     public Integer getTotalQuestions() {
         return 1;
     }

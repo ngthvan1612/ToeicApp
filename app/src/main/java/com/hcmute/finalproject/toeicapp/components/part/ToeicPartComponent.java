@@ -8,6 +8,5 @@ public interface ToeicPartComponent {
     void loadQuestionGroup(ToeicQuestionGroup toeicQuestionGroup);
     void showExplain();
     GradeToeicResult calculateScore();
-    default Integer getNumberCorrectAnswer() { return 0; }
-    default Integer getTotalQuestions() { return 0; }
+    Integer getTotalQuestions();
 }
