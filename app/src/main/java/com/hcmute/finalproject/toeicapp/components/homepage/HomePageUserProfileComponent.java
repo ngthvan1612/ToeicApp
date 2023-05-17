@@ -18,12 +18,14 @@ import com.bumptech.glide.Glide;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.activities.LoginActivity;
 import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.FavoriteVocabService;
 
 public class HomePageUserProfileComponent extends LinearLayout {
     private ImageView imgUserPhoto;
     private TextView txtDisplayName, txtEmail;
     private AppCompatButton btnLogout;
     private AuthenticationService authenticationService;
+    private FavoriteVocabService favoriteVocabService;
 
     public HomePageUserProfileComponent(Context context) {
         this(context, null);
@@ -50,6 +52,7 @@ public class HomePageUserProfileComponent extends LinearLayout {
             return;
         }
 
+        this.favoriteVocabService = new FavoriteVocabService(this.getContext());
         this.authenticationService = new AuthenticationService(this.getContext());
 
         this.txtDisplayName.setText(this.authenticationService.getUserDisplayName());
@@ -72,16 +75,27 @@ public class HomePageUserProfileComponent extends LinearLayout {
             ProgressDialog dialog = new ProgressDialog(getContext());
             dialog.setMessage("Đang xử lý...");
             dialog.show();
+            final String email = this.authenticationService.getUserEmail();
 
             this.authenticationService.LogoutAsync(new AuthenticationService.OnAccountLogoutAsyncEvent() {
                 @Override
                 public void onSuccess() {
-                    dialog.dismiss();
-                    Activity activity = (Activity)getContext();
-                    activity.finish();
+                    favoriteVocabService.restoreFavoriteVocabsToServerAfterLogout(email, new FavoriteVocabService.OnFavoriteVocabServiceListener() {
+                        @Override
+                        public void onSuccess() {
+                            dialog.dismiss();
+                            Activity activity = (Activity)getContext();
+                            activity.finish();
 
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    activity.startActivity(intent);
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            activity.startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            this.onSuccess();
+                        }
+                    });
                 }
 
                 @Override

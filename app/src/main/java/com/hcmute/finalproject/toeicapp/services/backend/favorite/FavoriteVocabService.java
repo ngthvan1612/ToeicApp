@@ -34,7 +34,7 @@ public class FavoriteVocabService {
     private final Context context;
     private final FavoriteVocabWordDao favoriteVocabWordDao;
     private final FavoriteVocabGroupDao favoriteVocabGroupDao;
-    private final AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
 
     public FavoriteVocabService(@NonNull Context context) {
         this.context = context;
@@ -50,12 +50,14 @@ public class FavoriteVocabService {
                 .getFavoriteVocabWordDao();
     }
 
-    private RestoreFavoriteRequest buildRestoreRequest() {
+    private RestoreFavoriteRequest buildRestoreRequest(
+            @NonNull final String email
+    ) {
         final RestoreFavoriteRequest request = new RestoreFavoriteRequest();
         final List<FavoriteVocabGroup> groups = this.favoriteVocabGroupDao.getAll();
         final List<RestoreFavoriteGroup> restoreFavoriteGroups = new ArrayList<>();
 
-        request.setGmail(this.authenticationService.getUserEmail());
+        request.setGmail(email);
         request.setGroups(restoreFavoriteGroups);
 
         for (FavoriteVocabGroup group : groups) {
@@ -80,8 +82,11 @@ public class FavoriteVocabService {
         return request;
     }
 
-    public void restoreFavoriteVocabsToServer() {
-        final RestoreFavoriteRequest request = this.buildRestoreRequest();
+    public void restoreFavoriteVocabsToServerAfterLogout(
+            @NonNull final String email,
+            OnFavoriteVocabServiceListener listener
+    ) {
+        final RestoreFavoriteRequest request = this.buildRestoreRequest(email);
 
         APIFavoriteVocab
                 .getInstance()
@@ -90,11 +95,42 @@ public class FavoriteVocabService {
                     @Override
                     public void onResponse(Call<RestoreFavoriteResponse> call, Response<RestoreFavoriteResponse> response) {
                         Log.d("RESTORE_FAVORITE", "ok " + response.body().getMessage());
+                        if (listener != null)
+                            listener.onSuccess();
                     }
 
                     @Override
                     public void onFailure(Call<RestoreFavoriteResponse> call, Throwable t) {
                         Log.d("RESTORE_FAVORITE", "fail " + Log.getStackTraceString(t));
+                        if (listener != null)
+                            listener.onError(new Exception(t.getMessage()));
+                    }
+                });
+    }
+
+    public void restoreFavoriteVocabsToServer(
+            OnFavoriteVocabServiceListener listener
+    ) {
+        final RestoreFavoriteRequest request = this.buildRestoreRequest(
+                this.authenticationService.getUserEmail()
+        );
+
+        APIFavoriteVocab
+                .getInstance()
+                .restoreFavoriteDatabase(request)
+                .enqueue(new Callback<RestoreFavoriteResponse>() {
+                    @Override
+                    public void onResponse(Call<RestoreFavoriteResponse> call, Response<RestoreFavoriteResponse> response) {
+                        Log.d("RESTORE_FAVORITE", "ok " + response.body().getMessage());
+                        if (listener != null)
+                            listener.onSuccess();
+                    }
+
+                    @Override
+                    public void onFailure(Call<RestoreFavoriteResponse> call, Throwable t) {
+                        Log.d("RESTORE_FAVORITE", "fail " + Log.getStackTraceString(t));
+                        if (listener != null)
+                            listener.onError(new Exception(t.getMessage()));
                     }
                 });
     }
@@ -121,7 +157,11 @@ public class FavoriteVocabService {
         }
     }
 
-    public void backupFavoriteVocabToServer() {
+    public void backupFavoriteVocabFromServer(
+            @NonNull OnFavoriteVocabServiceListener listener
+    ) {
+        this.authenticationService = new AuthenticationService(this.context);
+
         BackupFavoriteRequest request = new BackupFavoriteRequest();
         request.setGmail(this.authenticationService.getUserEmail());
 
@@ -133,12 +173,19 @@ public class FavoriteVocabService {
                     public void onResponse(Call<BackupFavoriteResponse> call, Response<BackupFavoriteResponse> response) {
                         backupFavoriteVocabFromResponse(response.body());
                         Log.d("BACKUP_FAVORITE", "ok " + response.body().getMessage());
+                        listener.onSuccess();
                     }
 
                     @Override
                     public void onFailure(Call<BackupFavoriteResponse> call, Throwable t) {
                         Log.d("BACKUP_FAVORITE", "fail " + Log.getStackTraceString(t));
+                        listener.onError(new Exception(t.getMessage()));
                     }
                 });
+    }
+
+    public interface OnFavoriteVocabServiceListener {
+        void onSuccess();
+        void onError(Exception e);
     }
 }

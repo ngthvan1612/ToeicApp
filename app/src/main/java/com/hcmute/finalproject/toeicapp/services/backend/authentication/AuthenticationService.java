@@ -33,14 +33,12 @@ public class AuthenticationService {
             contextInstance = context;
         }
 
-        if (this.googleSignInAccount == null) {
-            this.googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .requestProfile()
-                    .build();
-            this.googleSignInClient = GoogleSignIn.getClient(context, this.googleSignInOptions);
-            this.googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context);
-        }
+        this.googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .build();
+        this.googleSignInClient = GoogleSignIn.getClient(context, this.googleSignInOptions);
+        this.googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context);
     }
 
     public void LogoutAsync(

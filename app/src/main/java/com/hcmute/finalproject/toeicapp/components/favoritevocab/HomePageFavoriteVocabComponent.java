@@ -95,7 +95,7 @@ public class HomePageFavoriteVocabComponent extends LinearLayout {
         });
     }
 
-    private void reloadListFavoriteGroups() {
+    public void reloadListFavoriteGroups() {
         List<FavoriteVocabGroup> groups = this.favoriteVocabGroupDao.getAll();
 
         this.favoriteVocabGroups.clear();

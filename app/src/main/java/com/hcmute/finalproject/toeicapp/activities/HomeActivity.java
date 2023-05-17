@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hcmute.finalproject.toeicapp.R;
+import com.hcmute.finalproject.toeicapp.components.LoadingDialogComponent;
 import com.hcmute.finalproject.toeicapp.components.favoritevocab.HomePageFavoriteVocabComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListPracticeComponent;
 import com.hcmute.finalproject.toeicapp.components.homepage.HomePageListVocabularyComponent;
@@ -34,6 +35,7 @@ public class HomeActivity extends GradientActivity {
     private AuthenticationService authenticationService;
     private FavoriteVocabService favoriteVocabService;
     private FavoriteVocabGroupDao favoriteVocabGroupDao;
+    private ViewPagerNavigationAdapter adapter;
 
 
     @Override
@@ -47,6 +49,7 @@ public class HomeActivity extends GradientActivity {
         this.favoriteVocabGroupDao = ToeicAppDatabase
                 .getInstance(this)
                 .getFavoriteVocabGroupDao();
+        this.adapter = new ViewPagerNavigationAdapter();
 
         if (!this.authenticationService.isAuthenticated()) {
             finish();
@@ -54,19 +57,38 @@ public class HomeActivity extends GradientActivity {
             return;
         }
 
-        this.authenticationService.refreshRegisterUserWithServer(() -> {
-            if (this.favoriteVocabGroupDao.getAll().size() == 0) {
-                this.favoriteVocabService.backupFavoriteVocabToServer();
-            }
-            else
-                this.favoriteVocabService.restoreFavoriteVocabsToServer();
-        });
-
         viewPager = findViewById(R.id.activity_home_view_pager);
         mainBottomNavigationComponent = findViewById(R.id.activity_home_bottom_navigation_view);
 
         this.initViewPager();
         this.initBottomNavigation();
+
+        this.authenticationService.refreshRegisterUserWithServer(() -> {
+            if (this.favoriteVocabGroupDao.getAll().size() == 0) {
+                this.favoriteVocabService.backupFavoriteVocabFromServer(new FavoriteVocabService.OnFavoriteVocabServiceListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("BACKUP_FAVORITE", "ok ");
+                        HomePageFavoriteVocabComponent homePageFavoriteVocabComponent = viewPager
+                                .findViewWithTag("c-3");
+
+                        Log.d("HOME_ACTIVITY", "before reload fav groups");
+
+                        if (homePageFavoriteVocabComponent != null) {
+                            Log.d("HOME_ACTIVITY", "reload fav groups");
+                            homePageFavoriteVocabComponent.reloadListFavoriteGroups();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.d("BACKUP_FAVORITE", "error " + e.getMessage());
+                    }
+                });
+            }
+            else
+                this.favoriteVocabService.restoreFavoriteVocabsToServer(null);
+        });
 
         CheckDataAsync();
     }
@@ -123,7 +145,7 @@ public class HomeActivity extends GradientActivity {
 
     private void initViewPager() {
         viewPager.setOffscreenPageLimit(NUMBER_OF_PAGES);
-        viewPager.setAdapter(new ViewPagerNavigationAdapter());
+        viewPager.setAdapter(this.adapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

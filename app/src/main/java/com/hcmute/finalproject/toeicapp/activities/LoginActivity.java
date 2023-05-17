@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,11 +15,13 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hcmute.finalproject.toeicapp.R;
 import com.hcmute.finalproject.toeicapp.services.backend.authentication.AuthenticationService;
+import com.hcmute.finalproject.toeicapp.services.backend.favorite.FavoriteVocabService;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOGIN_GOOGLE = 1720;
 
     private AuthenticationService authenticationService;
+    private FavoriteVocabService favoriteVocabService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         this.authenticationService = new AuthenticationService(this);
+        this.favoriteVocabService = new FavoriteVocabService(this);
 
         if (this.authenticationService.isAuthenticated()) {
             finish();
@@ -52,9 +56,21 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Toast.makeText(this, "Xin chào " + account.getEmail(), Toast.LENGTH_SHORT).show();
+                favoriteVocabService.backupFavoriteVocabFromServer(new FavoriteVocabService.OnFavoriteVocabServiceListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("BACKUP_FAVORITE", "ok login");
+                        finish();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    }
 
-                finish();
-                startActivity(new Intent(this, HomeActivity.class));
+                    @Override
+                    public void onError(Exception e) {
+                        Log.d("BACKUP_FAVORITE", "error login " + e.getMessage());
+                        finish();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    }
+                });
             }
             catch (ApiException e){
                 Toast.makeText(this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
